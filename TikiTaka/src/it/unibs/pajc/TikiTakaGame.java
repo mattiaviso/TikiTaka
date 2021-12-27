@@ -2,6 +2,8 @@ package it.unibs.pajc;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -38,17 +40,15 @@ public class TikiTakaGame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+	
 		frame = new JFrame();
-		frame.setBounds(100, 100, 600, 400);
+		frame.setBounds(0, 0, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		GameFieldView battleFieldView = new GameFieldView();
 		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
 		
-		txtGioco = new JTextField();
-		txtGioco.setText("GIOCO");
-		frame.getContentPane().add(txtGioco, BorderLayout.NORTH);
-		txtGioco.setColumns(10);
+	
 	}
 
 }

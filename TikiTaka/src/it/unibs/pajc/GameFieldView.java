@@ -1,21 +1,12 @@
 package it.unibs.pajc;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
+import java.awt.*;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class GameFieldView extends JPanel {
 
 	public GameFieldView() {
 		
-		Timer timer = new Timer(10, (e)->{
-			
-			repaint();
-		});
-		timer.start();
 		
 		this.setFocusable(true);
 		this.requestFocusInWindow();
@@ -25,18 +16,24 @@ public class GameFieldView extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
-		double s = Math.min(getWidth(), getHeight()) / 1000.;
-		double ss = getHeight()/1000.;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		g2.scale(s, -s); // passo in un mondo di coordiante con l'asse y che punta verso l'alto 
-		g2.translate(500, -500);//traslo verso il centro sposto la x verso dx e abbasso la y
+		int w = getWidth();
+		int h = getHeight();
+		
+		g2.translate(0, h);
+		g2.scale(1, -1);
+		g2.translate(w/2, h/2);
 		
 		g2.setColor(Color.green);
-		g2.fillRect(-500, -500, 1000, 1000);
+		g2.fillRect(-w/3, -h/4, w/6, h/2);
 		
 		g2.setColor(Color.white);
-		g2.fillOval(0, 0, 20, 20);
+		g2.drawLine(0, h/4, 0, -h/4);
+		g2.drawLine(-w/4, 0, w/4, 0);
 		
+		
+	
 	}
 
 }
