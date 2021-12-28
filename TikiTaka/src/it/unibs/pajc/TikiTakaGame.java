@@ -1,17 +1,18 @@
 package it.unibs.pajc;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-public class TikiTakaGame {
+public class TikiTakaGame extends Canvas {
 
 	private JFrame frame;
 	private JTextField txtGioco;
+	/*private BufferedImage sfondo = null;*/
+
 
 	/**
 	 * Launch the application.
@@ -42,13 +43,21 @@ public class TikiTakaGame {
 	private void initialize() {
 	
 		frame = new JFrame();
-		frame.setBounds(0, 0, 800, 500);
+		frame.setResizable(false);
+		frame.setBounds(100, 50, 1300, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		GameFieldView battleFieldView = new GameFieldView();
 		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
+		/*disegna();*/
 		
 	
 	}
 
-}
+
+
+	}
+
+
+
+
