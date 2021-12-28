@@ -37,12 +37,12 @@ public class GameFieldView extends JPanel {
 
 
 		try {
-			this.field  = ImageIO.read(new File("campo.jpeg"));
+			this.field  = ImageIO.read(new File("campo.jpg"));
 		} catch (IOException var4) {
 			System.out.println("Image d'arriere plan non trouvee");
 		}
 
-		g2.drawImage(this.field,-w/3, -h/3, (w/3)*2, (h/3)*2, (ImageObserver)null);
+		g2.drawImage(this.field,-650, -175, 1300,570,null);
 		//g2.drawLine(0, h / 4, 0, -h / 4);
 		//g2.drawLine(-w / 4, 0, w / 4, 0);
 
