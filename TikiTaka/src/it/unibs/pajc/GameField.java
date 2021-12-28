@@ -1,6 +1,7 @@
 package it.unibs.pajc;
 
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -36,7 +37,7 @@ public class GameField {
     }
 
     public void stepNext() {
-        for (SpaceObject o: objects) {
+        for (FieldObject o: objects) {
             o.stepNext();
             applyCloseUniverse(o);
         }
@@ -51,7 +52,7 @@ public class GameField {
         if(nobjs<2)
             return;
 
-        SpaceObject[] objs = new SpaceObject[nobjs];
+        FieldObject[] objs = new FieldObject[nobjs];
         objects.toArray(objs);
 
         for(int i=0;i<nobjs-1;i++) {
@@ -70,7 +71,7 @@ public class GameField {
     }
 
     public void removeZombie() {
-        ArrayList<SpaceObject> aliveObjects = new ArrayList<>();
+        ArrayList<FieldObject> aliveObjects = new ArrayList<>();
 
         objects.forEach(o -> {
             if(o.isAlive()) aliveObjects.add(o);
@@ -81,7 +82,7 @@ public class GameField {
     }
 
     //se la navicella esce rientra dall'altra parte
-    private void applyCloseUniverse(SpaceObject o) {
+    private void applyCloseUniverse(FieldObject o) {
         if(o.getY()> bordersFloat.getMaxY())
             o.setY((float) bordersFloat.getMinY());
         else if (o.getY()<bordersFloat.getMinY())
@@ -94,7 +95,7 @@ public class GameField {
     }
 
 
-
+        /*
     public SpaceShip getShip() {
         return ship;
     }
@@ -105,6 +106,6 @@ public class GameField {
 
         objects.add(bullet);
     }
-
+*/
 
 }
