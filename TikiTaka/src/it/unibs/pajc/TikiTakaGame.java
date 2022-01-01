@@ -1,11 +1,8 @@
 package it.unibs.pajc;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class TikiTakaGame extends Canvas {
 
@@ -43,15 +40,21 @@ public class TikiTakaGame extends Canvas {
 	private void initialize() {
 
 		frame = new JFrame();
+
 		frame.setResizable(false);
 		frame.setBounds(100, 50, 1300, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
+		JPanel rsl = new JPanel();
 		GameFieldView battleFieldView = new GameFieldView();
 		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
-
-		/*disegna();*/
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.RED);
+
+		panel.setPreferredSize(new Dimension(1300,120));
+		frame.getContentPane().add(panel,BorderLayout.NORTH);
+
 	
 	}
 

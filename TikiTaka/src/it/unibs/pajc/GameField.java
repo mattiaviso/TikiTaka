@@ -81,8 +81,16 @@ public class GameField {
         objects = aliveObjects;
     }
 
+
+    // max del campo
     //se la navicella esce rientra dall'altra parte
     private void applyCloseUniverse(FieldObject o) {
+
+
+
+
+
+
         if(o.getY()> bordersFloat.getMaxY())
             o.setY((float) bordersFloat.getMinY());
         else if (o.getY()<bordersFloat.getMinY())

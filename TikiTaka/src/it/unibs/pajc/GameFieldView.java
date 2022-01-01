@@ -55,7 +55,7 @@ public class GameFieldView extends JPanel {
 		} catch (IOException var4) {
 			System.out.println("Image d'arriere plan non trouvee");
 		}
-		g2.drawImage(this.field,-650, -380, 1300,645,null);
+		g2.drawImage(this.field,-650, -320, 1300,645,null);
 	}
 
 
