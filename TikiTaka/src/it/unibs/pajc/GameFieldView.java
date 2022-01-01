@@ -34,31 +34,29 @@ public class GameFieldView extends JPanel {
 		g2.fillRect(-w/3, -h/4, w/6, h/2);
 
 		g2.setColor(Color.white);
+		// CREAZIONE CAMPO
+		creatingfield(g2);
+		
 
 
-		try {
-			this.field  = ImageIO.read(new File("campo.jpg"));
-		} catch (IOException var4) {
-			System.out.println("Image d'arriere plan non trouvee");
-		}
-
-		g2.drawImage(this.field,-650, -175, 1300,570,null);
 		//g2.drawLine(0, h / 4, 0, -h / 4);
 		//g2.drawLine(-w / 4, 0, w / 4, 0);
+
+
 
 	}
 
 
 
 
-
-
-
-
-
-
-		
-	
+	private void creatingfield(Graphics2D g2) {
+		try {
+			this.field  = ImageIO.read(new File("campogiusto.jpg"));
+		} catch (IOException var4) {
+			System.out.println("Image d'arriere plan non trouvee");
+		}
+		g2.drawImage(this.field,-650, -380, 1300,645,null);
+	}
 
 
 }

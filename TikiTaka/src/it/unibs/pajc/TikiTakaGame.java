@@ -41,7 +41,7 @@ public class TikiTakaGame extends Canvas {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-	
+
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 50, 1300, 800);
@@ -49,6 +49,7 @@ public class TikiTakaGame extends Canvas {
 		
 		GameFieldView battleFieldView = new GameFieldView();
 		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
+
 		/*disegna();*/
 		
 	
