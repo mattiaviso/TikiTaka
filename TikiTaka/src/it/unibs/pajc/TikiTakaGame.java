@@ -55,7 +55,6 @@ public class TikiTakaGame extends Canvas {
 		panel.setPreferredSize(new Dimension(1300,120));
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
 
-	
 	}
 
 

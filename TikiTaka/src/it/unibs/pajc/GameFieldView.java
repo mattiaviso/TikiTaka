@@ -1,39 +1,44 @@
 package it.unibs.pajc;
 
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
+// QUI INSERIIRE ELEMENTI TASTIERI
 
-public class GameFieldView extends JPanel {
+
+public class GameFieldView extends JPanel implements MouseListener , MouseMotionListener {
 
 	 private  Image field;
 	 public static   int w;
 	 public  static int h;
+	 public boolean valido=false;
 
-	private FieldObject[] ball;
+	GameField fieldModel = new GameField();
 
 	public GameFieldView() {
-		ball = new FieldObject[11];
+		Timer timer = new Timer(10, (e) -> {
+			fieldModel.stepNext();
 
-		ball[0] = new Ball(36,0,0);
-		ball[1] = new Piece(80,520,0,"Pedina1.png");
-		ball[2] = new Piece(80,170,70,"Pedina1.png");
-		ball[3] = new Piece(80,170,-70,"Pedina1.png");
-		ball[4] = new Piece(80,350,180,"Pedina1.png");
-		ball[5] = new Piece(80,350,-180,"Pedina1.png");
-		ball[6] = new Piece(80,-520,0,"Pedina2.png");
-		ball[7] = new Piece(80,-170,70,"Pedina2.png");
-		ball[8] = new Piece(80,-170,-70,"Pedina2.png");
-		ball[9] = new Piece(80,-350,180,"Pedina2.png");
-		ball[10] = new Piece(80,-350,-180,"Pedina2.png");
-}
+			repaint();
+		});
+		timer.start();
 
-protected void paintComponent(Graphics g) {
+		//riceve il focus degli eventi
+		this.setFocusable(true);
+		this.requestFocusInWindow();
+		this.addMouseListener(this);
+	}
+
+		protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -48,8 +53,12 @@ protected void paintComponent(Graphics g) {
 		// CREAZIONE CAMPO
 		creatingfield(g2);
 
-		for(int i=0;i < ball.length; i++){
-			g2.drawImage(ball[i].getImageObj(),(int) (ball[i].getX()-(ball[i].getRadius()/2)), (int) (ball[i].getY()-(ball[i].getRadius()/2)),null);
+		for(FieldObject f : fieldModel.objectsPiece){
+			g2.drawImage(f.getImageObj(),(int) (f.getX()-(f.getRadius())), (int) (f.getY()-(f.getRadius())),null);
+		}
+		if(valido){
+			g2.setColor(Color.RED);
+			g2.drawOval(-18,-18,36,36);
 		}
 		//g2.drawImage(ball[0].getImageObj(),(int) (ball[0].getX()-(ball[0].getRadius()/2)), (int) (ball[0].getY()-(ball[0].getRadius()/2)),null);
 		//g2.drawImage(ball[1].getImageObj(),(int) (ball[1].getX()-(ball[1].getRadius()/2)), (int) (ball[1].getY()-(ball[1].getRadius()/2)),null);
@@ -72,4 +81,52 @@ protected void paintComponent(Graphics g) {
 	}
 
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+		//prendiamo coordinate x e y di dove è stato premuto il mouse
+		int x = e.getX()-w/2;
+		int y = e.getY()-h/2;
+		System.out.println(x+ "  " + y);
+
+		 valido = fieldModel.checkClickAble(x,y);
+
+		repaint();
+
+
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// il rilascio lo step next
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+
+	}
 }
+
+

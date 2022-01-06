@@ -6,6 +6,8 @@ abstract public class FieldObject {
     protected double [] position;
     protected double radius;
     protected BufferedImage imageObj;
+    protected double [] velocity;
+
 
     abstract public boolean isBall();
 
@@ -34,4 +36,9 @@ abstract public class FieldObject {
 
 
 
+    public void stepNext(){
+        for (int i = 0; i < 2; i++) {
+            //position[i]+= velocity[i];
+        }
+    }
 }

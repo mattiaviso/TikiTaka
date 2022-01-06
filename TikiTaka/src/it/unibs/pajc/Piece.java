@@ -6,8 +6,9 @@ import java.io.IOException;
 
 public class Piece extends FieldObject{
 
+    protected String team;
 
-    public Piece(double radius, double x, double y,String imagePath) {
+    public Piece(double radius, double x, double y,String imagePath, String team) {
         super(radius, x, y);
 
         //Caricamento immagine **Metodo da estrarre
@@ -16,6 +17,8 @@ public class Piece extends FieldObject{
         } catch(IOException e) {
             System.out.println("Image not found");
         }
+
+        this.team = team;
 
     }
 
