@@ -1,5 +1,6 @@
 package it.unibs.pajc;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameField {
@@ -35,16 +36,16 @@ public class GameField {
         }
     }
 
-    public boolean checkClickAble(int xMouse, int yMouse) {
+    public FieldObject checkClickAble(int xMouse, int yMouse) {
         for(FieldObject f : objectsPiece){
             if(f instanceof Piece)
             if(Math.pow(xMouse-f.getX(),2)+Math.pow(yMouse-f.getY(),2)<Math.pow((f.radius),2) && ((Piece)f).team.equals(turno)){
                 System.out.println("ciao ");
-                return true;
+                return f;
             }
 
         }
-        return false;
+        return null;
     }
 
     public void cambioTurno(){

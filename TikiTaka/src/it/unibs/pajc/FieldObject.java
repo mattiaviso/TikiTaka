@@ -38,7 +38,7 @@ abstract public class FieldObject {
 
     public void stepNext(){
         for (int i = 0; i < 2; i++) {
-            //position[i]+= velocity[i];
+            position[i]+= velocity[i];
         }
     }
 }
