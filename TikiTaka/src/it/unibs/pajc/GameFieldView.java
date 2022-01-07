@@ -1,33 +1,25 @@
 package it.unibs.pajc;
 
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.GeneralPath;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.Point2D;
+import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.geom.AffineTransform;
-
-
-// QUI INSERIIRE ELEMENTI TASTIERI
-
 
 
 public class GameFieldView extends JPanel implements MouseListener , MouseMotionListener {
 
 
 	private  Image field;
-	 public static   int w;
-	 public  static int h;
-	 public  FieldObject valido;
-	 public  int newradius = 0;
-	 public int xnew,ynew;
+ 	public static   int w;
+	public  static int h;
+ 	public  FieldObject valido;
+ 	public  int newradius = 0;
+ 	public int xnew,ynew;
 
 	GameField fieldModel = new GameField();
 
@@ -47,7 +39,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 	}
 
-		protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -72,17 +64,18 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		if (newradius != 0 ){
 			g2.setColor(new Color(0, 100, 0, 100));
 			g2.fillOval((int)(valido.getX()-newradius),(int)(valido.getY()-newradius),(int)newradius*2,(int)newradius*2);
+
 			g2.setColor(Color.black);
 			int dy = (int)(ynew - valido.getY());
 			int dx = (int) (xnew- valido.getX());
+			int xOpposta = (int) valido.getX() - dx;
+			int yOpposta = (int) valido.getY() - dy;
 
-
-			double ang = Math.atan(dy/dx);
-
-
-			
-
-			g2.drawLine((int)valido.getX(), (int)valido.getY() , (int)(valido.getX()+(newradius*Math.cos(ang))),(int)(valido.getY()+(newradius*Math.sin(ang))));
+			int distance = (int)(Math.min(Math.sqrt(Math.pow(valido.getX()-xOpposta,2)+Math.pow(valido.getY()-yOpposta,2)),150));
+			double angle = Math.atan2(yOpposta-valido.getY(),xOpposta-valido.getX());
+			drawArrow(g2, new Point2D.Double(valido.getX(),valido.getY()),angle,distance);
+			//mi danno la direzione se faccio divisione
+			//g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
 
 		}
 
@@ -92,10 +85,31 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		g2.drawLine(-w/2,0,w/2,0);
 		g2.drawLine(0,-h/2,0,h/2);*/
 
-
 	}
 
+	/**
+	 * Metodo che permette di disegnare a video una linea con una freccia
+	 * @param g Graphics2d g2
+	 * @param point Punto di partenza della freccia
+	 * @param angle Angolo formato dalla freccia
+	 * @param len lunghezza della retta
+	 */
+	private static void drawArrow(Graphics2D g, Point2D point, double angle, int len) {
+		AffineTransform at = AffineTransform.getTranslateInstance(point.getX(), point.getY());
+		at.concatenate(AffineTransform.getRotateInstance(angle));
+		AffineTransform restoreTransform = g.getTransform();
+		g.transform(at);
 
+		int ARR_SIZE = 10;
+
+		// Draw horizontal arrow starting in (0, 0)
+		g.setStroke(new BasicStroke(2.5f));
+		g.drawLine(0, 0, len-5, 0);
+		g.setStroke(new BasicStroke(1f));
+		g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
+				new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+		g.setTransform(restoreTransform);
+	}
 
 	private void creatingfield(Graphics2D g2) {
 		try {
@@ -124,8 +138,6 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 		repaint();
 
-
-
 	}
 
 	@Override
@@ -153,6 +165,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 		xnew = e.getX()-w/2;
 		ynew = -(e.getY()-h/2);
+
 		System.out.println("prova");
 		if(valido!=null)
 			newradius =Math.min((int) Math.sqrt((valido.getX()-xnew)*(valido.getX()-xnew)+(valido.getY()-ynew)*(valido.getY()-ynew)),150);
