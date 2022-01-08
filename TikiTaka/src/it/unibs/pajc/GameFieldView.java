@@ -144,10 +144,13 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	public void mouseReleased(MouseEvent e) {
 		// il rilascio lo step next
 
-
+		if(valido!=null){
+			fieldModel.cambioTurno();
+		}
 		valido = null;
 		newradius = 0;
 		repaint();
+
 	}
 
 	@Override
@@ -166,7 +169,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		xnew = e.getX()-w/2;
 		ynew = -(e.getY()-h/2);
 
-		System.out.println("prova");
+		//System.out.println("prova");
 		if(valido!=null)
 			newradius =Math.min((int) Math.sqrt((valido.getX()-xnew)*(valido.getX()-xnew)+(valido.getY()-ynew)*(valido.getY()-ynew)),150);
 
