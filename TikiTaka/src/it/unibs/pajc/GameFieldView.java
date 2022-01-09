@@ -20,6 +20,8 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
  	public  FieldObject valido;
  	public  int newradius = 0;
  	public int xnew,ynew;
+	 public int distance;
+	 public double angle;
 
 	GameField fieldModel = new GameField();
 
@@ -71,8 +73,8 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 			int xOpposta = (int) valido.getX() - dx;
 			int yOpposta = (int) valido.getY() - dy;
 
-			int distance = (int)(Math.min(Math.sqrt(Math.pow(valido.getX()-xOpposta,2)+Math.pow(valido.getY()-yOpposta,2)),150));
-			double angle = Math.atan2(yOpposta-valido.getY(),xOpposta-valido.getX());
+			distance = (int)(Math.min(Math.sqrt(Math.pow(valido.getX()-xOpposta,2)+Math.pow(valido.getY()-yOpposta,2)),150));
+			angle = Math.atan2(yOpposta-valido.getY(),xOpposta-valido.getX());
 			drawArrow(g2, new Point2D.Double(valido.getX(),valido.getY()),angle,distance);
 			//mi danno la direzione se faccio divisione
 			//g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
@@ -86,6 +88,97 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		g2.drawLine(0,-h/2,0,h/2);*/
 
 	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+		//prendiamo coordinate x e y di dove è stato premuto il mouse
+		int x = e.getX()-w/2;
+		int y = -(e.getY()-h/2);
+		System.out.println(x+ "  " + y);
+
+		 valido = fieldModel.checkClickAble(x,y);
+
+		repaint();
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// il rilascio lo step next
+
+
+
+
+		if(valido!=null){
+			valido.start(distance, angle);
+
+			fieldModel.cambioTurno();
+		}
+		valido = null;
+		newradius = 0;
+		repaint();
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+		xnew = e.getX()-w/2;
+		ynew = -(e.getY()-h/2);
+
+
+
+
+
+		if(valido!=null)
+			newradius =Math.min((int) Math.sqrt((valido.getX()-xnew)*(valido.getX()-xnew)+(valido.getY()-ynew)*(valido.getY()-ynew)),150);
+
+		repaint();
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * Metodo che permette di disegnare a video una linea con una freccia
@@ -120,66 +213,6 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		g2.drawImage(this.field,-656, -320, 1300,645,null);
 	}
 
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-		//prendiamo coordinate x e y di dove è stato premuto il mouse
-		int x = e.getX()-w/2;
-		int y = -(e.getY()-h/2);
-		System.out.println(x+ "  " + y);
-
-		 valido = fieldModel.checkClickAble(x,y);
-
-		repaint();
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// il rilascio lo step next
-
-		if(valido!=null){
-			fieldModel.cambioTurno();
-		}
-		valido = null;
-		newradius = 0;
-		repaint();
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-
-		xnew = e.getX()-w/2;
-		ynew = -(e.getY()-h/2);
-
-		//System.out.println("prova");
-		if(valido!=null)
-			newradius =Math.min((int) Math.sqrt((valido.getX()-xnew)*(valido.getX()-xnew)+(valido.getY()-ynew)*(valido.getY()-ynew)),150);
-
-		repaint();
-	}
-
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-	}
 
 
 }
