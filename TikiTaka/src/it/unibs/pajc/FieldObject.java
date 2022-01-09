@@ -3,7 +3,7 @@ package it.unibs.pajc;
 import java.awt.image.BufferedImage;
 
 abstract public class FieldObject {
-    public static final int MAXSPEED = 20;
+    public static final int MAXSPEED = 150;
     protected double [] position;
     protected double radius;
     protected BufferedImage imageObj;
@@ -39,7 +39,7 @@ abstract public class FieldObject {
 
 
     public void start(int distance, double angle){
-        speed = distance;
+        speed = distance/7.5;
         if(speed> MAXSPEED)speed= MAXSPEED;
         setDirection(angle);
     }
@@ -54,20 +54,48 @@ abstract public class FieldObject {
     }
 
     public int move(){
-        if(speed <=0 ) speed = 0;
-
+        if(speed <=1 ) speed = 0;
         else {
-               speed = speed - speed*0.045;
-
+               speed = speed - speed*(0.017);
         }
 
         // probabile errore
         this.position[0] += (speed* Math.cos(direction));
         this.position[1] += (speed * Math.sin(direction));
+
+        //COLLISSIONI DELLE PARETI
+
+        double minX = this.position[0] - this.radius;
+        double maxX = this.position[0] + this.radius;
+        double minY = this.position[1] - this.radius ;
+        double maxY = this.position[1] + this.radius;
+
+        if (this.isBall() && this.position[1] > -302.0D && this.position[1] < 312.0D) {
+            if (this.position[0] - this.radius < -566.0D) {
+                return 2;
+            }
+            else if (this.position[0] + this.radius > 566.0D) {
+                return 1;
+            }
+        }
+
+        if (minX < -566.0D) {
+            this.direction *= -1.0D;
+            this.position[0] = -566.0D + this.radius;
+        } else if (maxX > 566.0D) {
+            this.direction *= -1.0D;
+            this.position[0] = 566.0D - this.radius;
+        } else if (minY < -302.0D) {
+            this.direction = Math.PI - this.direction;
+            this.position[1] = -302.0D + this.radius;
+        } else if (maxY > 312.0D) {
+            this.direction = Math.PI - this.direction;
+            this.position[1] = 312.0D - this.radius;
+        }
+
+
+
         return 0;
-
-
-        // COLLISSIONI DELLE PARETI
     }
 
 

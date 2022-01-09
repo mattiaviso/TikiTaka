@@ -81,6 +81,27 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 		}
 
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(1f));
+		// LINEA SOPRA
+		g2.drawLine(-566,312,566,312);
+		//LINEA SOTTO
+		g2.drawLine(-566,-302,566,-302);
+		// LINEA SX
+		g2.drawLine(-566,312,-566,-302);
+		// LINEA DX
+		g2.drawLine(566,312,566,-302);
+
+		// AMPIEZZA porta sx
+		g2.drawLine(-566,108,-566,-98);
+		// PROFONDITA PORTA SX
+		g2.drawLine(-630,108,-630,-98);
+		// AMPIEZZA PORTA DESTRA
+		g2.drawLine(566,108,566,-98);
+		//PROFONDITA DELLA PORTA DX
+		g2.drawLine(630,108,630,-98);
+
+
 		//g2.drawImage(ball[0].getImageObj(),(int) (ball[0].getX()-(ball[0].getRadius()/2)), (int) (ball[0].getY()-(ball[0].getRadius()/2)),null);
 		//g2.drawImage(ball[1].getImageObj(),(int) (ball[1].getX()-(ball[1].getRadius()/2)), (int) (ball[1].getY()-(ball[1].getRadius()/2)),null);
 		/*g2.setColor(Color.white);
@@ -210,7 +231,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		} catch (IOException var4) {
 			System.out.println("Image d'arriere plan non trouvee");
 		}
-		g2.drawImage(this.field,-656, -320, 1300,645,null);
+		g2.drawImage(this.field,-655, -320, 1300,645,null);
 	}
 
 
