@@ -80,16 +80,16 @@ abstract public class FieldObject {
         }
 
         if (minX < -566.0D) {
-            this.direction *= -1.0D;
+            this.direction = -(this.direction-Math.PI);
             this.position[0] = -566.0D + this.radius;
         } else if (maxX > 566.0D) {
-            this.direction *= -1.0D;
+            this.direction = -(this.direction-Math.PI);
             this.position[0] = 566.0D - this.radius;
-        } else if (minY < -302.0D) {
-            this.direction = Math.PI - this.direction;
+        } else if (minY < -302.0D) { //bordo sotto
+            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = -302.0D + this.radius;
-        } else if (maxY > 312.0D) {
-            this.direction = Math.PI - this.direction;
+        } else if (maxY > 312.0D) { //bordo sopra
+            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = 312.0D - this.radius;
         }
 
