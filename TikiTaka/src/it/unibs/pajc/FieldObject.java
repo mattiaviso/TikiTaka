@@ -60,11 +60,10 @@ abstract public class FieldObject {
         }
 
         // probabile errore
-        this.position[0] += (speed* Math.cos(direction));
+        this.position[0] += (speed * Math.cos(direction));
         this.position[1] += (speed * Math.sin(direction));
 
         //COLLISSIONI DELLE PARETI
-
         double minX = this.position[0] - this.radius;
         double maxX = this.position[0] + this.radius;
         double minY = this.position[1] - this.radius ;
@@ -79,16 +78,32 @@ abstract public class FieldObject {
             }
         }
 
-        if (minX < -566.0D) {
+
+
+        if (minX < -566.0D) { //bordo a SX
+            if(getY()+getRadius()>-98.0D && getY()+getRadius() < 108.0D){ //bordo porta
+                if(getX()<-630){
+                    setSpeed(0);
+                }
+            } else{ //bordo non porta
             this.direction = -(this.direction-Math.PI);
             this.position[0] = -566.0D + this.radius;
-        } else if (maxX > 566.0D) {
-            this.direction = -(this.direction-Math.PI);
-            this.position[0] = 566.0D - this.radius;
-        } else if (minY < -302.0D) { //bordo sotto
+            }
+        } else if (maxX > 566.0D) { //bordo a DX
+            //quando la pedina entra in porta
+            if(getY()+getRadius()>-98.0D && getY()+getRadius() < 108.0D){
+                if(getX()>630){
+                    setSpeed(0);
+                }
+            }else{ //bordo fuori dalla porta
+                this.direction = -(this.direction-Math.PI);
+                this.position[0] = 566.0D - this.radius;
+            }
+
+        } else if (minY < -302.0D) { //bordo Down
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = -302.0D + this.radius;
-        } else if (maxY > 312.0D) { //bordo sopra
+        } else if (maxY > 312.0D) { //bordo UP
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = 312.0D - this.radius;
         }
