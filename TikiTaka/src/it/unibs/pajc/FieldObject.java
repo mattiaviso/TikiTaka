@@ -101,10 +101,10 @@ abstract public class FieldObject {
             }
 
         } else if (minY < -302.0D) { //bordo Down
-            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
+            this.direction = this.direction + 2 * (3/2f*Math.PI - this.direction);
             this.position[1] = -302.0D + this.radius;
         } else if (maxY > 312.0D) { //bordo UP
-            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
+            this.direction = this.direction + 2 * (3/2f*Math.PI - this.direction);
             this.position[1] = 312.0D - this.radius;
         }
 
