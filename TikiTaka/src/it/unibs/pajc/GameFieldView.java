@@ -79,6 +79,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 			//mi danno la direzione se faccio divisione
 			//g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
 
+
 		}
 
 		g2.setColor(Color.white);
@@ -94,12 +95,14 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 		// AMPIEZZA porta sx
 		g2.drawLine(-566,108,-566,-98);
+		g2.drawLine(-600, 108, 600, 108);
 		// PROFONDITA PORTA SX
 		g2.drawLine(-630,108,-630,-98);
 		// AMPIEZZA PORTA DESTRA
 		g2.drawLine(566,108,566,-98);
 		//PROFONDITA DELLA PORTA DX
 		g2.drawLine(630,108,630,-98);
+
 
 
 		//g2.drawImage(ball[0].getImageObj(),(int) (ball[0].getX()-(ball[0].getRadius()/2)), (int) (ball[0].getY()-(ball[0].getRadius()/2)),null);

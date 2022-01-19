@@ -81,7 +81,7 @@ abstract public class FieldObject {
 
 
         if (minX < -566.0D) { //bordo a SX
-            if(getY()+getRadius()>-98.0D && getY()+getRadius() < 108.0D){ //bordo porta
+            if(getY()+getRadius()>-98.0D && getY()+getRadius() <112.0D /*108.0D*/){ //bordo porta
                 if(getX()<-630){
                     setSpeed(0);
                 }
@@ -101,17 +101,16 @@ abstract public class FieldObject {
             }
 
         } else if (minY < -302.0D) { //bordo Down
-            this.direction = this.direction + 2 * (3/2f*Math.PI - this.direction);
+            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = -302.0D + this.radius;
         } else if (maxY > 312.0D) { //bordo UP
-            this.direction = this.direction + 2 * (3/2f*Math.PI - this.direction);
+            this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
             this.position[1] = 312.0D - this.radius;
         }
 
-
-
         return 0;
     }
+
 
 
 
