@@ -1,5 +1,6 @@
 package it.unibs.pajc;
 
+import javax.tools.FileObject;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class GameField {
     }
 
     public FieldObject checkClickAble(int xMouse, int yMouse) {
+        if(!allStop()) return null;
         for(FieldObject f : objectsPiece){
             if(f instanceof Piece)
             if(Math.pow(xMouse-f.getX(),2)+Math.pow(yMouse-f.getY(),2)<Math.pow((f.radius),2) && ((Piece)f).team.equals(turno)){
@@ -49,11 +51,34 @@ public class GameField {
     }
 
     public void cambioTurno(){
-        if(turno.equals("T1")){
+        if(turno.equals("T1") ){
             turno = "T2";
-        }else{
+        }else if (turno.equals("T2")){
             turno="T1";
         }
+    }
+
+    public boolean allStop(){
+        for(FieldObject o: objectsPiece){
+            if(!o.speedIsZero()) return false;
+        }
+        return true;
+    }
+
+
+    public void collisions() {
+        for (int i = 0; i < objectsPiece.size(); i++) {
+            if (!objectsPiece.get(i).speedIsZero()){
+                for (int j = 0; j <objectsPiece.size() ; j++) {
+                    if (i!= j ) objectsPiece.get(i).collision(objectsPiece.get(j));
+
+                }
+
+                }
+        }
+
+
+
     }
 }
 

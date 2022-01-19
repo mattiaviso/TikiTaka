@@ -2,6 +2,8 @@ package it.unibs.pajc;
 
 import java.awt.image.BufferedImage;
 
+
+
 abstract public class FieldObject {
     public static final int MAXSPEED = 150;
     protected double [] position;
@@ -81,37 +83,53 @@ abstract public class FieldObject {
 
 
         if (minX < -566.0D) { //bordo a SX
-            if(getY()+getRadius()>-98.0D && getY()+getRadius() <112.0D /*108.0D*/){ //bordo porta
-                if(getX()<-630){
-                    setSpeed(0);
+
+
+            if(minY>=-98.0D && maxY <112.0D  && minX< -566 && minX > -630){ //bordo porta
+
+                if(minX==-630.0D){// direzione palla quando tocca il fine porta
+                    this.direction = -(this.direction-Math.PI);
+                    speed-=(speed*0.25);
+                 }
+                if (minY==-98.0D ){
+                    this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
                 }
+
+
             } else{ //bordo non porta
             this.direction = -(this.direction-Math.PI);
-            this.position[0] = -566.0D + this.radius;
+            //this.position[0] = -566.0D + this.radius;
             }
         } else if (maxX > 566.0D) { //bordo a DX
             //quando la pedina entra in porta
-            if(getY()+getRadius()>-98.0D && getY()+getRadius() < 108.0D){
+            if(getY()+getRadius()>-98.0D && getY()+getRadius() < 112.0D){
                 if(getX()>630){
                     setSpeed(0);
                 }
             }else{ //bordo fuori dalla porta
                 this.direction = -(this.direction-Math.PI);
-                this.position[0] = 566.0D - this.radius;
+               // this.position[0] = 566.0D - this.radius;
             }
 
         } else if (minY < -302.0D) { //bordo Down
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
-            this.position[1] = -302.0D + this.radius;
+            //this.position[1] = -302.0D + this.radius;
+
         } else if (maxY > 312.0D) { //bordo UP
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
-            this.position[1] = 312.0D - this.radius;
+            //this.position[1] = 312.0D - this.radius;
         }
 
         return 0;
     }
 
+    public boolean speedIsZero(){
+        final double EPSILON = 1E-4;
+        return Math.abs(speed) < EPSILON ? true : false;
+    }
 
 
+    public void collision(FieldObject pCollisione) {
 
+    }
 }
