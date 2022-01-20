@@ -190,23 +190,6 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * Metodo che permette di disegnare a video una linea con una freccia
 	 * @param g Graphics2d g2

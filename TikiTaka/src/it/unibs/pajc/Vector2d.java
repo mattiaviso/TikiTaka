@@ -2,22 +2,23 @@ package it.unibs.pajc;
 
  public class Vector2d {
 
-    private double x;
-    private double y;
+    protected  double x;
+    protected double y;
+    protected double sum=0;
+
+
 
     public Vector2d()
     {
-        this.setX(0);
-        this.setY(0);
+
     }
 
-    public Vector2d(double x, double y)
-    {
-        this.setX(x);
-        this.setY(y);
-    }
+     public Vector2d(double x, double y) {
+         this.x = x;
+         this.y = y;
+     }
 
-    public void setX(double x) {
+     public void setX(double x) {
         this.x = x;
     }
 
@@ -60,7 +61,7 @@ package it.unibs.pajc;
 
     public Vector2d add(Vector2d v2)
     {
-        Vector2d result = new Vector2d();
+        Vector2d result = new Vector2d(x, y);
         result.setX(getX() + v2.getX());
         result.setY(getY() + v2.getY());
         return result;
@@ -68,7 +69,7 @@ package it.unibs.pajc;
 
     public Vector2d subtract(Vector2d v2)
     {
-        Vector2d result = new Vector2d();
+        Vector2d result = new Vector2d(x, y);
         result.setX(this.getX() - v2.getX());
         result.setY(this.getY() - v2.getY());
         return result;
@@ -76,7 +77,7 @@ package it.unibs.pajc;
 
     public Vector2d multiply(double scaleFactor)
     {
-        Vector2d result = new Vector2d();
+        Vector2d result = new Vector2d(x, y);
         result.setX(this.getX() * scaleFactor);
         result.setY(this.getY() * scaleFactor);
         return result;
@@ -103,6 +104,23 @@ package it.unibs.pajc;
     {
         return "X: " + getX() + " Y: " + getY();
     }
+
+
+     public void setXY(double angle ){
+         x = sum * Math.cos(angle);
+         y = sum * Math.sin(angle);
+     }
+
+
+     public double getSum() {
+         return sum;
+     }
+
+     public void setSum(double speed) {
+         this.sum = speed;
+     }
+
+
 
 
 }

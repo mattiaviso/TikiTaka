@@ -1,8 +1,6 @@
 package it.unibs.pajc;
 
-import javax.tools.FileObject;
 import java.awt.image.BufferedImage;
-import java.util.Vector;
 
 
 abstract public class FieldObject {
@@ -11,7 +9,7 @@ abstract public class FieldObject {
     protected Vector2d position;
     protected double radius;
     protected BufferedImage imageObj;
-    protected double  speed;
+    protected Vector2d velocita = new Vector2d();
     protected double direction;
     protected double massa;
 
@@ -44,30 +42,33 @@ abstract public class FieldObject {
     }
 
     public void start(int distance, double angle){
-        speed = distance/7.5;
-        if(speed> MAXSPEED)speed= MAXSPEED;
-        setDirection(angle);
+
+        /*velocita = new Vector2d(distance/7.5);*/
+        velocita.setSum(distance/7.5);
+        if(velocita.sum > MAXSPEED) velocita.setSum(MAXSPEED);
+        velocita.setXY(angle);
+
     }
 
     protected void setDirection(double angle){
         direction = angle;
     }
 
-    public void setSpeed(double speed){
-        if(speed>MAXSPEED) speed=MAXSPEED;
-        this.speed = speed;
+    public void setVelocita(double velocita){
+        if(velocita >MAXSPEED) velocita =MAXSPEED;
+        this.velocita.setSum(velocita);
     }
 
     public int move(){
         // decremento della velocita
-        if(speed <=1 ) speed = 0;
+        if(this.velocita.getSum()<=1 ) velocita.setSum(0);
         else {
-               speed = speed - speed*(0.017);
+               velocita.setSum(velocita.getSum()- velocita.getSum() *(0.017));
         }
 
         // angolo direzione pareti
-        this.position.setX(this.position.getX() + (speed * Math.cos(direction)));
-        this.position.setY(this.position.getY() + (speed * Math.sin(direction)));
+        this.position.setX(this.position.getX() + velocita.getX());
+        this.position.setY(this.position.getY() + velocita.getY());
 
         //COLLISSIONI DELLE PARETI
         double minX = this.position.getX() - this.radius;
@@ -90,31 +91,31 @@ abstract public class FieldObject {
 
             if(minY>=-98.0D && maxY <112.0D && isBall()){ //bordo porta
                 if(minX<-630.0D){// direzione palla quando tocca il fine porta
-                    setSpeed(0);
+                    setVelocita(0);
                 }
             }else{ //bordo non porta
                 this.direction = -(this.direction-Math.PI);
-                speed-=(speed* DMURO);
+                velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
             }
 
         } else if (maxX > 566.0D) { //bordo a DX
 
             if(maxY >-98.0D && maxY< 112.0D && isBall()){
                 if(this.position.getX()>630)
-                    setSpeed(0);
+                    setVelocita(0);
 
             }else{ //bordo fuori dalla porta
                 this.direction = -(this.direction-Math.PI);
-                speed-=(speed* DMURO);
+                velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
             }
 
         } else if (minY < -302.0D) { //bordo Down
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
-            speed-=(speed* DMURO);
+            velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
 
         } else if (maxY > 312.0D) { //bordo UP
             this.direction = this.direction + 2 * (3/2*Math.PI - this.direction);
-            speed-=(speed* DMURO);
+            velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
         }
 
         return 0;
@@ -123,7 +124,7 @@ abstract public class FieldObject {
     // vedere se la pallina e ferma
     public boolean speedIsZero(){
         final double EPSILON = 1E-4;
-        return Math.abs(speed) < EPSILON ? true : false;
+        return Math.abs(velocita.sum) < EPSILON ? true : false;
     }
 
     // collissione
@@ -157,9 +158,7 @@ abstract public class FieldObject {
         position = position.add(mtd.multiply(im1 / (im1 + im2)));
         ball.position = ball.position.subtract(mtd.multiply(im2 / (im1 + im2)));
 
-        double speedX = (speed*Math.cos(this.direction))- (ball.speed * Math.cos(ball.direction));
-        double speedY =(speed*Math.sin(this.direction))- (ball.speed * Math.sin(ball.direction));
-        Vector2d v = new Vector2d(speedX, speedY);
+        Vector2d v = this.velocita.subtract(ball.velocita);
         double  vn = v.dot(mtd.normalize());
 
         // sphere intersecting but moving away from each other already
@@ -170,34 +169,8 @@ abstract public class FieldObject {
         Vector2d impulse = mtd.normalize().multiply(i);
 
 
-        double sX = speed*Math.cos(this.direction);
-        double sY = speed*Math.sin(this.direction);
-
-
-        sX+= impulse.multiply(im1).getX();
-        sY+= impulse.multiply(im1).getY();
-
-        this.speed = Math.sqrt((sX*sX)+(sY*sY));
-
-
-         double sX2 =ball.speed* Math.cos(ball.direction);
-         double sY2 =ball.speed* Math.sin(ball.direction);
-
-         sX2-= impulse.multiply(im2).getX();
-         sY2-= impulse.multiply(im2).getY();
-         ball.setSpeed(Math.sqrt((sX2*sX2)+(sY2*sY2)));
-
-
-
-        this.position.setX(this.position.getX() + sX);
-        this.position.setY(this.position.getY() + sY);
-
-
-
-        ball.position.setX(ball.position.getX() + sX2);
-        ball.position.setY(ball.position.getY() + sY2);
-
-
+        this.velocita =  this.velocita.add(impulse.multiply(im1));
+        ball.velocita =  ball.velocita.subtract(impulse.multiply(im2));
 
 
 
