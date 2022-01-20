@@ -7,7 +7,7 @@ import java.util.Vector;
 
 abstract public class FieldObject {
     public static final int MAXSPEED = 150;
-    public static final double DMURO = 0.25;
+    public static final double DMURO = 0.15;
     protected Vector2d position;
     protected double radius;
     protected BufferedImage imageObj;
@@ -157,9 +157,9 @@ abstract public class FieldObject {
         position = position.add(mtd.multiply(im1 / (im1 + im2)));
         ball.position = ball.position.subtract(mtd.multiply(im2 / (im1 + im2)));
 
-        this.position.setX(this.position.getX() - (speed * Math.cos(direction)));
-        this.position.setY(this.position.getY() - (speed * Math.sin(direction)));
-        Vector2d v = new Vector2d(this.position.getX(), this.position.getY());
+        double speedX = (speed*Math.cos(this.direction))- (ball.speed * Math.cos(ball.direction));
+        double speedY =(speed*Math.sin(this.direction))- (ball.speed * Math.sin(ball.direction));
+        Vector2d v = new Vector2d(speedX, speedY);
         double  vn = v.dot(mtd.normalize());
 
         // sphere intersecting but moving away from each other already
@@ -169,53 +169,43 @@ abstract public class FieldObject {
         double i = (-(1.0f + 0.85D) * vn) / (im1 + im2);
         Vector2d impulse = mtd.normalize().multiply(i);
 
-        // change in momentum
-        this.position = this.position.add(impulse.multiply(im1));
-        ball.position = ball.position.subtract(impulse.multiply(im2));
+
+        double sX = speed*Math.cos(this.direction);
+        double sY = speed*Math.sin(this.direction);
+
+
+        sX+= impulse.multiply(im1).getX();
+        sY+= impulse.multiply(im1).getY();
+
+        this.speed = Math.sqrt((sX*sX)+(sY*sY));
+
+
+         double sX2 =ball.speed* Math.cos(ball.direction);
+         double sY2 =ball.speed* Math.sin(ball.direction);
+
+         sX2-= impulse.multiply(im2).getX();
+         sY2-= impulse.multiply(im2).getY();
+         ball.setSpeed(Math.sqrt((sX2*sX2)+(sY2*sY2)));
+
+
+
+        this.position.setX(this.position.getX() + sX);
+        this.position.setY(this.position.getY() + sY);
+
+
+
+        ball.position.setX(ball.position.getX() + sX2);
+        ball.position.setY(ball.position.getY() + sY2);
+
+
+
+
+
+
+
 
     }
 
 
 
-
-   /* public Vector2d add(Vector2d v2)
-    {
-        Vector2d result = new Vector2d();
-        result.setX(getX() + v2.getX());
-        result.setY(getY() + v2.getY());
-        return result;
-    }
-
-    public Vector2d subtract(Vector2d v2)
-    {
-        Vector2d result = new Vector2d();
-        result.setX(this.getX() - v2.getX());
-        result.setY(this.getY() - v2.getY());
-        return result;
-    }
-
-    public Vector2d multiply(float scaleFactor)
-    {
-        Vector2d result = new Vector2d();
-        result.setX(this.getX() * scaleFactor);
-        result.setY(this.getY() * scaleFactor);
-        return result;
-    }
-
-    public Vector2d normalize()
-    {
-        float len = getLength();
-        if (len != 0.0f)
-        {
-            this.setX(this.getX() / len);
-            this.setY(this.getY() / len);
-        }
-        else
-        {
-            this.setX(0.0f);
-            this.setY(0.0f);
-        }
-
-        return this;
-    }*/
 }

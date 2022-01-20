@@ -33,6 +33,7 @@ public class GameField {
     public void stepNext() {
         for (FieldObject o: objectsPiece) {
             o.move();
+            collisionDetection();
 
         }
     }
@@ -65,6 +66,18 @@ public class GameField {
         return true;
     }
 
+
+    public void collisionDetection(){
+        for (int i = 0; i <objectsPiece.size() ; i++) {
+            if( !objectsPiece.get(i).speedIsZero()){
+                for (int j = 0; j <objectsPiece.size() ; j++) {
+                    if (objectsPiece.get(i).collision(objectsPiece.get(j)))
+                        objectsPiece.get(i).resolveCollision(objectsPiece.get(j));
+
+                }
+            }
+        }
+    }
 
 
 }
