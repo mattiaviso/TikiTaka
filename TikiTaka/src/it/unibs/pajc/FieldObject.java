@@ -144,7 +144,7 @@ abstract public class FieldObject {
     }
 
 
-   /* public void resolveCollision (FieldObject ball){
+    public void resolveCollision (FieldObject ball){
 
         Vector2d delta = (position.subtract(ball.position));
         double d = delta.getLength();
@@ -173,13 +173,12 @@ abstract public class FieldObject {
         this.position = this.position.add(impulse.multiply(im1));
         ball.position = ball.position.subtract(impulse.multiply(im2));
 
-    }*/
+    }
 
 
 
 
-/*
-    public Vector2d add(Vector2d v2)
+   /* public Vector2d add(Vector2d v2)
     {
         Vector2d result = new Vector2d();
         result.setX(getX() + v2.getX());
