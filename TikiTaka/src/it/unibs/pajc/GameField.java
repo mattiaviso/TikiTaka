@@ -70,7 +70,8 @@ public class GameField {
         for (int i = 0; i < objectsPiece.size(); i++) {
             if (!objectsPiece.get(i).speedIsZero()){
                 for (int j = 0; j <objectsPiece.size() ; j++) {
-                    if (i!= j ) objectsPiece.get(i).collision(objectsPiece.get(j));
+                    if ( objectsPiece.get(i).collision(objectsPiece.get(j)))
+                            objectsPiece.get(i).resolveCollision( objectsPiece.get(j));
 
                 }
 
