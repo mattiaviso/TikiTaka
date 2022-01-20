@@ -41,7 +41,7 @@ public class GameField {
         if(!allStop()) return null;
         for(FieldObject f : objectsPiece){
             if(f instanceof Piece)
-            if(Math.pow(xMouse-f.getX(),2)+Math.pow(yMouse-f.getY(),2)<Math.pow((f.radius),2) && ((Piece)f).team.equals(turno)){
+            if(Math.pow((xMouse- f.position.getX()),2)+Math.pow((yMouse-f.position.getY()),2)<Math.pow((f.radius),2) && ((Piece)f).team.equals(turno)){
                 System.out.println("ciao ");
                 return f;
             }
@@ -66,20 +66,6 @@ public class GameField {
     }
 
 
-    public void collisions() {
-        for (int i = 0; i < objectsPiece.size(); i++) {
-            if (!objectsPiece.get(i).speedIsZero()){
-                for (int j = 0; j <objectsPiece.size() ; j++) {
-                    if ( objectsPiece.get(i).collision(objectsPiece.get(j)))
-                            objectsPiece.get(i).resolveCollision( objectsPiece.get(j));
 
-                }
-
-                }
-        }
-
-
-
-    }
 }
 

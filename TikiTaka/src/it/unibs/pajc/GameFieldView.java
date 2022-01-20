@@ -57,25 +57,25 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		creatingfield(g2);
 
 		for(FieldObject f : fieldModel.objectsPiece){
-			g2.drawImage(f.getImageObj(),(int) (f.getX()-(f.getRadius())), (int) (f.getY()-(f.getRadius())),null);
+			g2.drawImage(f.getImageObj(),(int) (f.position.getX()-(f.getRadius())), (int) (f.position.getY()-(f.getRadius())),null);
 		}
 		if(valido!=null){
 			g2.setColor(Color.RED);
-			g2.drawOval((int)(valido.getX()-valido.radius),(int)(valido.getY()-valido.radius),(int)valido.radius*2,(int)valido.radius*2);
+			g2.drawOval((int)(valido.position.getX()-valido.radius),(int)(valido.position.getY()-valido.radius),(int)valido.radius*2,(int)valido.radius*2);
 		}
 		if (newradius != 0 ){
 			g2.setColor(new Color(0, 100, 0, 100));
-			g2.fillOval((int)(valido.getX()-newradius),(int)(valido.getY()-newradius),(int)newradius*2,(int)newradius*2);
+			g2.fillOval((int)(valido.position.getX()-newradius),(int)(valido.position.getY()-newradius),(int)newradius*2,(int)newradius*2);
 
 			g2.setColor(Color.black);
-			int dy = (int)(ynew - valido.getY());
-			int dx = (int) (xnew- valido.getX());
-			int xOpposta = (int) valido.getX() - dx;
-			int yOpposta = (int) valido.getY() - dy;
+			int dy = (int)(ynew - valido.position.getY());
+			int dx = (int) (xnew- valido.position.getX());
+			int xOpposta = (int) valido.position.getX() - dx;
+			int yOpposta = (int) valido.position.getY() - dy;
 
-			distance = (int)(Math.min(Math.sqrt(Math.pow(valido.getX()-xOpposta,2)+Math.pow(valido.getY()-yOpposta,2)),150));
-			angle = Math.atan2(yOpposta-valido.getY(),xOpposta-valido.getX());
-			drawArrow(g2, new Point2D.Double(valido.getX(),valido.getY()),angle,distance);
+			distance = (int)(Math.min(Math.sqrt(Math.pow(valido.position.getX()-xOpposta,2)+Math.pow(valido.position.getY()-yOpposta,2)),150));
+			angle = Math.atan2(yOpposta-valido.position.getY(),xOpposta-valido.position.getX());
+			drawArrow(g2, new Point2D.Double(valido.position.getX(),valido.position.getY()),angle,distance);
 			//mi danno la direzione se faccio divisione
 			//g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
 
@@ -176,7 +176,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 
 		if(valido!=null)
-			newradius =Math.min((int) Math.sqrt((valido.getX()-xnew)*(valido.getX()-xnew)+(valido.getY()-ynew)*(valido.getY()-ynew)),150);
+			newradius =Math.min((int) (Math.sqrt(((valido.position.getX()-xnew)*(valido.position.getX()-xnew))+((valido.position.getY()-ynew)*(valido.position.getY()-ynew)))),150);
 
 		repaint();
 	}
