@@ -59,7 +59,7 @@ abstract public class FieldObject {
         this.velocita.setSum(velocita);
     }
 
-    public int move(){
+    /*public int move(){
         // decremento della velocita
         if(this.velocita.getSum()<=1 ) velocita.setSum(0);
         else {
@@ -119,7 +119,7 @@ abstract public class FieldObject {
         }
 
         return 0;
-    }
+    }*/
 
     // vedere se la pallina e ferma
     public boolean speedIsZero(){
@@ -173,11 +173,25 @@ abstract public class FieldObject {
         ball.velocita =  ball.velocita.subtract(impulse.multiply(im2));
 
 
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

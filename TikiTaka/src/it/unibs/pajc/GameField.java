@@ -32,9 +32,9 @@ public class GameField {
 
     public void stepNext() {
         for (FieldObject o: objectsPiece) {
-            o.move();
-            collisionDetection();
-            // checkCollisions();
+           // o.move();
+            //collisionDetection();
+            checkCollisions();
 
 
 
@@ -116,27 +116,27 @@ public class GameField {
             if (objectsPiece.get(i).position.getX() - objectsPiece.get(i).getRadius() < -566)
             {
                 objectsPiece.get(i).position.setX(objectsPiece.get(i).getRadius()); // Place ball against edge
-                objectsPiece.get(i).velocita.setX(-(objectsPiece.get(i).velocita.getX() * Constants.restitution)); // Reverse direction and account for friction
-                objectsPiece.get(i).velocita.setY(objectsPiece.get(i).velocita.getY() * Constants.restitution);
+                objectsPiece.get(i).velocita.setX(-(objectsPiece.get(i).velocita.getX() )); // Reverse direction and account for friction
+                objectsPiece.get(i).velocita.setY(objectsPiece.get(i).velocita.getY() );
             }
             else if (objectsPiece.get(i).position.getX() + objectsPiece.get(i).getRadius() > 566) // Right Wall
             {
                 objectsPiece.get(i).position.setX(566 - objectsPiece.get(i).getRadius());		// Place ball against edge
-                objectsPiece.get(i).velocita.setX(-(objectsPiece.get(i).velocita.getX() * Constants.restitution)); // Reverse direction and account for friction
-                objectsPiece.get(i).velocita.setY((objectsPiece.get(i).velocita.getY() * Constants.restitution));
+                objectsPiece.get(i).velocita.setX(-(objectsPiece.get(i).velocita.getX() )); // Reverse direction and account for friction
+                objectsPiece.get(i).velocita.setY((objectsPiece.get(i).velocita.getY() ));
             }
 
             if (objectsPiece.get(i).position.getY() - objectsPiece.get(i).getRadius() < 312)				// Top Wall
             {
                 objectsPiece.get(i).position.setY(objectsPiece.get(i).getRadius());				// Place ball against edge
-                objectsPiece.get(i).velocita.setY(-(objectsPiece.get(i).velocita.getY() * Constants.restitution)); // Reverse direction and account for friction
-                objectsPiece.get(i).velocita.setX((objectsPiece.get(i).velocita.getX() * Constants.restitution));
+                objectsPiece.get(i).velocita.setY(-(objectsPiece.get(i).velocita.getY() )); // Reverse direction and account for friction
+                objectsPiece.get(i).velocita.setX((objectsPiece.get(i).velocita.getX() ));
             }
             else if (objectsPiece.get(i).position.getY() + objectsPiece.get(i).getRadius() > -302) // Bottom Wall
             {
                 objectsPiece.get(i).position.setY(-302 - objectsPiece.get(i).getRadius());		// Place ball against edge
-                objectsPiece.get(i).velocita.setY(-(objectsPiece.get(i).velocita.getY() * Constants.restitution));    // Reverse direction and account for friction
-                objectsPiece.get(i).velocita.setX((objectsPiece.get(i).velocita.getX() * Constants.restitution));
+                objectsPiece.get(i).velocita.setY(-(objectsPiece.get(i).velocita.getY()));    // Reverse direction and account for friction
+                objectsPiece.get(i).velocita.setX((objectsPiece.get(i).velocita.getX() ));
             }
 
             // Ball to Ball collision
@@ -149,7 +149,7 @@ public class GameField {
                         (objectsPiece.get(j).position.getY() + objectsPiece.get(j).getRadius()) < (objectsPiece.get(i).position.getY() - objectsPiece.get(i).getRadius()))
                     continue;
 
-                objectsPiece.get(i).resolveCollision(objectsPiece.get(j));
+                //objectsPiece.get(i).resolveCollision(objectsPiece.get(j));
 
             }
         }
