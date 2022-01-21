@@ -32,9 +32,9 @@ public class GameField {
 
     public void stepNext() {
         for (FieldObject o: objectsPiece) {
-           // o.move();
+           o.move();
             //collisionDetection();
-            checkCollisions();
+            //checkCollisions();
 
 
 
@@ -149,7 +149,7 @@ public class GameField {
                         (objectsPiece.get(j).position.getY() + objectsPiece.get(j).getRadius()) < (objectsPiece.get(i).position.getY() - objectsPiece.get(i).getRadius()))
                     continue;
 
-                //objectsPiece.get(i).resolveCollision(objectsPiece.get(j));
+                objectsPiece.get(i).resolveCollision(objectsPiece.get(j));
 
             }
         }
