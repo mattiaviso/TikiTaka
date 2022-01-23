@@ -4,8 +4,8 @@ package it.unibs.pajc;
 
     protected  double x;
     protected double y;
-    protected double sum=0;
-
+    protected double total;
+    protected double angle;
 
 
     public Vector2d()
@@ -106,19 +106,54 @@ package it.unibs.pajc;
     }
 
 
-     public void setXY(double angle ){
-         x = sum * Math.cos(angle);
-         y = sum * Math.sin(angle);
+     public double getAngle() {
+         return angle;
+     }
+
+     public void setAngle(double angle) {
+         this.angle = angle;
+     }
+
+     public void setXY (double total, double angle){
+        if(angle<0) angle = (2*Math.PI) + angle;
+        this.total = total;
+         x = this.total * Math.cos(angle);
+         y = this.total * Math.sin(angle);
+
      }
 
 
      public double getSum() {
-         return sum;
+         return total;
      }
 
      public void setSum(double speed) {
-         this.sum = speed;
+         this.total = speed;
      }
+
+
+     public void change(double x , double y){
+        this.x= x* this.x;
+        this.y= y* this.y;
+
+     }
+
+
+     public void subtract(double x , double y)
+     {
+         this.x -= x;
+         this.y -= y;
+
+     }
+
+     public  void totalXY (){
+        total = Math.sqrt(Math.pow(x, 2) +Math.pow(y, 2));
+     }
+
+
+
+
+
 
 
 
