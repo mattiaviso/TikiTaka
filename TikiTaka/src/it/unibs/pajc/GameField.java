@@ -33,7 +33,6 @@ public class GameField {
     public void stepNext() {
         for (FieldObject o : objectsPiece) {
             o.move();
-
             collisionCheck();
 
 

@@ -129,6 +129,8 @@ package it.unibs.pajc;
 
      public void setSum(double speed) {
          this.total = speed;
+
+
      }
 
 
@@ -146,7 +148,7 @@ package it.unibs.pajc;
 
      }
 
-     public  void totalXY (){
+     public void totalXY (){
         total = Math.sqrt(Math.pow(x, 2) +Math.pow(y, 2));
      }
 

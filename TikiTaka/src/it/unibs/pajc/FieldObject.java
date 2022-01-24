@@ -145,19 +145,17 @@ abstract public class FieldObject {
 
         public void collision (FieldObject ball){
         // velocita finali
+            this.velocita.totalXY();
+            ball.velocita.totalXY();
         double v1F = ((this.massa - ball.getMassa())* this.velocita.total + 2*ball.getMassa()*ball.velocita.total)/ (this.massa + ball.massa);
         double v2F = ((ball.getMassa()- this.massa) * ball.velocita.total + 2*this.massa*this.velocita.total)/ (this.massa + ball.massa);
         // direzione triangolo
+         double angle = Math.atan2(this.position.getY()- ball.position.getY(), this.position.getX()- ball.position.getX());
+         //System.out.println( "collisione " + angle);
 
-         double angle =
+             velocita.setXY(v1F, angle);
+             ball.velocita.setXY(v2F , Math.PI/2  - angle);
 
-
-
-
-
-
-        velocita.setXY(v1F, );
-        ball.velocita.setXY(v2F, );
 
 
 
