@@ -119,6 +119,7 @@ package it.unibs.pajc;
         this.total = total;
          x = this.total * Math.cos(angle);
          y = this.total * Math.sin(angle);
+         this.angle = angle;
 
      }
 

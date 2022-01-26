@@ -71,12 +71,10 @@ public class GameField {
     public  void collisionCheck (){
         for (int i = 0; i < objectsPiece.size(); i++)
         {
-            for (int j = i + 1; j < objectsPiece.size(); j++)
+            for (int j = i+1; j < objectsPiece.size(); j++)
             {
-                if (objectsPiece.get(i).colliding( objectsPiece.get(j)))
-                {
                     objectsPiece.get(i).collision(objectsPiece.get(j));
-                }
+
             }
         }
     }

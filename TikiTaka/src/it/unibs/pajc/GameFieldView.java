@@ -129,7 +129,6 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		//prendiamo coordinate x e y di dove è stato premuto il mouse
 		int x = e.getX()-w/2;
 		int y = -(e.getY()-h/2);
-		System.out.println(x+ "  " + y);
 
 		 valido = fieldModel.checkClickAble(x,y);
 
