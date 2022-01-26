@@ -41,9 +41,9 @@ abstract public class FieldObject {
     }
 
     public void start(int distance, double angle) {
-        double vel = distance/7.5;
+        double vel = distance / 7.5;
         if (vel > MAXSPEED) vel = MAXSPEED;
-        velocita.setXY(vel ,angle);
+        velocita.setXY(vel, angle);
 
     }
 
@@ -56,8 +56,8 @@ abstract public class FieldObject {
     public int move() {
         // decremento della velocita
         velocita.totalXY();
-        if (this.velocita.getSum() <= 1) velocita.set(0,0);
-        else velocita.subtract(velocita.getX() * DECVEL, velocita.getY() * DECVEL );
+        if (this.velocita.getSum() <= 1) velocita.set(0, 0);
+        else velocita.subtract(velocita.getX() * DECVEL, velocita.getY() * DECVEL);
 
 
         // angolo direzione pareti
@@ -87,7 +87,7 @@ abstract public class FieldObject {
                 }
             } else { //bordo non porta
 
-                velocita.change(-1,1);
+                velocita.change(-1, 1);
                 velocita.setSum(velocita.getSum() - (velocita.getSum() * DMURO));
             }
 
@@ -98,17 +98,17 @@ abstract public class FieldObject {
                     setVelocita(0);
 
             } else { //bordo fuori dalla porta
-                velocita.change(-1,1);
+                velocita.change(-1, 1);
                 velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
             }
 
         } else if (minY < -302.0D) { //bordo Down
 
-            velocita.change(1,-1);
+            velocita.change(1, -1);
             velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
 
         } else if (maxY > 312.0D) { //bordo UP
-            velocita.change(1,-1);
+            velocita.change(1, -1);
             velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
         }
         return 0;
@@ -121,88 +121,52 @@ abstract public class FieldObject {
     }
 
 
+    // METODO COLLISIONI
+    public void collision(FieldObject ball) {
+        this.velocita.totalXY();
+        ball.velocita.totalXY();
 
-    // metodo per vedere se esiste la collisione
 
 
-    public boolean colliding(FieldObject ball) {
-        double xd = position.getX() - ball.position.getX();
-        double yd = position.getY() - ball.position.getY();
 
-        double sumRadius = getRadius() + ball.getRadius();
-        double sqrRadius = sumRadius * sumRadius;
+        Vector2d n = this.position.subtract(ball.position);
+        double dist = n.getLength();
+        double r = getRadius() + ball.getRadius();
 
-        double distSqr = (xd * xd) + (yd * yd);
 
-        if (distSqr <= sqrRadius)
-            return true;
+        if (dist> r) {
+            return;
+        }
 
-        return false;
+       Vector2d mtb = n.multiply((ball.radius - dist) / dist);
+        this.position = this.position.add(mtb.multiply(1 / 2));
+        ball.position = ball.position.subtract(mtb.multiply(1 / 2));
+
+        Vector2d un = n.multiply(1 / n.getLength());
+        Vector2d ut = new Vector2d(-un.y, un.x);
+        double v1n = un.dot(this.velocita);
+        double v1t = ut.dot(this.velocita);
+        double v2n = un.dot(ball.velocita);
+        double v2t = ut.dot(ball.velocita);
+
+        // VETTORI PESATI
+        double v1nTag = (((this.massa - ball.getMassa())* v1n) + (2*ball.getMassa()*v2n))/ (this.massa + ball.massa);
+        double v2nTag = (((ball.getMassa()- this.massa) * v2n )+ (2*this.massa*v1n))/ (this.massa + ball.massa);
+
+
+        Vector2d v1nTagChange = un.multiply(v1nTag);
+        Vector2d v1tTag = un.multiply(v1t);
+        Vector2d v2nTagChange = un.multiply(v2nTag);
+        Vector2d v2tTag = un.multiply(v2t);
+
+        this.velocita = v1nTagChange.add(v1tTag);
+        ball.velocita = v2nTagChange.add(v2tTag);
+
     }
 
 
-        // METODO COLLISIONI
 
-
-        public void collision (FieldObject ball){
-        // velocita finali
-            this.velocita.totalXY();
-            ball.velocita.totalXY();
-
-
-            Vector2d n = this.position.subtract(ball.position);
-            double dist  = n.getLength();
-
-
-            if (dist > radius){
-                return;
-            }
-            Vector2d mtb = n.multiply((ball.radius - dist)/dist);
-            this.position = this.position.add(mtb.multiply(1/2));
-            ball.position = ball.position.subtract(mtb.multiply(1/2));
-
-
-
-// collisioni
-            Vector2d un = n.multiply(1/n.getLength());
-
-
-            Vector2d ut = new Vector2d(-un.y,un.x );
-            double v1n =un.dot(this.velocita);
-            double v1t = ut.dot(this.velocita);
-            double v2n = un.dot(ball.velocita);
-            double v2t = un.dot(ball.velocita);
-
-
-            double v1nTag = v2n;
-            double v2nTag = v1n;
-
-
-            Vector2d v1nTagChange= un.multiply(v1nTag);
-            Vector2d v1tTag = un.multiply(v1t);
-            Vector2d v2nTagChange= un.multiply(v2nTag);
-            Vector2d v2tTag = un.multiply(v1t);
-
-
-            this.velocita = v1nTagChange.add(v1tTag);
-            ball.velocita = v2nTagChange.add(v2tTag);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* double v1F = ((this.massa - ball.getMassa())* this.velocita.total + 2*ball.getMassa()*ball.velocita.total)/ (this.massa + ball.massa);
+ /* double v1F = ((this.massa - ball.getMassa())* this.velocita.total + 2*ball.getMassa()*ball.velocita.total)/ (this.massa + ball.massa);
         double v2F = ((ball.getMassa()- this.massa) * ball.velocita.total + 2*this.massa*this.velocita.total)/ (this.massa + ball.massa);
         // direzione triangolo
          double angle = Math.atan2(this.position.getY()- ball.position.getY(), this.position.getX()- ball.position.getX());
@@ -210,17 +174,6 @@ abstract public class FieldObject {
 
              velocita.setXY(v1F, angle);
              ball.velocita.setXY(v2F , Math.PI/2  - angle);*/
-
-
-
-
-
-
-
-
-        }
-
-
 
 
 }

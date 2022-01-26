@@ -43,13 +43,12 @@ package it.unibs.pajc;
 
     public double dot(Vector2d v2)
     {
-        double result = 0.0D;
+        double result;
         result = this.getX() * v2.getX() + this.getY() * v2.getY();
         return result;
     }
 
-    public double getLength()
-    {
+    public double getLength() {
         return Math.sqrt(getX()*getX() + getY()*getY());
     }
 
@@ -58,33 +57,28 @@ package it.unibs.pajc;
         return  Math.sqrt((v2.getX() - getX()) * (v2.getX() - getX()) + (v2.getY() - getY()) * (v2.getY() - getY()));
     }
 
-
-    public Vector2d add(Vector2d v2)
-    {
+    public Vector2d add(Vector2d v2) {
         Vector2d result = new Vector2d(x, y);
         result.setX(getX() + v2.getX());
         result.setY(getY() + v2.getY());
         return result;
     }
 
-    public Vector2d subtract(Vector2d v2)
-    {
+    public Vector2d subtract(Vector2d v2) {
         Vector2d result = new Vector2d(x, y);
         result.setX(this.getX() - v2.getX());
         result.setY(this.getY() - v2.getY());
         return result;
     }
 
-    public Vector2d multiply(double scaleFactor)
-    {
+    public Vector2d multiply(double scaleFactor) {
         Vector2d result = new Vector2d(x, y);
         result.setX(this.getX() * scaleFactor);
         result.setY(this.getY() * scaleFactor);
         return result;
     }
 
-    public Vector2d normalize()
-    {
+    public Vector2d normalize() {
         double len = getLength();
         if (len != 0.0f)
         {
@@ -105,7 +99,6 @@ package it.unibs.pajc;
         return "X: " + getX() + " Y: " + getY();
     }
 
-
      public double getAngle() {
          return angle;
      }
@@ -123,7 +116,6 @@ package it.unibs.pajc;
 
      }
 
-
      public double getSum() {
          return total;
      }
@@ -134,16 +126,13 @@ package it.unibs.pajc;
 
      }
 
-
      public void change(double x , double y){
         this.x= x* this.x;
         this.y= y* this.y;
 
      }
 
-
-     public void subtract(double x , double y)
-     {
+     public void subtract(double x , double y) {
          this.x -= x;
          this.y -= y;
 
