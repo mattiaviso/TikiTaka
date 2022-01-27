@@ -56,7 +56,7 @@ abstract public class FieldObject {
     public int move() {
         // decremento della velocita
         velocita.totalXY();
-        if (this.velocita.getSum() <= 1) velocita.set(0, 0);
+        if (this.velocita.getSum() <= 0.5) velocita.set(velocita.getX()* 0.10 , velocita.getY()* +0.10);
         else velocita.subtract(velocita.getX() * DECVEL, velocita.getY() * DECVEL);
 
 
@@ -138,6 +138,7 @@ abstract public class FieldObject {
             return;
         }
 
+
        Vector2d mtb = n.multiply((ball.radius - dist) / dist);
         this.position = this.position.add(mtb.multiply(1 / 2));
         ball.position = ball.position.subtract(mtb.multiply(1 / 2));
@@ -148,6 +149,8 @@ abstract public class FieldObject {
         double v1t = ut.dot(this.velocita);
         double v2n = un.dot(ball.velocita);
         double v2t = ut.dot(ball.velocita);
+
+
 
         // VETTORI PESATI
         double v1nTag = (((this.massa - ball.getMassa())* v1n) + (2*ball.getMassa()*v2n))/ (this.massa + ball.massa);
