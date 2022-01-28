@@ -1,13 +1,12 @@
 package it.unibs.pajc;
 
 import java.awt.image.BufferedImage;
-import java.util.Vector;
 
 
 abstract public class FieldObject {
-    public static final int MAXSPEED = 150;
+    public static final int MAXSPEED = 150; // era 150
     public static final double DMURO = 0.15;
-    public static final double DECVEL = 0.017;
+    public static final double DECVEL = 0.05;// era 0.007
     protected Vector2d position;
     protected double radius;
     protected BufferedImage imageObj;
@@ -41,9 +40,11 @@ abstract public class FieldObject {
     }
 
     public void start(int distance, double angle) {
-        double vel = distance / 7.5;
-        if (vel > MAXSPEED) vel = MAXSPEED;
+        double vel = distance/7.5;
+        // controllo che non serve
+        if (vel >MAXSPEED) vel = MAXSPEED/7.5;
         velocita.setXY(vel, angle);
+        velocita.totalXY();
 
     }
 
@@ -53,31 +54,35 @@ abstract public class FieldObject {
         this.velocita.setSum(velocita);
     }
 
-    public int move() {
-        // decremento della velocita
-        velocita.totalXY();
-        if (this.velocita.getSum() <= 0.5) velocita.set(velocita.getX()* 0.10 , velocita.getY()* +0.10);
-        else velocita.subtract(velocita.getX() * DECVEL, velocita.getY() * DECVEL);
-
+    public void move() {
 
         // angolo direzione pareti
+
+        this.velocita.totalXY();
+        this.position.totalXY();
+
+
+
         this.position.setX(this.position.getX() + velocita.getX());
         this.position.setY(this.position.getY() + velocita.getY());
+
 
         //COLLISSIONI DELLE PARETI
         double minX = this.position.getX() - this.radius;
         double maxX = this.position.getX() + this.radius;
         double minY = this.position.getY() - this.radius;
         double maxY = this.position.getY() + this.radius;
-
-        if (this.isBall() && this.position.getY() > -302.0D && this.position.getY() < 312.0D) {
+        // per vedere chi segna
+       /* if (this.isBall() && this.position.getY() > -302.0D && this.position.getY() < 312.0D) {
             if (minX < -566.0D) {
-                return 2;
+                // return 2;
+                System.out.println("ciao");
             } else if (maxX > 566.0D) {
-                return 1;
+                //return 1;
+                System.out.println("mamma");
             }
         }
-
+*/
 
         if (minX < -566.0D) { //bordo a SX
 
@@ -87,7 +92,7 @@ abstract public class FieldObject {
                 }
             } else { //bordo non porta
 
-                velocita.change(-1, 1);
+                velocita = new Vector2d(- this.velocita.getX(), this.velocita.getY());
                 velocita.setSum(velocita.getSum() - (velocita.getSum() * DMURO));
             }
 
@@ -98,26 +103,26 @@ abstract public class FieldObject {
                     setVelocita(0);
 
             } else { //bordo fuori dalla porta
-                velocita.change(-1, 1);
+                velocita = new Vector2d(- this.velocita.getX(), this.velocita.getY());
                 velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
             }
 
         } else if (minY < -302.0D) { //bordo Down
 
-            velocita.change(1, -1);
+            velocita = new Vector2d( this.velocita.getX(), -this.velocita.getY());
             velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
 
         } else if (maxY > 312.0D) { //bordo UP
-            velocita.change(1, -1);
+            velocita = new Vector2d( this.velocita.getX(), -this.velocita.getY());
             velocita.setSum(velocita.getSum() - velocita.getSum() * DMURO);
         }
-        return 0;
+
     }
 
     // vedere se la pallina e ferma
     public boolean speedIsZero() {
         final double EPSILON = 1E-4;
-        return Math.abs(velocita.getX()) < EPSILON ? true : false;
+        return Math.abs(velocita.getLength()) < EPSILON ? true : false;
     }
 
 
@@ -139,9 +144,9 @@ abstract public class FieldObject {
         }
 
 
-       Vector2d mtb = n.multiply((ball.radius - dist) / dist);
-        this.position = this.position.add(mtb.multiply(1 / 2));
-        ball.position = ball.position.subtract(mtb.multiply(1 / 2));
+     Vector2d mtb = n.multiply((ball.radius - dist) / dist);
+        this.position = this.position.add(mtb.multiply(1 /4));
+        ball.position = ball.position.subtract(mtb.multiply(1 / 4));
 
         Vector2d un = n.multiply(1 / n.getLength());
         Vector2d ut = new Vector2d(-un.y, un.x);
@@ -178,8 +183,22 @@ abstract public class FieldObject {
              velocita.setXY(v1F, angle);
              ball.velocita.setXY(v2F , Math.PI/2  - angle);*/
 
+    public void friction (){
+
+        if(this.speedIsZero())return;
+
+         velocita.multiply(0.984);
+        if( velocita.getLength() <5 ){
+            velocita = new Vector2d(0,0);
+
+        }
+    }
+
+
 
 }
+
+
 
 
 

@@ -26,7 +26,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	GameField fieldModel = new GameField();
 
 	public GameFieldView() {
-		Timer timer = new Timer(10, (e) -> {
+		Timer timer = new Timer(1, (e) -> {
 			fieldModel.stepNext();
 
 			repaint();

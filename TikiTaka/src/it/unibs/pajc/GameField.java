@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class GameField {
 
+    public static final double DECVEL = 0.017;
     protected ArrayList<FieldObject> objectsPiece;
     protected String turno;
 
@@ -31,15 +32,11 @@ public class GameField {
     }
 
     public void stepNext() {
-        for (FieldObject o : objectsPiece) {
-            collisionCheck();
-            o.move();
+        collisionCheck();
+       /* for (FieldObject o : objectsPiece) {
 
 
-
-
-
-        }
+        }*/
     }
 
     public FieldObject checkClickAble(int xMouse, int yMouse) {
@@ -47,7 +44,6 @@ public class GameField {
         for (FieldObject f : objectsPiece) {
             if (f instanceof Piece)
                 if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2) && ((Piece) f).team.equals(turno)) {
-                    System.out.println("ciao ");
                     return f;
                 }
 
@@ -72,15 +68,21 @@ public class GameField {
 
 
     public  void collisionCheck (){
+
         for (int i = 0; i < objectsPiece.size(); i++)
         {
+            objectsPiece.get(i).move();
+            //objectsPiece.get(i).friction();
             for (int j = i+1; j < objectsPiece.size(); j++)
             {
-                    objectsPiece.get(i).collision(objectsPiece.get(j));
-
+                objectsPiece.get(i).collision(objectsPiece.get(j));
+                //objectsPiece.get(j).friction();
             }
         }
     }
+
+
+
 
 
 
