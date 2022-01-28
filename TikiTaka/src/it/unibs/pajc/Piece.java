@@ -22,11 +22,5 @@ public class Piece extends FieldObject{
 
     }
 
-    @Override
-    public boolean isBall() {
-        return false;
-    }
-
-
 
 }

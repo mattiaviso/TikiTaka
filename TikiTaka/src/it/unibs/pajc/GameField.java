@@ -1,44 +1,46 @@
 package it.unibs.pajc;
 
-import javax.tools.FileObject;
-import java.awt.*;
-import java.util.ArrayList;
-
 public class GameField {
 
-    public static final double DECVEL = 0.017;
-    protected ArrayList<FieldObject> objectsPiece;
+    public static final int MAX_X = 566;
+    public static final int MIN_X = -566;
+    public static final int MIN_Y = -302;
+    public static final int MAX_Y = 312;
+    public static final float EPSILON = 0.09f;
+    public static final float RESTITUTION = 0.85f; //potenza che la pedina perde quando va contro un ostacolo
+
+    protected FieldObject[] objectsPiece;
     protected String turno;
 
     public GameField() {
-        objectsPiece = new ArrayList<>();
         turno = "T1";
-
+        objectsPiece = new FieldObject[11];
         positionStart();
     }
 
+    /**
+     * Posizione iniziale delle pedine
+     */
     private void positionStart() {
-        objectsPiece.add(new Piece(40, 520, 0, "Pedina1.png", "T1"));
-        objectsPiece.add(new Piece(40, 170, 70, "Pedina1.png", "T1"));
-        objectsPiece.add(new Piece(40, 170, -70, "Pedina1.png", "T1"));
-        objectsPiece.add(new Piece(40, 350, 180, "Pedina1.png", "T1"));
-        objectsPiece.add(new Piece(40, 350, -180, "Pedina1.png", "T1"));
-        objectsPiece.add(new Ball(18, 0, 0));
-        objectsPiece.add(new Piece(40, -520, 0, "Pedina2.png", "T2"));
-        objectsPiece.add(new Piece(40, -170, 70, "Pedina2.png", "T2"));
-        objectsPiece.add(new Piece(40, -170, -70, "Pedina2.png", "T2"));
-        objectsPiece.add(new Piece(40, -350, 180, "Pedina2.png", "T2"));
-        objectsPiece.add(new Piece(40, -350, -180, "Pedina2.png", "T2"));
+        objectsPiece[0] = (new Piece(40, 520, 0, "Pedina1.png", "T1"));
+        objectsPiece[1] =(new Piece(40, 170, 70, "Pedina1.png", "T1"));
+        objectsPiece[2] =(new Piece(40, 170, -70, "Pedina1.png", "T1"));
+        objectsPiece[3] =(new Piece(40, 350, 180, "Pedina1.png", "T1"));
+        objectsPiece[4] =(new Piece(40, 350, -180, "Pedina1.png", "T1"));
+        objectsPiece[5] =(new Ball(18, 0, 0));
+        objectsPiece[6] =(new Piece(40, -520, 0, "Pedina2.png", "T2"));
+        objectsPiece[7] =(new Piece(40, -170, 70, "Pedina2.png", "T2"));
+        objectsPiece[8] =(new Piece(40, -170, -70, "Pedina2.png", "T2"));
+        objectsPiece[9] =(new Piece(40, -350, 180, "Pedina2.png", "T2"));
+        objectsPiece[10] =(new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
 
-    public void stepNext() {
-        collisionCheck();
-       /* for (FieldObject o : objectsPiece) {
-
-
-        }*/
-    }
-
+    /**
+     * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
+     * @param xMouse Coordinata x del mouse
+     * @param yMouse Coordinata y del mouse
+     * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
+     */
     public FieldObject checkClickAble(int xMouse, int yMouse) {
         if (!allStop()) return null;
         for (FieldObject f : objectsPiece) {
@@ -46,7 +48,6 @@ public class GameField {
                 if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2) && ((Piece) f).team.equals(turno)) {
                     return f;
                 }
-
         }
         return null;
     }
@@ -66,24 +67,94 @@ public class GameField {
         return true;
     }
 
-
-    public  void collisionCheck (){
-
-        for (int i = 0; i < objectsPiece.size(); i++)
+    public void insertionSort(Comparable[] a)
+    {
+        for( int p = 1; p < objectsPiece.length; p++ )
         {
-            objectsPiece.get(i).move();
-            //objectsPiece.get(i).friction();
-            for (int j = i+1; j < objectsPiece.size(); j++)
-            {
-                objectsPiece.get(i).collision(objectsPiece.get(j));
-                //objectsPiece.get(j).friction();
-            }
+            Comparable tmp = a[ p ];
+            int j = p;
+
+            for( ; j > 0 && tmp.compareTo( a[ j - 1 ] ) < 0; j-- )
+                a[ j ] = a[ j - 1 ];
+
+            a[ j ] = tmp;
         }
     }
 
+    /**
+     *
+     * Metodo che se invocato manda avanti il gioco, si occupa di spostamenti ecc
+     * Come se fosse lo StepNext
+     *
+     */
+    public void updateGame()
+    {
+        for (int i = 0; i < objectsPiece.length; i++)
+        {
+            objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY() );
+            objectsPiece[i].position.setX(objectsPiece[i].position.getX() + (objectsPiece[i].velocita.getX() * (1)));
+            objectsPiece[i].position.setY(objectsPiece[i].position.getY() + (objectsPiece[i].velocita.getY() * (1)));
 
 
+            if (Math.abs(objectsPiece[i].velocita.getX()) < EPSILON) objectsPiece[i].velocita.setX(0);
+            if (Math.abs(objectsPiece[i].velocita.getY()) < EPSILON) objectsPiece[i].velocita.setY(0);
+        }
 
+        checkCollisions();
+
+    }
+
+    public void checkCollisions()
+    {
+        insertionSort(objectsPiece);
+
+
+        // Controllo collisioni con bordi del campo
+        for (int i = 0; i < objectsPiece.length; i++)
+        {
+
+            if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
+            {
+                objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
+                objectsPiece[i].velocita.setX(-(objectsPiece[i].velocita.getX() * RESTITUTION));
+                objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY() * RESTITUTION);
+            }
+            else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
+            {
+                objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
+                objectsPiece[i].velocita.setX(-(objectsPiece[i].velocita.getX() * RESTITUTION));
+                objectsPiece[i].velocita.setY((objectsPiece[i].velocita.getY() * RESTITUTION));
+            }
+
+            if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)				//Bordo Up
+            {
+                objectsPiece[i].position.setY(objectsPiece[i].getRadius() + MIN_Y);
+                objectsPiece[i].velocita.setY(-(objectsPiece[i].velocita.getY() * RESTITUTION));
+                objectsPiece[i].velocita.setX((objectsPiece[i].velocita.getX() * RESTITUTION));
+            }
+            else if (objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > MAX_Y) //Bordo Down
+            {
+                objectsPiece[i].position.setY(MAX_Y - objectsPiece[i].getRadius());
+                objectsPiece[i].velocita.setY(-(objectsPiece[i].velocita.getY() * RESTITUTION));
+                objectsPiece[i].velocita.setX((objectsPiece[i].velocita.getX() * RESTITUTION));
+            }
+
+            // Collisione pedina contro pedina
+            for(int j = i + 1; j < objectsPiece.length; j++)
+            {
+                if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
+                    break;
+
+                if((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) ||
+                        (objectsPiece[j].position.getY() + objectsPiece[j].getRadius()) < (objectsPiece[i].position.getY() - objectsPiece[i].getRadius()))
+                    continue;
+
+                objectsPiece[i].resolveCollision(objectsPiece[j]);
+
+            }
+        }
+
+    }
 
 
 

@@ -27,7 +27,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 
 	public GameFieldView() {
 		Timer timer = new Timer(1, (e) -> {
-			fieldModel.stepNext();
+			fieldModel.updateGame();
 
 			repaint();
 		});
@@ -139,9 +139,6 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// il rilascio lo step next
-
-
-
 
 		if(valido!=null){
 			valido.start(distance, angle);

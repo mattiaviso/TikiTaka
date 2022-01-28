@@ -108,7 +108,7 @@ package it.unibs.pajc;
      }
 
      public void setXY (double total, double angle){
-        if(angle<0) angle = (2*Math.PI) + angle;
+        if(angle < 0) angle = (2*Math.PI) + angle;
         this.total = total;
          x = this.total * Math.cos(angle);
          y = this.total * Math.sin(angle);

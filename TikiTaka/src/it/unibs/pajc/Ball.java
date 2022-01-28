@@ -17,11 +17,6 @@ public class Ball extends FieldObject{
         }
     }
 
-    @Override
-    public boolean isBall() {
-        return true;
-    }
-
 
 
 
