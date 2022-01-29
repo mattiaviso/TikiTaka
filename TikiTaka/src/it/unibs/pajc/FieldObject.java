@@ -140,7 +140,8 @@ abstract public class FieldObject implements Comparable<FieldObject>{
 
     public void friction (double num ){
         velocita.set(velocita.getX() - (velocita.getX()*num), velocita.getY()- (velocita.getY()*num) );
-        if ( velocita.getLength() < 10)new Vector2d(0,0);
+
+        if ( velocita.getLength() < 0.75) velocita = new Vector2d(0,0);
     }
 
 }

@@ -108,10 +108,9 @@ public class GameField {
 
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
-
+                    /*bordiPorta(objectsPiece[i], 1 );*/
                     objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
                     objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
-
             } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
                 objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
@@ -153,34 +152,37 @@ public class GameField {
 
 
 // PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
-    /*public void bordiPorta ( FieldObject o ,int  direzione){
-        if ( o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >-98 ){
-            if(o.position.getX() < -630 ){
+    public void bordiPorta ( FieldObject o ,int  direzione){
+
+        if ( o.position.getY() + o.getRadius() <106 &&  o.position.getY() - o.getRadius() >-96 ){
+            // bordo interno
+            if(o.position.getX()-o.radius < -630 ){
                 o.position.setX(o.getRadius() + -630);
                 o.velocita = new Vector2d(-o.velocita.getX(), +o.velocita.getY());
-
-            } else if(o.position.getY()>108){
-                o.position.setY(MAX_Y - o.getRadius());
+            // sopra
+            } if(o.position.getY()+ o.radius>106 && o.position.getX()<-566 && o.position.getX()>= -630){
+                o.position.setY(106 - o.getRadius());
+                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
+            // sotto
+            } if (o.position.getY()- o.radius<-96&& o.position.getX()<-566 && o.position.getX()>= -630) {
+                o.position.setY(o.getRadius() -96);
                 o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
 
-            }else if (o.position.getY()<-98){
-                o.position.setY(o.getRadius() + MIN_Y);
-                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
-
+            }
+        }else{
+            if (direzione ==1 ){ // sinistra
+                o.position.setX(o.getRadius() + MIN_X);
+                o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
             }else{
-                if (direzione ==1 ){ // sinistra
-                    o.position.setX(o.getRadius() + MIN_X);
-                    o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
-                }else{
-                    o.position.setX(MAX_X - o.getRadius());
-                    o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
+                o.position.setX(MAX_X - o.getRadius());
+                o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
 
                 }
-            }
         }
+    }
 
 
-    }*/
+
 
 
 
