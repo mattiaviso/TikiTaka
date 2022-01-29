@@ -9,7 +9,7 @@ public class Piece extends FieldObject{
     protected String team;
 
     public Piece(double radius, double x, double y,String imagePath, String team ) {
-        super(radius, x, y, 60);
+        super(radius, x, y, 200);
 
         //Caricamento immagine **Metodo da estrarre
         try {

@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Ball extends FieldObject{
 
     public Ball(double radius,double x,double y){
-        super(radius,x,y,40);
+        super(radius,x,y,150);
 
         //Caricamento immagine **Metodo da estrarre
         try {

@@ -23,20 +23,21 @@ public class GameField {
      */
     private void positionStart() {
         objectsPiece[0] = (new Piece(40, 520, 0, "Pedina1.png", "T1"));
-        objectsPiece[1] =(new Piece(40, 170, 70, "Pedina1.png", "T1"));
-        objectsPiece[2] =(new Piece(40, 170, -70, "Pedina1.png", "T1"));
-        objectsPiece[3] =(new Piece(40, 350, 180, "Pedina1.png", "T1"));
-        objectsPiece[4] =(new Piece(40, 350, -180, "Pedina1.png", "T1"));
-        objectsPiece[5] =(new Ball(18, 0, 0));
-        objectsPiece[6] =(new Piece(40, -520, 0, "Pedina2.png", "T2"));
-        objectsPiece[7] =(new Piece(40, -170, 70, "Pedina2.png", "T2"));
-        objectsPiece[8] =(new Piece(40, -170, -70, "Pedina2.png", "T2"));
-        objectsPiece[9] =(new Piece(40, -350, 180, "Pedina2.png", "T2"));
-        objectsPiece[10] =(new Piece(40, -350, -180, "Pedina2.png", "T2"));
+        objectsPiece[1] = (new Piece(40, 170, 70, "Pedina1.png", "T1"));
+        objectsPiece[2] = (new Piece(40, 170, -70, "Pedina1.png", "T1"));
+        objectsPiece[3] = (new Piece(40, 350, 180, "Pedina1.png", "T1"));
+        objectsPiece[4] = (new Piece(40, 350, -180, "Pedina1.png", "T1"));
+        objectsPiece[5] = (new Ball(18, 0, 0));
+        objectsPiece[6] = (new Piece(40, -520, 0, "Pedina2.png", "T2"));
+        objectsPiece[7] = (new Piece(40, -170, 70, "Pedina2.png", "T2"));
+        objectsPiece[8] = (new Piece(40, -170, -70, "Pedina2.png", "T2"));
+        objectsPiece[9] = (new Piece(40, -350, 180, "Pedina2.png", "T2"));
+        objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
 
     /**
      * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
+     *
      * @param xMouse Coordinata x del mouse
      * @param yMouse Coordinata y del mouse
      * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
@@ -67,31 +68,25 @@ public class GameField {
         return true;
     }
 
-    public void insertionSort(Comparable[] a)
-    {
-        for( int p = 1; p < objectsPiece.length; p++ )
-        {
-            Comparable tmp = a[ p ];
+    public void insertionSort(Comparable[] a) {
+        for (int p = 1; p < objectsPiece.length; p++) {
+            Comparable tmp = a[p];
             int j = p;
 
-            for( ; j > 0 && tmp.compareTo( a[ j - 1 ] ) < 0; j-- )
-                a[ j ] = a[ j - 1 ];
+            for (; j > 0 && tmp.compareTo(a[j - 1]) < 0; j--)
+                a[j] = a[j - 1];
 
-            a[ j ] = tmp;
+            a[j] = tmp;
         }
     }
 
     /**
-     *
      * Metodo che se invocato manda avanti il gioco, si occupa di spostamenti ecc
      * Come se fosse lo StepNext
-     *
      */
-    public void updateGame()
-    {
-        for (int i = 0; i < objectsPiece.length; i++)
-        {
-            objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY() );
+    public void updateGame() {
+        for (int i = 0; i < objectsPiece.length; i++) {
+            objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY());
             objectsPiece[i].position.setX(objectsPiece[i].position.getX() + (objectsPiece[i].velocita.getX() * (1)));
             objectsPiece[i].position.setY(objectsPiece[i].position.getY() + (objectsPiece[i].velocita.getY() * (1)));
 
@@ -104,57 +99,88 @@ public class GameField {
 
     }
 
-    public void checkCollisions()
-    {
+    public void checkCollisions() {
         insertionSort(objectsPiece);
 
 
         // Controllo collisioni con bordi del campo
-        for (int i = 0; i < objectsPiece.length; i++)
-        {
+        for (int i = 0; i < objectsPiece.length; i++) {
 
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
-                objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
-                objectsPiece[i].velocita.setX(-(objectsPiece[i].velocita.getX() * RESTITUTION));
-                objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY() * RESTITUTION);
-            }
-            else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
+
+                    objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
+                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
+
+            } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
                 objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
-                objectsPiece[i].velocita.setX(-(objectsPiece[i].velocita.getX() * RESTITUTION));
-                objectsPiece[i].velocita.setY((objectsPiece[i].velocita.getY() * RESTITUTION));
+                objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
             }
 
-            if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)				//Bordo Up
+            if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)                //Bordo Down
             {
                 objectsPiece[i].position.setY(objectsPiece[i].getRadius() + MIN_Y);
-                objectsPiece[i].velocita.setY(-(objectsPiece[i].velocita.getY() * RESTITUTION));
-                objectsPiece[i].velocita.setX((objectsPiece[i].velocita.getX() * RESTITUTION));
-            }
-            else if (objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > MAX_Y) //Bordo Down
+                objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
+            } else if (objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > MAX_Y) //Bordo UP
             {
                 objectsPiece[i].position.setY(MAX_Y - objectsPiece[i].getRadius());
-                objectsPiece[i].velocita.setY(-(objectsPiece[i].velocita.getY() * RESTITUTION));
-                objectsPiece[i].velocita.setX((objectsPiece[i].velocita.getX() * RESTITUTION));
+                objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
+
             }
 
+            // crea una frizione tra i 2 oggetti
+            objectsPiece[i].friction(0.02);
+
+
             // Collisione pedina contro pedina
-            for(int j = i + 1; j < objectsPiece.length; j++)
-            {
+            for (int j = i + 1; j < objectsPiece.length; j++) {
                 if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
                     break;
 
-                if((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) ||
+                if ((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) ||
                         (objectsPiece[j].position.getY() + objectsPiece[j].getRadius()) < (objectsPiece[i].position.getY() - objectsPiece[i].getRadius()))
                     continue;
 
                 objectsPiece[i].resolveCollision(objectsPiece[j]);
+                objectsPiece[i].friction(0.035);
+                objectsPiece[j].friction(0.015);
 
             }
         }
 
     }
+
+
+// PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
+    /*public void bordiPorta ( FieldObject o ,int  direzione){
+        if ( o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >-98 ){
+            if(o.position.getX() < -630 ){
+                o.position.setX(o.getRadius() + -630);
+                o.velocita = new Vector2d(-o.velocita.getX(), +o.velocita.getY());
+
+            } else if(o.position.getY()>108){
+                o.position.setY(MAX_Y - o.getRadius());
+                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
+
+            }else if (o.position.getY()<-98){
+                o.position.setY(o.getRadius() + MIN_Y);
+                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
+
+            }else{
+                if (direzione ==1 ){ // sinistra
+                    o.position.setX(o.getRadius() + MIN_X);
+                    o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
+                }else{
+                    o.position.setX(MAX_X - o.getRadius());
+                    o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
+
+                }
+            }
+        }
+
+
+    }*/
 
 
 
