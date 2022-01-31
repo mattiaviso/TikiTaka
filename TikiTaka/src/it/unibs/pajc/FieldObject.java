@@ -33,6 +33,13 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         return massa;
     }
 
+    public boolean isBall() {
+        if(this instanceof Ball){
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Metodo che serve per far muovere la prima pallina, quella selezionata dal giocatore

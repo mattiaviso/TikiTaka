@@ -1,5 +1,8 @@
 package it.unibs.pajc;
 
+import javax.swing.*;
+import java.util.Timer;
+
 public class GameField {
 
     public static final int MAX_X = 566;
@@ -8,6 +11,9 @@ public class GameField {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
     public static final float RESTITUTION = 0.85f; //potenza che la pedina perde quando va contro un ostacolo
+    protected int score1;
+    protected int score2;
+
 
     protected FieldObject[] objectsPiece;
     protected String turno;
@@ -103,6 +109,7 @@ public class GameField {
         insertionSort(objectsPiece);
 
 
+
         // Controllo collisioni con bordi del campo
         for (int i = 0; i < objectsPiece.length; i++) {
 
@@ -110,13 +117,34 @@ public class GameField {
 
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
-                    /*bordiPorta(objectsPiece[i], 1 );*/
+                    //bordiPorta(objectsPiece[i], 1 );
+                if(objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius  > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112)
+                {
+                    if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
+                        positionStart();
+                        score2++;
+                    }
+                }
+                else{
                     objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
                     objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
+                }
             } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
-                objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
-                objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
+                if(objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius  > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112)
+                {
+
+                    if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
+                        positionStart();
+                        score1++;
+                        TikiTakaGame.rep(1);
+                    }
+                }
+                else {
+
+                    objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
+                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
+                }
             }
 
             if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)                //Bordo Down
@@ -153,10 +181,11 @@ public class GameField {
             }
         }
 
+
     }
 
 
-/*
+
 // PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
     public void bordiPorta ( FieldObject o ,int  direzione){
 
@@ -186,7 +215,7 @@ public class GameField {
                 }
         }
     }
-*/
+
 
     public int gool(FieldObject o , double sup , double min ){
 

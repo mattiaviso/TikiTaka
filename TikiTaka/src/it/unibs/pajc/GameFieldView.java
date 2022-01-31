@@ -52,6 +52,8 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		g2.scale(1, -1);
 		g2.translate(w / 2, h / 2);
 
+		//g2.setColor(Color.RED);
+		//g2.fillRect(-getWidth()/2,-getHeight()/2,1300,240);
 
 		// CREAZIONE CAMPO
 		creatingfield(g2);
@@ -220,7 +222,9 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	}
 
 
-
+	public GameField getModel() {
+		return fieldModel;
+	}
 }
 
 
