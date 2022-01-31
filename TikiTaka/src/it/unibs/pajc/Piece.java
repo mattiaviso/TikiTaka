@@ -23,4 +23,9 @@ public class Piece extends FieldObject{
     }
 
 
+    public boolean isBall(){
+        return false;
+    }
+
+
 }

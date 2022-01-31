@@ -106,6 +106,8 @@ public class GameField {
         // Controllo collisioni con bordi del campo
         for (int i = 0; i < objectsPiece.length; i++) {
 
+
+
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
                     /*bordiPorta(objectsPiece[i], 1 );*/
@@ -132,6 +134,9 @@ public class GameField {
             objectsPiece[i].friction(0.02);
 
 
+
+
+
             // Collisione pedina contro pedina
             for (int j = i + 1; j < objectsPiece.length; j++) {
                 if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
@@ -151,6 +156,7 @@ public class GameField {
     }
 
 
+/*
 // PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
     public void bordiPorta ( FieldObject o ,int  direzione){
 
@@ -180,9 +186,20 @@ public class GameField {
                 }
         }
     }
+*/
+
+    public int gool(FieldObject o , double sup , double min ){
 
 
+        if ( o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >-98 && o.isBall){
+            return 1;
 
+        }
+        else if (o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >min && o.isBall){
+            return 2;
+        }else
+            return 0;
+    }
 
 
 

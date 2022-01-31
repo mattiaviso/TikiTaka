@@ -19,5 +19,7 @@ public class Ball extends FieldObject{
 
 
 
-
+    public boolean isBall (){
+        return true;
+    }
 }

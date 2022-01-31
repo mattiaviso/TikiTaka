@@ -12,6 +12,8 @@ abstract public class FieldObject implements Comparable<FieldObject>{
     protected BufferedImage imageObj;
     protected double massa;
 
+    public boolean isBall;
+
 
     public FieldObject(double radius, double x, double y, double massa) {
         this.radius = radius;
