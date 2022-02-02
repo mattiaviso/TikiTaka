@@ -1,20 +1,24 @@
 package it.unibs.pajc;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class TikiTakaGame extends Canvas {
 
+	private static JLabel textField = new JLabel("");
 	private JFrame frame;
 	private JTextField txtGioco;
 	/*private BufferedImage sfondo = null;*/
 	GameFieldView battleFieldView = new GameFieldView();
-	 static JPanel  panel = new JPanel();
+	 private static JPanel  panel = new JPanel();
 
 
 
-
+	 
 	/**
 	 * Launch the application.
 	 */
@@ -44,37 +48,30 @@ public class TikiTakaGame extends Canvas {
 	private void initialize() {
 
 		frame = new JFrame();
-
 		frame.setResizable(false);
 		frame.setBounds(100, 50, 1300, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
-		
-
 		panel.setBackground(Color.RED);
-
-
-
 		panel.setPreferredSize(new Dimension(1300,120));
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
-		rep(2);
+		rep(0,0, "RedMax", "Cigno" );
 
 	}
 	// metodo per il cambiamento
 
-	public static void rep(int result){
-
-		JLabel textField = new JLabel();
-		textField.setText(result+" score 1");
-		panel.add(textField);
-		panel.repaint();
+	public static void rep(int t1,int t2,String n1,String n2){
+		//textField.setText(n1 +t1 +  n2 + t2);
+		//panel.add(textField);
+		panel.add(new JLabel(new ImageIcon("Tabellone.png")));
+		panel.isOptimizedDrawingEnabled()
+		panel.revalidate();
 	}
 
 
-
-	}
+}
 
 
 

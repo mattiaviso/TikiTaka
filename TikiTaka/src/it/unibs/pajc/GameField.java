@@ -11,8 +11,8 @@ public class GameField {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
     public static final float RESTITUTION = 0.85f; //potenza che la pedina perde quando va contro un ostacolo
-    protected int score1;
-    protected int score2;
+    protected int score1=0;
+    protected int score2=0;
 
 
     protected FieldObject[] objectsPiece;
@@ -123,6 +123,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
                         positionStart();
                         score2++;
+                        TikiTakaGame.rep(score1,score2 , "redolfi ", "calamaro ");
                     }
                 }
                 else{
@@ -137,7 +138,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
                         positionStart();
                         score1++;
-                        TikiTakaGame.rep(1);
+                        TikiTakaGame.rep(score1,score2, "redolfi ", "shumacher ");
                     }
                 }
                 else {
