@@ -1,8 +1,5 @@
 package it.unibs.pajc;
 
-import javax.swing.*;
-import java.util.Timer;
-
 public class GameField {
 
     public static final int MAX_X = 566;
@@ -67,6 +64,10 @@ public class GameField {
         }
     }
 
+    public void setTurno(String team){
+        turno = team;
+    }
+
     public boolean allStop() {
         for (FieldObject o : objectsPiece) {
             if (!o.speedIsZero()) return false;
@@ -123,7 +124,8 @@ public class GameField {
                     if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
                         positionStart();
                         score2++;
-                        TikiTakaGame.rep(score1,score2 , "redolfi ", "calamaro ");
+                        TikiTakaGame.panel.setTable(score1,score2);
+                        setTurno("T2");
                     }
                 }
                 else{
@@ -138,7 +140,8 @@ public class GameField {
                     if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
                         positionStart();
                         score1++;
-                        TikiTakaGame.rep(score1,score2, "redolfi ", "shumacher ");
+                        TikiTakaGame.panel.setTable(score1,score2);
+                        setTurno("T1");
                     }
                 }
                 else {
