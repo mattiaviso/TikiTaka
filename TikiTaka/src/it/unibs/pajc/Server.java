@@ -3,6 +3,8 @@ package it.unibs.pajc;
 import java.awt.color.ICC_Profile;
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
+import javax.swing.Timer;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -247,18 +249,28 @@ public class Server {
 
 				case ChatMessage.MESSAGE:
 
-					String m = message;
-
+					//formato messaggio x@y@distance@angle
+					//dove x e y sono le coordinate del primo oggetto che si muove
+					if(!message.isEmpty()) {
+						System.out.println("MESSAGGIO INVIATO"+message);
+						String part[] = message.split("@");
+						FieldObject selezionata = modelField.pedinaSelezionata(Double.parseDouble(part[0]), Double.parseDouble(part[1]));
+						if(selezionata != null)
+							selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
+					}
 					// controllare
-						do {
+
+					Timer timer = new Timer(1, (e) -> {
+						if (!modelField.allStop()) {
 							modelField.updateGame();
 							broadcast("", al.size());
-						}while(!modelField.allStop());
-					/*boolean confirmation =  broadcast(username + ": " + message,al.size());
-					if(confirmation==false){
-						String msg = notif + "Sorry. No such user exists." + notif;
-						writeMsg(msg);
-					}*/
+						}
+					});
+					timer.start();
+						/*do {
+							modelField.updateGame();
+							broadcast("", al.size());
+						}while(!modelField.allStop());*/
 					break;
 				case ChatMessage.LOGOUT:
 					display(username + " disconnected with a LOGOUT message.");

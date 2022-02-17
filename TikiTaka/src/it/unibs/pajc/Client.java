@@ -202,8 +202,10 @@ public class Client  {
 		    public void mouseReleased(MouseEvent e) {
 
 				if(finestra.valido!=null){
-					finestra.valido.start(finestra.distance, finestra.angle);
-
+					//finestra.valido.start(finestra.distance, finestra.angle);
+					System.out.println(finestra.valido.position.getX()+finestra.valido.position.getY()+finestra.distance+ finestra.angle);
+					//Dare formo al messaggio x@y@distance@angle
+					elaboramessaggio(new String( finestra.valido.position.getX()+"@"+finestra.valido.position.getY()+"@"+finestra.distance+"@"+ finestra.angle),client);
 					//fieldModel.cambioTurno();
 				}
 				finestra.valido = null;
@@ -211,9 +213,7 @@ public class Client  {
 				finestra.repaint();
 
 
-				System.out.println("premuto");
-				//Dare formo al messaggio x@y@distance@angle
-		      	elaboramessaggio("Ho premuto\n", client);
+
 		    }
 
 			@Override
@@ -228,8 +228,6 @@ public class Client  {
 				finestra.repaint();
 
 			}
-
-
 
 		});
 		

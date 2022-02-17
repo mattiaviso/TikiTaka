@@ -247,6 +247,16 @@ public class GameField {
     }
 
 
+     public FieldObject pedinaSelezionata(double x, double y){
+        double EPS = 1E-3;
+         for (int i = 0; i< objectsPiece.length ; i++) {
+             if ( Math.abs(x-objectsPiece[i].position.getX()) < EPS &&  Math.abs(y-objectsPiece[i].position.getY())< EPS ){
+                 return objectsPiece[i];
+             }
+         }
+        return null;
+     }
+
 
 
 
