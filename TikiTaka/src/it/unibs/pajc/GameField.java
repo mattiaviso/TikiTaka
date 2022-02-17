@@ -21,6 +21,8 @@ public class GameField {
         positionStart();
     }
 
+    
+    
     /**
      * Posizione iniziale delle pedine
      */
@@ -38,6 +40,16 @@ public class GameField {
         objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
 
+    
+    public String messaggioPos() {
+    	String string = "";
+    	for(FieldObject f: objectsPiece) {
+    		string+=f.toString()+"\n";
+    	}
+    	return string;
+    }
+    
+    
     /**
      * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
      *
@@ -124,7 +136,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
                         positionStart();
                         score2++;
-                        TikiTakaGame.panel.setTable(score1,score2);
+                        //TikiTakaGame.panel.setTable(score1,score2);
                         setTurno("T2");
                     }
                 }
@@ -140,7 +152,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
                         positionStart();
                         score1++;
-                        TikiTakaGame.panel.setTable(score1,score2);
+                        //TikiTakaGame.panel.setTable(score1,score2);
                         setTurno("T1");
                     }
                 }

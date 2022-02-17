@@ -40,6 +40,11 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         return false;
     }
 
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return radius+"@"+position.getX()+"@"+position.getY();
+    }
 
     /**
      * Metodo che serve per far muovere la prima pallina, quella selezionata dal giocatore

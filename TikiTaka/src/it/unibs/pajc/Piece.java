@@ -7,9 +7,12 @@ import java.io.IOException;
 public class Piece extends FieldObject{
 
     protected String team;
+    private String imgPathString;
 
-    public Piece(double radius, double x, double y,String imagePath, String team ) {
+    public Piece(double radius, double x, double y, String imagePath, String team ) {
         super(radius, x, y, 200);
+        
+        imgPathString = imagePath;
 
         //Caricamento immagine **Metodo da estrarre
         try {
@@ -25,6 +28,10 @@ public class Piece extends FieldObject{
 
     public boolean isBall(){
         return false;
+    }
+    @Override
+    public String toString() {
+    	return "Piece@"+super.toString()+"@"+imgPathString+"@"+team;
     }
 
 
