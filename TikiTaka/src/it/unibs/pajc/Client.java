@@ -1,16 +1,19 @@
 package it.unibs.pajc;
 
-import javax.swing.*;
+import java.net.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.Scanner;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.*;
+import java.util.*;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+
 
 
 //The Client that can be run as a console
-public class Client {
+public class Client  {
 	
 	// notification
 	private String notif = " *** ";
@@ -20,6 +23,10 @@ public class Client {
 
 	protected FieldObject[] objectsPiece;
 	public static Result  panel;
+	// variabili messe dopo il funzionamento
+
+
+
 	
 
 	private static boolean close=false;
@@ -142,7 +149,7 @@ public class Client {
 	public static void main(String[] args) {
 		// default values if not entered
 		int portNumber = 1500;
-		String serverAddress = "172.28.224.10";
+		String serverAddress = "localhost";
 		String userName = "Anonymous";
 		Scanner scan = new Scanner(System.in);
 		
@@ -163,9 +170,8 @@ public class Client {
 		finestra.setVisible(true);
 		
 		frame.add(finestra, BorderLayout.CENTER);
+
 		frame.add(panel, BorderLayout.NORTH);
-		
-		
 		
 		
 		// create the Client object
@@ -173,8 +179,59 @@ public class Client {
 		// try to connect to the server and return if not connected
 		if(!client.start())
 			return;
-		
-		
+
+		finestra.addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+				finestra.xnew = e.getX()-finestra.w/2;
+				finestra.ynew = -(e.getY()-finestra.h/2);
+
+				if(finestra.valido!=null)
+					finestra.newradius =Math.min((int) (Math.sqrt(((finestra.valido.position.getX()-finestra.xnew)*
+							(finestra.valido.position.getX()-finestra.xnew))+((finestra.valido.position.getY()-finestra.ynew)*
+							(finestra.valido.position.getY()-finestra.ynew)))),150);
+
+				finestra.repaint();
+			}
+		});
+
+		// MOUSE LISTENER
+		finestra.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+
+				if(finestra.valido!=null){
+					finestra.valido.start(finestra.distance, finestra.angle);
+
+					//fieldModel.cambioTurno();
+				}
+				finestra.valido = null;
+				finestra.newradius = 0;
+				finestra.repaint();
+
+
+				System.out.println("premuto");
+				//Dare formo al messaggio x@y@distance@angle
+		      	elaboramessaggio("Ho premuto\n", client);
+		    }
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+				//prendiamo coordinate x e y di dove è stato premuto il mouse
+				int x = e.getX()-finestra.w/2;
+				int y = -(e.getY()- finestra.h/2);
+
+				finestra.valido = finestra.checkClickAble(x,y);
+
+				finestra.repaint();
+
+			}
+
+
+
+		});
 		
 		
 		if(close == true) {

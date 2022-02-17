@@ -1,9 +1,19 @@
 package it.unibs.pajc;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.JTextField;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JScrollPane;
 
 public class ViewServer extends JFrame {
 

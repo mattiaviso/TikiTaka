@@ -1,13 +1,10 @@
 package it.unibs.pajc;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.awt.color.ICC_Profile;
+import java.io.*;
+import java.net.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 
 // the server that can be run as a console
@@ -63,7 +60,11 @@ public class Server {
 				//add this client to arraylist
 				al.add(t);
 				frame.repaintPeople(al);
+				
+				
 				broadcast("",al.size());
+				
+				
 				t.start();
 			}
 			// try to stop the server
@@ -108,12 +109,13 @@ public class Server {
 	}
 	
 	// to broadcast a message to all Clients
-	private synchronized boolean broadcast(String message,int m) {
+	private boolean broadcast(String message,int m) {
 		// add timestamp to the message
 		String time = sdf.format(new Date());
 		
 		// if message is a broadcast message
 		//String messageLf = time + " " + message + "\n";
+		
 		
 		String messageLf = modelField.messaggioPos()+m+"\n";
 		for(int i=0;i<m;i++) {
@@ -133,7 +135,8 @@ public class Server {
 				display("Disconnected Client " + ct.username + " removed from list.");
 			}
 		}
-	
+		
+		
 		return true;
 		
 		
@@ -243,11 +246,19 @@ public class Server {
 				switch(cm.getType()) {
 
 				case ChatMessage.MESSAGE:
-					boolean confirmation =  broadcast(username + ": " + message,al.size());
+
+					String m = message;
+
+					// controllare
+						do {
+							modelField.updateGame();
+							broadcast("", al.size());
+						}while(!modelField.allStop());
+					/*boolean confirmation =  broadcast(username + ": " + message,al.size());
 					if(confirmation==false){
 						String msg = notif + "Sorry. No such user exists." + notif;
 						writeMsg(msg);
-					}
+					}*/
 					break;
 				case ChatMessage.LOGOUT:
 					display(username + " disconnected with a LOGOUT message.");
