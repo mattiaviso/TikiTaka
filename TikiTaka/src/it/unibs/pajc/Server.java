@@ -280,6 +280,9 @@ public class Server {
 							modelField.updateGame();
 							broadcast("", al.size());
 						}
+						else{
+
+						}
 					});
 					timer.start();
 						/*do {

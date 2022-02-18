@@ -221,7 +221,7 @@ public class Client  {
 			public void mousePressed(MouseEvent e) {
 
 				//prendiamo coordinate x e y di dove è stato premuto il mouse
-				if(team.equals(turno)) {
+				if(team.equals(turno) ) {
 					int x = e.getX() - finestra.w / 2;
 					int y = -(e.getY() - finestra.h / 2);
 					finestra.valido = finestra.checkClickAble(x, y);
