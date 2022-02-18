@@ -25,6 +25,7 @@ public class Client  {
 	// da rendere private
 	public  static String team;
 	public static String turno;
+	public static int score1,score2;
 
 
 
@@ -297,6 +298,9 @@ public class Client  {
 					int nUte = Integer.parseInt(riga11[0]);
 					team = riga11[1];
 					turno = riga11[2];
+					score1 = Integer.parseInt(riga11[3]);
+					score2 = Integer.parseInt(riga11[4]);
+					panel.setScore(score1,score2);
 					
 					if(nUte>=1)
 					if(parts[12].equals(username))

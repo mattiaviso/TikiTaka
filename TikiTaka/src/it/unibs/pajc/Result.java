@@ -25,11 +25,17 @@ public class Result extends JPanel  {
     public void setUsername1(String t1) {
     	this.team1 = t1;
     	repaint();
-    };
+    }
+    public void setScore(int s1,int s2){
+        score1 = s1;
+        score2 = s2;
+        repaint();
+    }
+
     public void setUsername2(String t2) {
     	this.team2 = t2;
     	repaint();
-    };
+    }
     public void setUsernames(String t1,String t2) {
     	this.team1 = t1;
         this.team2 = t2;

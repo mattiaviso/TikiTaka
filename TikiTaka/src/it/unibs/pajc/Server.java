@@ -125,7 +125,7 @@ public class Server {
 			else{
 				team="T1";
 			}
-			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"\n";
+			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"@"+modelField.score1+"@"+modelField.score2+"\n";
 			for(int j=0;j<m;j++) {
 				messageLf+= al.get(j).username+"\n";
 			}
@@ -170,7 +170,7 @@ public class Server {
 			else{
 				team="T1";
 			}
-			String messageLf = modelField.messaggioPos()+m+"@"+team+"@null\n";
+			String messageLf = modelField.messaggioPos()+m+"@"+team+"@null"+"@"+modelField.score1+"@"+modelField.score2+"\n";
 			for(int j=0;j<m;j++) {
 				messageLf+= al.get(j).username+"\n";
 			}
