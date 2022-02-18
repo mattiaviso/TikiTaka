@@ -1,6 +1,7 @@
 package it.unibs.pajc;
 
 import java.awt.color.ICC_Profile;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
@@ -27,6 +28,8 @@ public class Server {
 	public static GameField modelField;
 	
 	public static ViewServer frame;
+
+
 
 	
 	//constructor that receive the port to listen to for connection as parameter
@@ -65,7 +68,7 @@ public class Server {
 				frame.repaintPeople(al);
 				
 				
-				broadcast("",al.size());
+				broadcastFerme("",al.size());
 				
 				
 				t.start();
@@ -230,9 +233,8 @@ public class Server {
 		String username;
 		// message object to recieve message and its type
 		ChatMessage cm;
-		// timestamp
 		String date;
-		
+		 Timer timer;
 
 		// Constructor
 		ClientThread(Socket socket) {
@@ -301,25 +303,23 @@ public class Server {
 							selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
 					}
 					// controllare
-						Timer timer = new Timer(1, (e) -> {
-							//if(!modelField.allStop()) {
+					timer = new Timer(1, (e) -> {
+							if(!modelField.allStop()) {
 								modelField.updateGame();
 								broadcast("", al.size());
-							//}
 
+							}
+							else{
+
+								timer.stop();
+								broadcastFerme("", al.size());
+							}
 						});
 
-						if(!modelField.allStop())
-							timer.start();
-						else
-							timer.stop();
+						timer.start();
 
 						broadcastFerme("",al.size());
 
-						/*do {
-							modelField.updateGame();
-							broadcast("", al.size());
-						}while(!modelField.allStop());*/
 					break;
 				case ChatMessage.LOGOUT:
 					display(username + " disconnected with a LOGOUT message.");
@@ -333,7 +333,7 @@ public class Server {
 			close();
 			frame.repaintPeople(al);
 		}
-		
+
 		// close everything
 		private void close() {
 			try {

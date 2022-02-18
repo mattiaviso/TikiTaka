@@ -1,5 +1,7 @@
 package it.unibs.pajc;
 
+import javax.swing.*;
+
 public class GameField {
 
     public static final int MAX_X = 566;
