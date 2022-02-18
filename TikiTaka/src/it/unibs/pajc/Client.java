@@ -27,10 +27,7 @@ public class Client  {
 	public static String turno;
 	public static int score1,score2;
 
-
-
 	
-
 	private static boolean close=false;
 	// for I/O
 	private ObjectInputStream sInput;		// to read from the socket

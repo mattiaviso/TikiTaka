@@ -80,6 +80,10 @@ public class Result extends JPanel  {
             g2.setColor(Color.BLUE);
             g2.drawString(team2, 857,30);
         }
+        else{
+            g2.drawString(team1, 230,30);
+            g2.drawString(team2, 857,30);
+        }
 
 
         g2.drawString(score1+"", 505,50);
