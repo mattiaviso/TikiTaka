@@ -111,6 +111,7 @@ public class Client  {
 	private void display(String msg) {
 
 		System.out.println(msg);
+		JOptionPane.showMessageDialog(finestra,"Errore di connessione al server");
 		
 	}
 	
@@ -145,12 +146,24 @@ public class Client  {
 		catch(Exception e) {}
 			
 	}
-	
+	public static boolean isValidIp(final String ip)
+	{
+		return ip.matches("^[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}$");
+	}
 	
 	public static void main(String[] args) {
 		// default values if not entered
 		int portNumber = 1500;
-		String serverAddress = "localhost";
+		// immette ip
+		String serverAddress;
+		String ipServer = JOptionPane.showInputDialog("inserire ipServer (premere invio per il localhost)");
+		if(ipServer!=null && isValidIp(ipServer)){
+			 serverAddress = ipServer;
+		}else{
+			serverAddress = "localhost";
+		}
+
+
 		String userName = "Anonymous";
 		Scanner scan = new Scanner(System.in);
 		

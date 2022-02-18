@@ -120,10 +120,10 @@ public class Server {
 			ClientThread ct = al.get(i);
 			String team;
 			if(i%2==0) {
-				team="T1";
+				team="T2";
 			}
 			else{
-				team="T2";
+				team="T1";
 			}
 			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"\n";
 			for(int j=0;j<m;j++) {
@@ -165,10 +165,10 @@ public class Server {
 			ClientThread ct = al.get(i);
 			String team;
 			if(i%2==0) {
-				team="T1";
+				team="T2";
 			}
 			else{
-				team="T2";
+				team="T1";
 			}
 			String messageLf = modelField.messaggioPos()+m+"@"+team+"@null\n";
 			for(int j=0;j<m;j++) {
@@ -315,11 +315,7 @@ public class Server {
 								broadcastFerme("", al.size());
 							}
 						});
-
 						timer.start();
-
-						broadcastFerme("",al.size());
-
 					break;
 				case ChatMessage.LOGOUT:
 					display(username + " disconnected with a LOGOUT message.");

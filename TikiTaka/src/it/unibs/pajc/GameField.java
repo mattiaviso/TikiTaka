@@ -139,7 +139,7 @@ public class GameField {
                         positionStart();
                         score2++;
                         //TikiTakaGame.panel.setTable(score1,score2);
-                        setTurno("T2");
+                        setTurno("T1");
                     }
                 }
                 else{
@@ -155,7 +155,7 @@ public class GameField {
                         positionStart();
                         score1++;
                         //TikiTakaGame.panel.setTable(score1,score2);
-                        setTurno("T1");
+                        setTurno("T2");
                     }
                 }
                 else {
