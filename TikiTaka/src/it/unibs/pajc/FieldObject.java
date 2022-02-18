@@ -21,6 +21,11 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         this.massa = massa;
     }
 
+    public void setXY(double x,double y){
+        this.position.setX(x);
+        this.position.setY(y);
+    }
+
     public double getRadius() {
         return radius;
     }

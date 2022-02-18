@@ -24,6 +24,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
  	public double angle;
  	protected FieldObject[] objectsPiece;
  	private boolean wait = false;
+
 	
 	
 	public ViewClient() {
@@ -123,25 +124,29 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 	public void aggiornaPos(String msg) {
 
 		String[] parts = msg.split("\n");
-		for(int i=0;i<11;i++) {
-			String []subpartStrings = parts[i].split("@");
-			if(subpartStrings[0].equals("Piece")) {
-				objectsPiece[i] = (new Piece(Double.parseDouble(subpartStrings[1]), Double.parseDouble(subpartStrings[2]), Double.parseDouble(subpartStrings[3]), subpartStrings[4], subpartStrings[5]));
+
+
+			for (int i = 0; i < 11; i++) {
+				String[] subpartStrings = parts[i].split("@");
+				if (subpartStrings[0].equals("Piece")) {
+					objectsPiece[i] = (new Piece(Double.parseDouble(subpartStrings[1]), Double.parseDouble(subpartStrings[2]), Double.parseDouble(subpartStrings[3]), subpartStrings[4], subpartStrings[5]));
+				} else if (subpartStrings[0].equals("Ball")) {
+					objectsPiece[i] = (new Ball(Double.parseDouble(subpartStrings[1]), Double.parseDouble(subpartStrings[2]), Double.parseDouble(subpartStrings[3])));
+				}
 			}
-			else if(subpartStrings[0].equals("Ball")) {
-				objectsPiece[i] = (new Ball(Double.parseDouble(subpartStrings[1]), Double.parseDouble(subpartStrings[2]), Double.parseDouble(subpartStrings[3])));
+
+			String[] riga11 = parts[11].split("@");
+			int nUte = Integer.parseInt(riga11[0]);
+
+			if (nUte == 1) {
+				wait = true;
+			} else {
+				wait = false;
 			}
+
+			repaint();
 		}
-		
-		if(Integer.parseInt(parts[11]) == 1 ) {
-			wait = true;
-		}
-		else {
-			wait=false;
-		}
-		
-		repaint();
-	}
+
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {

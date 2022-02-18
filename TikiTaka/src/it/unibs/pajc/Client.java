@@ -8,8 +8,6 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-
 
 
 //The Client that can be run as a console
@@ -24,6 +22,9 @@ public class Client  {
 	protected FieldObject[] objectsPiece;
 	public static Result  panel;
 	// variabili messe dopo il funzionamento
+	// da rendere private
+	public  static String team;
+	public static String turno;
 
 
 
@@ -220,13 +221,13 @@ public class Client  {
 			public void mousePressed(MouseEvent e) {
 
 				//prendiamo coordinate x e y di dove è stato premuto il mouse
-				int x = e.getX()-finestra.w/2;
-				int y = -(e.getY()- finestra.h/2);
+				if(team.equals(turno)) {
+					int x = e.getX() - finestra.w / 2;
+					int y = -(e.getY() - finestra.h / 2);
 
-				finestra.valido = finestra.checkClickAble(x,y);
-
-				finestra.repaint();
-
+					finestra.valido = finestra.checkClickAble(x, y);
+					finestra.repaint();
+				}
 			}
 
 		});
@@ -265,6 +266,8 @@ public class Client  {
 
 		public void run() {
 			String msg = null;
+
+
 			while(true) {
 				try {
 					// read the message form the input datastream
@@ -273,8 +276,11 @@ public class Client  {
 					System.out.println(msg);
 					finestra.aggiornaPos(msg);
 					String[] parts = msg.split("\n");
-					
-					int nUte = Integer.parseInt(parts[11]);
+
+					String[] riga11 = parts[11].split("@");
+					int nUte = Integer.parseInt(riga11[0]);
+					team = riga11[1];
+					turno = riga11[2];
 					
 					if(nUte>=1)
 					if(parts[12].equals(username))

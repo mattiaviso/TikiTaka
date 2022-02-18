@@ -27,6 +27,7 @@ public class Server {
 	public static GameField modelField;
 	
 	public static ViewServer frame;
+
 	
 	//constructor that receive the port to listen to for connection as parameter
 	
@@ -119,25 +120,38 @@ public class Server {
 		//String messageLf = time + " " + message + "\n";
 		
 		
-		String messageLf = modelField.messaggioPos()+m+"\n";
+		/*String messageLf = modelField.messaggioPos()+m+"\n";
 		for(int i=0;i<m;i++) {
 			messageLf+= al.get(i).username+"\n";
-		}
+		}*/
 		// display message
 		//System.out.print(messageLf);
-		frame.aggiungitesto(messageLf);
+		// ATENZIONE
+		//frame.aggiungitesto(messageLf);
 		
 		// we loop in reverse order in case we would have to remove a Client
 		// because it has disconnected
 		for(int i = al.size(); --i >= 0;) {
 			ClientThread ct = al.get(i);
+			String team;
+			if(i%2==0) {
+				team="T1";
+			}
+			else{
+				team="T2";
+			}
+			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"\n";
+			for(int j=0;j<m;j++) {
+				messageLf+= al.get(j).username+"\n";
+			}
+
 			// try to write to the Client if it fails remove it from the list
 			if(!ct.writeMsg(messageLf)) {
 				al.remove(i);
 				display("Disconnected Client " + ct.username + " removed from list.");
 			}
 		}
-		
+
 		
 		return true;
 		
@@ -252,6 +266,7 @@ public class Server {
 					//formato messaggio x@y@distance@angle
 					//dove x e y sono le coordinate del primo oggetto che si muove
 					if(!message.isEmpty()) {
+						modelField.cambioTurno();
 						System.out.println("MESSAGGIO INVIATO"+message);
 						String part[] = message.split("@");
 						FieldObject selezionata = modelField.pedinaSelezionata(Double.parseDouble(part[0]), Double.parseDouble(part[1]));
