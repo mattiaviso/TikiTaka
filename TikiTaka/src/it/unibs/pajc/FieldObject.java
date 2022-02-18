@@ -69,7 +69,7 @@ abstract public class FieldObject implements Comparable<FieldObject>{
             distance = MAXDISTANCE;
         }
 
-        vel = distance/7.5;
+        vel = distance/8.5;// 7.5
         velocita.setXY(vel, angle);
         velocita.totalXY();
     }

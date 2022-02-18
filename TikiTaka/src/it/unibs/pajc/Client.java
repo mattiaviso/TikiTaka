@@ -112,7 +112,7 @@ public class Client  {
 	private void display(String msg) {
 
 		System.out.println(msg);
-		JOptionPane.showMessageDialog(finestra,"Errore di connessione al server");
+		JOptionPane.showMessageDialog(finestra,msg);
 		
 	}
 	
@@ -301,7 +301,7 @@ public class Client  {
 					score1 = Integer.parseInt(riga11[3]);
 					score2 = Integer.parseInt(riga11[4]);
 					panel.setScore(score1,score2);
-					
+
 					if(nUte>=1)
 					if(parts[12].equals(username))
 						parts[12]+="(you)";
