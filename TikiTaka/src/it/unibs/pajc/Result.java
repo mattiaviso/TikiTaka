@@ -69,13 +69,16 @@ public class Result extends JPanel  {
         g2.setFont(new Font("Ahoroni",Font.BOLD,30));
         if(Client.turno.equals("T1")){
             g2.setColor(Color.RED);
-            g2.drawString(team1, 230,30);
+            g2.drawString(team2, 857,30);
+
             g2.setColor(Color.BLUE);
+            g2.drawString(team1, 230,30);
         }
         else if(Client.turno.equals("T2")){
             g2.setColor(Color.RED);
-            g2.drawString(team2, 857,30);
+            g2.drawString(team1, 230,30);
             g2.setColor(Color.BLUE);
+            g2.drawString(team2, 857,30);
         }
 
 
