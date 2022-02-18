@@ -25,6 +25,9 @@ public class Piece extends FieldObject{
 
     }
 
+    public String getTeam(){
+        return team;
+    }
 
     public boolean isBall(){
         return false;

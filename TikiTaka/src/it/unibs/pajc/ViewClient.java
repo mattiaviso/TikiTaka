@@ -24,6 +24,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
  	public double angle;
  	protected FieldObject[] objectsPiece;
  	private boolean wait = false;
+	 private String team;
 
 	
 	
@@ -137,6 +138,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
 			String[] riga11 = parts[11].split("@");
 			int nUte = Integer.parseInt(riga11[0]);
+			team = riga11[1];
 
 			if (nUte == 1) {
 				wait = true;
@@ -181,7 +183,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
 	public FieldObject checkClickAble(int xMouse, int yMouse) {
 		for (FieldObject f : objectsPiece) {
-			if (f instanceof Piece)
+			if (f instanceof Piece && ((Piece) f).getTeam().equals(team));
 				if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2)) {
 					return f;
 				}
