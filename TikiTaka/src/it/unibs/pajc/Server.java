@@ -110,16 +110,43 @@ public class Server {
 		String time = sdf.format(new Date()) + " " + msg;
 		System.out.println(time);
 	}
-	
+
+	private boolean broadcastFerme(String message,int m) {
+
+		for(int i = al.size(); --i >= 0;) {
+			ClientThread ct = al.get(i);
+			String team;
+			if(i%2==0) {
+				team="T1";
+			}
+			else{
+				team="T2";
+			}
+			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"\n";
+			for(int j=0;j<m;j++) {
+				messageLf+= al.get(j).username+"\n";
+			}
+
+			// try to write to the Client if it fails remove it from the list
+			if(!ct.writeMsg(messageLf)) {
+				al.remove(i);
+				display("Disconnected Client " + ct.username + " removed from list.");
+			}
+		}
+
+
+		return true;
+
+
+	}
+
+
 	// to broadcast a message to all Clients
 	private boolean broadcast(String message,int m) {
 		// add timestamp to the message
 		String time = sdf.format(new Date());
-		
 		// if message is a broadcast message
 		//String messageLf = time + " " + message + "\n";
-		
-		
 		/*String messageLf = modelField.messaggioPos()+m+"\n";
 		for(int i=0;i<m;i++) {
 			messageLf+= al.get(i).username+"\n";
@@ -140,7 +167,7 @@ public class Server {
 			else{
 				team="T2";
 			}
-			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"\n";
+			String messageLf = modelField.messaggioPos()+m+"@"+team+"@null\n";
 			for(int j=0;j<m;j++) {
 				messageLf+= al.get(j).username+"\n";
 			}
@@ -274,17 +301,21 @@ public class Server {
 							selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
 					}
 					// controllare
+						Timer timer = new Timer(1, (e) -> {
+							//if(!modelField.allStop()) {
+								modelField.updateGame();
+								broadcast("", al.size());
+							//}
 
-					Timer timer = new Timer(1, (e) -> {
-						if (!modelField.allStop()) {
-							modelField.updateGame();
-							broadcast("", al.size());
-						}
-						else{
+						});
 
-						}
-					});
-					timer.start();
+						if(!modelField.allStop())
+							timer.start();
+						else
+							timer.stop();
+
+						broadcastFerme("",al.size());
+
 						/*do {
 							modelField.updateGame();
 							broadcast("", al.size());
