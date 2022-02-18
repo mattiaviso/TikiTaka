@@ -224,9 +224,12 @@ public class Client  {
 				if(team.equals(turno)) {
 					int x = e.getX() - finestra.w / 2;
 					int y = -(e.getY() - finestra.h / 2);
-
 					finestra.valido = finestra.checkClickAble(x, y);
-					finestra.repaint();
+					if(finestra.valido.getTeam().equals(team)) {
+						finestra.repaint();
+					}else{
+						finestra.valido = null;
+					}
 				}
 			}
 

@@ -21,6 +21,13 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         this.massa = massa;
     }
 
+    public String getTeam(){
+        if(this instanceof Piece){
+           return this.getTeam();
+        }
+        return null;
+    }
+
     public void setXY(double x,double y){
         this.position.setX(x);
         this.position.setY(y);
