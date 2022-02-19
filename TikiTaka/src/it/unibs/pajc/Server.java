@@ -31,6 +31,8 @@ public class Server {
 
 
 
+
+
 	
 	//constructor that receive the port to listen to for connection as parameter
 	
@@ -41,6 +43,7 @@ public class Server {
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		// an ArrayList to keep the list of the Client
 		al = new ArrayList<ClientThread>();
+
 	}
 	
 	public void start() {

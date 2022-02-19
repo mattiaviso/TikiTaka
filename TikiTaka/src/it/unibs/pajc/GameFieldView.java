@@ -1,5 +1,8 @@
 package it.unibs.pajc;
 
+import it.unibs.pajc.FieldObject;
+import it.unibs.pajc.GameField;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +21,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	private  Image field;
  	public static   int w;
 	public  static int h;
- 	public  FieldObject valido;
+ 	public FieldObject valido;
  	public  int newradius = 0;
  	public int xnew,ynew;
 	 public int distance;
@@ -144,9 +147,11 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 		// il rilascio lo step next
 
 		if(valido!=null){
-			valido.start(distance, angle);
+			if(!(distance <= valido.getRadius())) {
+				valido.start(distance, angle);
 
-			fieldModel.cambioTurno();
+				fieldModel.cambioTurno();
+			}
 		}
 		valido = null;
 		newradius = 0;

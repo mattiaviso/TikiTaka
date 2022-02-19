@@ -8,9 +8,8 @@ public class TikiTakaGame extends Canvas {
 	private static JLabel textField = new JLabel("");
 	private JFrame frame;
 	private JTextField txtGioco;
-	/*private BufferedImage sfondo = null;*/
 	GameFieldView battleFieldView = new GameFieldView();
-	public static Result  panel;
+	public static ResultOffline panel;
 
 
 /**
@@ -22,30 +21,6 @@ public class TikiTakaGame extends Canvas {
  *
  */
 
-
-	 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		String team1 = JOptionPane.showInputDialog("Dammi il nome del team1");
-		String team2 = JOptionPane.showInputDialog("Dammi il nome del team2");
-
-		panel = new Result(team1,team2);
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TikiTakaGame window = new TikiTakaGame();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -53,10 +28,18 @@ public class TikiTakaGame extends Canvas {
 		initialize();
 	}
 
+
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		String team1 = JOptionPane.showInputDialog("Dammi il nome del team1");
+		String team2 = JOptionPane.showInputDialog("Dammi il nome del team2");
+
+		panel = new ResultOffline(team1,team2);
+
 
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -69,10 +52,8 @@ public class TikiTakaGame extends Canvas {
 		panel.setTable(0,0);
 		panel.setPreferredSize(new Dimension(1300,120));
 
+		frame.setVisible(true);
 	}
-	// metodo per il cambiamento
-
-
 
 
 }
