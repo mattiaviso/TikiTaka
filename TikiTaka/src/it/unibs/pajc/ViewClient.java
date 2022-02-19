@@ -85,6 +85,12 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 			g2.drawImage(f.getImageObj(),(int) (f.position.getX()-(f.getRadius())), (int) (f.position.getY()-(f.getRadius())),null);
 		}
 
+		if(wait){
+
+			g2.setColor(Color.RED);
+			g2.drawString("ATTENDI ALTRO GIOCATORE",-30,0);
+			g2.setColor(Color.BLUE);
+		}
 		
 
 	}

@@ -120,10 +120,10 @@ public class Server {
 			ClientThread ct = al.get(i);
 			String team;
 			if(i%2==0) {
-				team="T2";
+				team="T1";
 			}
 			else{
-				team="T1";
+				team="T2";
 			}
 			String messageLf = modelField.messaggioPos()+m+"@"+team+"@"+modelField.turno+"@"+modelField.score1+"@"+modelField.score2+"\n";
 			for(int j=0;j<m;j++) {
@@ -165,10 +165,10 @@ public class Server {
 			ClientThread ct = al.get(i);
 			String team;
 			if(i%2==0) {
-				team="T2";
+				team="T1";
 			}
 			else{
-				team="T1";
+				team="T2";
 			}
 			String messageLf = modelField.messaggioPos()+m+"@"+team+"@null"+"@"+modelField.score1+"@"+modelField.score2+"\n";
 			for(int j=0;j<m;j++) {
@@ -365,5 +365,24 @@ public class Server {
 			return true;
 		}
 	}
+
+	/**
+	 *
+	 * @return 0 Se nessuno ha vinto
+	 * @return 1 Se team1 ha vinto
+	 * @return 2 Se team2 ha vinto
+	 */
+	public int checkVincitore(){
+		if(modelField.score1 == 3 ){
+			return 1;
+		}else if (modelField.score2 == 3){
+			return 2;
+		} else{
+			return 0;
+		}
+	}
+
+
+
 }
 

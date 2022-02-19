@@ -177,13 +177,15 @@ public class Client  {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setTable(0,0);
 		panel.setPreferredSize(new Dimension(1300,120));
-		
+
+
 		finestra = new ViewClient();
 		finestra.setVisible(true);
-		
-		frame.add(finestra, BorderLayout.CENTER);
 
+		frame.add(finestra, BorderLayout.CENTER);
 		frame.add(panel, BorderLayout.NORTH);
+
+
 		
 		
 		// create the Client object
@@ -214,11 +216,12 @@ public class Client  {
 		    public void mouseReleased(MouseEvent e) {
 
 				if(finestra.valido!=null){
-					//finestra.valido.start(finestra.distance, finestra.angle);
-					System.out.println(finestra.valido.position.getX()+finestra.valido.position.getY()+finestra.distance+ finestra.angle);
-					//Dare formo al messaggio x@y@distance@angle
-					elaboramessaggio(new String( finestra.valido.position.getX()+"@"+finestra.valido.position.getY()+"@"+finestra.distance+"@"+ finestra.angle),client);
-					//fieldModel.cambioTurno();
+					if(!(finestra.distance <= finestra.valido.getRadius())){
+						//finestra.valido.start(finestra.distance, finestra.angle);
+						System.out.println(finestra.valido.position.getX() + finestra.valido.position.getY() + finestra.distance + finestra.angle);
+						//Dare formo al messaggio x@y@distance@angle
+						elaboramessaggio(new String(finestra.valido.position.getX() + "@" + finestra.valido.position.getY() + "@" + finestra.distance + "@" + finestra.angle), client);
+					}
 				}
 				finestra.valido = null;
 				finestra.newradius = 0;
@@ -236,10 +239,12 @@ public class Client  {
 					int x = e.getX() - finestra.w / 2;
 					int y = -(e.getY() - finestra.h / 2);
 					finestra.valido = finestra.checkClickAble(x, y);
-					if(finestra.valido.getTeam().equals(team)) {
-						finestra.repaint();
-					}else{
-						finestra.valido = null;
+					if(finestra.valido != null) {
+						if (finestra.valido.getTeam().equals(team)) {
+							finestra.repaint();
+						} else {
+							finestra.valido = null;
+						}
 					}
 				}
 			}
@@ -313,7 +318,8 @@ public class Client  {
 					else {
 						panel.setUsernames(parts[12], parts[13]);
 					}
-					
+
+					checkVincitore();
 					
 				}
 				catch(IOException e) {
@@ -324,6 +330,24 @@ public class Client  {
 				}
 			}
 			
+		}
+	}
+	/**
+	 *
+	 * @return 0 Se nessuno ha vinto
+	 * @return 1 Se team1 ha vinto
+	 * @return 2 Se team2 ha vinto
+	 */
+	public int checkVincitore(){
+		if(score1 == 3 ){
+			frame.setVisible(false);
+
+			return 1;
+		}else if (score2 == 3){
+			frame.setVisible(false);
+			return 2;
+		} else{
+			return 0;
 		}
 	}
 }

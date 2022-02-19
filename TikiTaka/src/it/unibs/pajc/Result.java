@@ -67,34 +67,26 @@ public class Result extends JPanel  {
         g2.drawImage(this.Tabel, 0, 0, 1285, 120, null);
 
         g2.setFont(new Font("Ahoroni",Font.BOLD,30));
-        if(Client.turno.equals("T1")){
-            g2.setColor(Color.RED);
-            g2.drawString(team2, 857,30);
-
-            g2.setColor(Color.BLUE);
-            g2.drawString(team1, 230,30);
+        if(Client.turno != null) {
+            if (Client.turno.equals("T1")) {
+                g2.setColor(Color.RED);
+                g2.drawString(team1, 857, 30);
+                g2.setColor(Color.BLUE);
+                g2.drawString(team2, 230, 30);
+            } else if (Client.turno.equals("T2")) {
+                g2.setColor(Color.RED);
+                g2.drawString(team2, 230, 30);
+                g2.setColor(Color.BLUE);
+                g2.drawString(team1, 857, 30);
+            } else {
+                g2.drawString(team2, 230, 30);
+                g2.drawString(team1, 857, 30);
+            }
         }
-        else if(Client.turno.equals("T2")){
-            g2.setColor(Color.RED);
-            g2.drawString(team1, 230,30);
-            g2.setColor(Color.BLUE);
-            g2.drawString(team2, 857,30);
-        }
-        else{
-            g2.drawString(team1, 230,30);
-            g2.drawString(team2, 857,30);
-        }
 
-
-        g2.drawString(score1+"", 505,50);
-        g2.drawString(score2+"", 755,50);
-
-        //porterofutbol.gif
-
-
+        g2.drawString(score2+"", 505,50);
+        g2.drawString(score1+"", 755,50);
 
     }
-
-
 
 }
