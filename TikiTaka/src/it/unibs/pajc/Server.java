@@ -183,6 +183,7 @@ public class Server {
 				al.remove(i);
 				display("Disconnected Client " + ct.username + " removed from list.");
 			}
+			modelField.checkVincitore();
 		}
 
 		

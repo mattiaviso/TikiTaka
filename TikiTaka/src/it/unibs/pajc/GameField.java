@@ -138,7 +138,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
                         positionStart();
                         score2++;
-                        checkVincitore();
+
                         //TikiTakaGame.panel.setTable(score1,score2);
                         setTurno("T2");
                     }
@@ -155,7 +155,7 @@ public class GameField {
                     if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
                         positionStart();
                         score1++;
-                        checkVincitore();
+
                         //TikiTakaGame.panel.setTable(score1,score2);
                         setTurno("T1");
                     }
