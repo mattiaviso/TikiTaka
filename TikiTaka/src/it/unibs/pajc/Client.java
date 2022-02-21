@@ -23,7 +23,7 @@ public class Client  {
 	public static Result  panel;
 	// variabili messe dopo il funzionamento
 	// da rendere private
-	public  static String team;
+	public static String team;
 	public static String turno;
 	public static int score1,score2;
 
@@ -319,7 +319,13 @@ public class Client  {
 						panel.setUsernames(parts[12], parts[13]);
 					}
 
-					checkVincitore();
+					if(checkVincitore()==1){
+						JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam1());
+					}
+					else if( checkVincitore() == 2){
+						JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam2());
+					}
+
 					
 				}
 				catch(IOException e) {
@@ -340,11 +346,12 @@ public class Client  {
 	 */
 	public int checkVincitore(){
 		if(score1 == 3 ){
-			frame.setVisible(false);
+			//frame.setVisible(false);
 
 			return 1;
 		}else if (score2 == 3){
-			frame.setVisible(false);
+			//frame.setVisible(false);
+
 			return 2;
 		} else{
 			return 0;

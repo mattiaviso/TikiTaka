@@ -41,6 +41,26 @@ public class Result extends JPanel  {
         this.team2 = t2;
     }
 
+    public int getScore1() {
+        return score1;
+    }
+
+    public int getScore2() {
+        return score2;
+    }
+
+    public String getTeam1() {
+        return team1;
+    }
+
+    public String getTeam2() {
+        return team2;
+    }
+
+    public BufferedImage getTabel() {
+        return Tabel;
+    }
+
     public void setTable(int t1, int t2){
         //settare variabili
         this.score1 = t1;
