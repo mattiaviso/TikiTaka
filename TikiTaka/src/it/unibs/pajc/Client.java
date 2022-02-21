@@ -1,5 +1,6 @@
 package it.unibs.pajc;
 
+import java.awt.image.BufferedImage;
 import java.net.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -7,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -326,6 +328,8 @@ public class Client  {
 						JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam1());
 					}*/
 
+					System.out.println(checkVincitore());
+
 					
 				}
 				catch(IOException e) {
@@ -346,12 +350,25 @@ public class Client  {
 	 */
 	public int checkVincitore(){
 		if(score1 == 3 ){
-
-			JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam2());
+			if(panel.getTeam2().equals(username+"(you)"))
+			{
+				final ImageIcon icon = new ImageIcon("porterofutbol.gif");
+				JOptionPane.showMessageDialog(null, "Hai vinto", "About", JOptionPane.INFORMATION_MESSAGE, icon);
+			}
+			else{
+				JOptionPane.showMessageDialog(frame,"Hai perso");
+			}
+			//JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam2());
 			return 1;
 		}else if (score2 == 3){
 			//frame.setVisible(false);
-			JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam1());
+			if(panel.getTeam1().equals(username+"(you)"))
+			{
+				JOptionPane.showMessageDialog(frame,"Hai vinto");
+			}
+			else{
+				JOptionPane.showMessageDialog(frame,"Hai perso");
+			}
 			return 2;
 		} else{
 			return 0;

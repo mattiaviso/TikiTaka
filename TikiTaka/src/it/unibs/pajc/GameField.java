@@ -264,8 +264,8 @@ public class GameField {
 
     public void checkVincitore(){
         if(score1 == 3 || score2 == 3){
-            score1 = 0;
-            score2 = 0;
+            score1 = 2;
+            score2 = 2;
         }
     }
 
