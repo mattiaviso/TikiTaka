@@ -319,12 +319,12 @@ public class Client  {
 						panel.setUsernames(parts[12], parts[13]);
 					}
 
-					if(checkVincitore()==1){
-						JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam1());
+					/*if(checkVincitore()==1){
+						JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam2());
 					}
 					else if( checkVincitore() == 2){
-						JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam2());
-					}
+						JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam1());
+					}*/
 
 					
 				}
@@ -346,12 +346,12 @@ public class Client  {
 	 */
 	public int checkVincitore(){
 		if(score1 == 3 ){
-			//frame.setVisible(false);
 
+			JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam2());
 			return 1;
 		}else if (score2 == 3){
 			//frame.setVisible(false);
-
+			JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam1());
 			return 2;
 		} else{
 			return 0;
