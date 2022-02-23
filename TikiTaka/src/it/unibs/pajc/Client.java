@@ -334,7 +334,7 @@ public class Client  {
 						JOptionPane.showMessageDialog(frame, "Il vincitore e' " + panel.getTeam1());
 					}*/
 
-					System.out.println(checkVincitore());
+					checkVincitore();
 
 					
 				}
@@ -348,36 +348,26 @@ public class Client  {
 			
 		}
 	}
-	/**
-	 *
-	 * @return 0 Se nessuno ha vinto
-	 * @return 1 Se team1 ha vinto
-	 * @return 2 Se team2 ha vinto
+	/** Metodo che controlla se qualcuno ha vinto
 	 */
-	public int checkVincitore(){
+	public void checkVincitore(){
+		ImageIcon winner = new ImageIcon("winner.gif");
+		ImageIcon loser = new ImageIcon("loser.gif");
 		if(score1 == 3 ){
-			if(panel.getTeam2().equals(username+"(you)"))
-			{
-				final ImageIcon icon = new ImageIcon("porterofutbol.gif");
-				JOptionPane.showMessageDialog(null, "Hai vinto", "About", JOptionPane.INFORMATION_MESSAGE, icon);
+			if(panel.getTeam2().equals(username+"(you)")) {
+				JOptionPane.showMessageDialog(null, null, "Hai vinto", JOptionPane.INFORMATION_MESSAGE, winner);
 			}
 			else{
-				JOptionPane.showMessageDialog(frame,"Hai perso");
+				JOptionPane.showMessageDialog(null, null, "Hai perso", JOptionPane.INFORMATION_MESSAGE, loser);
 			}
-			//JOptionPane.showMessageDialog(frame,"Il vincitore e' " + panel.getTeam2());
-			return 1;
 		}else if (score2 == 3){
-			//frame.setVisible(false);
-			if(panel.getTeam1().equals(username+"(you)"))
-			{
-				JOptionPane.showMessageDialog(frame,"Hai vinto");
+			if(panel.getTeam1().equals(username+"(you)")) {
+				JOptionPane.showMessageDialog(null, null, "Hai vinto", JOptionPane.INFORMATION_MESSAGE, winner);
 			}
 			else{
-				JOptionPane.showMessageDialog(frame,"Hai perso");
+				JOptionPane.showMessageDialog(null, null, "Hai perso", JOptionPane.INFORMATION_MESSAGE, loser);
+
 			}
-			return 2;
-		} else{
-			return 0;
 		}
 	}
 }
