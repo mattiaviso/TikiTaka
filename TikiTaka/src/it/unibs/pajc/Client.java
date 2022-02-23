@@ -184,6 +184,9 @@ public class Client {
 
         userName = JOptionPane.showInputDialog(finestra, "Inserisci username");
 
+        // create the Client object
+        Client client = new Client(serverAddress, portNumber, userName);
+
         panel = new Result("", "",client);
         frame = new JFrame();
         frame.setVisible(true);
@@ -203,9 +206,6 @@ public class Client {
         sound = new SoundClip("Song");
         sound.start();
 
-
-        // create the Client object
-        Client client = new Client(serverAddress, portNumber, userName);
         // try to connect to the server and return if not connected
         if (!client.start())
             return;

@@ -96,8 +96,8 @@ public class Result extends JPanel {
                 g2.setColor(Color.RED);
                 g2.drawString(team1, 857, 30);
                 g2.setColor(Color.BLUE);
-                g2.drawString(team2, 230, 30);client
-            } else if (Client.turno.equals("T2")) {
+                g2.drawString(team2, 230, 30);
+            } else if (client.getTurno().equals("T2")) {
                 g2.setColor(Color.RED);
                 g2.drawString(team2, 230, 30);
                 g2.setColor(Color.BLUE);
