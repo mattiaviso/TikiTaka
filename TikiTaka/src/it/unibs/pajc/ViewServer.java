@@ -59,9 +59,7 @@ public class ViewServer extends JFrame {
         contentPane.add(people);
     }
 
-    public void aggiungitesto(String txt) {
-        testo.setText(testo.getText() + txt);
-    }
+
 
 
     public void repaintPeople(ArrayList<Server.ClientThread> al) {
