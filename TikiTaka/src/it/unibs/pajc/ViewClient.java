@@ -5,26 +5,97 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import javax.swing.border.EmptyBorder;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.*;
 
 
 public class ViewClient extends JPanel implements MouseListener, MouseMotionListener {
 
-
+    //Immagine del campo
     private Image field;
-    public static int w;
-    public static int h;
-    public FieldObject valido;
-    public int newradius = 0;
-    public int xnew, ynew;
-    public int distance;
-    public double angle;
+
+    private int w;
+    private int h;
+
+    private FieldObject valido;
+    // radius selezionato
+    private int radiusPower = 0;
+    private int xnew, ynew;
+    private int distance;
+    private double angle;
     protected FieldObject[] objectsPiece;
     private boolean wait = false;
-    private String team;
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public int getXnew() {
+        return xnew;
+    }
+
+    public void setXnew(int xnew) {
+        this.xnew = xnew;
+    }
+
+    public int getYnew() {
+        return ynew;
+    }
+
+    public void setYnew(int ynew) {
+        this.ynew = ynew;
+    }
+
+    public int getRadiusPower() {
+        return radiusPower;
+    }
+
+    public void setRadiusPower(int radiusPower) {
+        this.radiusPower = radiusPower;
+    }
+
+    public FieldObject getValido() {
+        return valido;
+    }
+
+    public void setValido(FieldObject valido) {
+        this.valido = valido;
+    }
+
+    public String getValidoTeam(){
+        return valido.getTeam();
+    }
+
+    public double getValidoRadius(){
+        return valido.getRadius();
+    }
+
+    public double getPosValidX(){
+        return valido.position.getX();
+    }
+    public double getPosValidY(){
+        return valido.position.getY();
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
 
 
     public ViewClient() {
@@ -58,9 +129,9 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             g2.setColor(Color.RED);
             g2.drawOval((int) (valido.position.getX() - valido.radius), (int) (valido.position.getY() - valido.radius), (int) valido.radius * 2, (int) valido.radius * 2);
         }
-        if (newradius != 0) {
+        if (radiusPower != 0) {
             g2.setColor(new Color(0, 100, 0, 100));
-            g2.fillOval((int) (valido.position.getX() - newradius), (int) (valido.position.getY() - newradius), (int) newradius * 2, (int) newradius * 2);
+            g2.fillOval((int) (valido.position.getX() - radiusPower), (int) (valido.position.getY() - radiusPower), (int) radiusPower * 2, (int) radiusPower * 2);
 
             g2.setColor(Color.black);
             int dy = (int) (ynew - valido.position.getY());

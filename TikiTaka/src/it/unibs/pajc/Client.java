@@ -20,16 +20,16 @@ public class Client {
 
     // variabili gioco
     protected String turno;
-    private int score1, score2;
-    private String team = null;
+    protected int score1, score2;
+    protected String team = null;
 
     // variabili client
-    private static boolean close = false;
-    private ObjectInputStream sInput;        // to read from the socket
-    private ObjectOutputStream sOutput;        // to write on the socket
-    private Socket socket;                    // socket object
-    private String server, username;    // server and username
-    private int port;
+    protected static boolean close = false;
+    protected ObjectInputStream sInput;        // to read from the socket
+    protected ObjectOutputStream sOutput;        // to write on the socket
+    protected Socket socket;                    // socket object
+    protected String server, username;    // server and username
+    protected int port;
 
 
     public String getTurno() {
@@ -187,7 +187,7 @@ public class Client {
         // create the Client object
         Client client = new Client(serverAddress, portNumber, userName);
 
-        panel = new Result("", "",client);
+        panel = new Result(client);
         frame = new JFrame();
         frame.setVisible(true);
         frame.setResizable(false);
@@ -214,13 +214,14 @@ public class Client {
             @Override
             public void mouseDragged(MouseEvent e) {
 
-                finestra.xnew = e.getX() - finestra.w / 2;
-                finestra.ynew = -(e.getY() - finestra.h / 2);
+                finestra.setXnew(e.getX() - finestra.getW() / 2);
+                finestra.setYnew(-(e.getY() - finestra.getH() / 2));
 
-                if (finestra.valido != null)
-                    finestra.newradius = Math.min((int) (Math.sqrt(((finestra.valido.position.getX() - finestra.xnew) *
-                            (finestra.valido.position.getX() - finestra.xnew)) + ((finestra.valido.position.getY() - finestra.ynew) *
-                            (finestra.valido.position.getY() - finestra.ynew)))), 150);
+                if (finestra.getValido() != null)
+                    finestra.setRadiusPower(
+                            Math.min((int) (Math.sqrt(((finestra.getPosValidX() - finestra.getXnew()) *
+                                    (finestra.getPosValidX() - finestra.getXnew())) + ((finestra.getPosValidY() - finestra.getYnew()) *
+                                    (finestra.getPosValidY() - finestra.getYnew())))), 150));
 
                 finestra.repaint();
             }
@@ -231,16 +232,16 @@ public class Client {
             @Override
             public void mouseReleased(MouseEvent e) {
 
-                if (finestra.valido != null) {
-                    if (!(finestra.distance <= finestra.valido.getRadius())) {
+                if (finestra.getValido() != null) {
+                    if (!(finestra.getDistance() <= finestra.getValidoRadius())) {
                         //finestra.valido.start(finestra.distance, finestra.angle);
-                        System.out.println(finestra.valido.position.getX() + finestra.valido.position.getY() + finestra.distance + finestra.angle);
+                        System.out.println(finestra.getPosValidX() + finestra.getPosValidY() + finestra.getDistance() + finestra.getAngle());
                         //Dare formo al messaggio x@y@distance@angle
-                        elaboramessaggio(new String(finestra.valido.position.getX() + "@" + finestra.valido.position.getY() + "@" + finestra.distance + "@" + finestra.angle), client);
+                        elaboramessaggio(finestra.getPosValidX() + "@" + finestra.getPosValidY() + "@" + finestra.getDistance() + "@" + finestra.getAngle(), client);
                     }
                 }
-                finestra.valido = null;
-                finestra.newradius = 0;
+                finestra.setValido(null);
+                finestra.setRadiusPower(0);
                 finestra.repaint();
 
             }
@@ -249,14 +250,14 @@ public class Client {
             public void mousePressed(MouseEvent e) {
                 //prendiamo coordinate x e y di dove è stato premuto il mouse
                 if (client.getTeam().equals(client.getTurno())) {
-                    int x = e.getX() - finestra.w / 2;
-                    int y = -(e.getY() - finestra.h / 2);
-                    finestra.valido = finestra.checkClickAble(x, y);
-                    if (finestra.valido != null) {
-                        if (finestra.valido.getTeam().equals(client.getTeam())) {
+                    int x = e.getX() - finestra.getW() / 2;
+                    int y = -(e.getY() - finestra.getH() / 2);
+                    finestra.setValido(finestra.checkClickAble(x, y));
+                    if (finestra.getValido() != null) {
+                        if (finestra.getValidoTeam().equals(client.getTeam())) {
                             finestra.repaint();
                         } else {
-                            finestra.valido = null;
+                            finestra.setValido(null);
                         }
                     }
                 }

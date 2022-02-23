@@ -1,10 +1,8 @@
 package it.unibs.pajc;
 
-import java.awt.color.ICC_Profile;
-import java.awt.event.ActionEvent;
+
 import java.io.*;
 import java.net.*;
-import javax.swing.*;
 import javax.swing.Timer;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,7 +29,6 @@ public class Server {
 
 
     //constructor that receive the port to listen to for connection as parameter
-
     public Server(int port) {
         // the port
         this.port = port;
@@ -41,7 +38,6 @@ public class Server {
         al = new ArrayList<ClientThread>();
 
     }
-
     public void start() {
         keepGoing = true;
         //create socket server and wait for connection requests
@@ -65,7 +61,7 @@ public class Server {
                 frame.repaintPeople(al);
 
 
-                broadcastFerme("", al.size());
+                broadcastFerme(al.size());
 
 
                 t.start();
@@ -92,14 +88,14 @@ public class Server {
         }
     }
 
-    // to stop the server
+    /*// to stop the server
     protected void stop() {
         keepGoing = false;
         try {
             new Socket("localhost", port);
         } catch (Exception e) {
         }
-    }
+    }*/
 
     // Display an event to the console
     private void display(String msg) {
@@ -107,7 +103,7 @@ public class Server {
         System.out.println(time);
     }
 
-    private boolean broadcastFerme(String message, int m) {
+    private boolean broadcastFerme(int m) {
 
         for (int i = al.size(); --i >= 0; ) {
             ClientThread ct = al.get(i);
@@ -128,30 +124,12 @@ public class Server {
                 display("Disconnected Client " + ct.username + " removed from list.");
             }
         }
-
-
         return true;
-
-
     }
 
 
     // to broadcast a message to all Clients
-    private boolean broadcast(String message, int m) {
-        // add timestamp to the message
-        String time = sdf.format(new Date());
-        // if message is a broadcast message
-        //String messageLf = time + " " + message + "\n";
-		/*String messageLf = modelField.messaggioPos()+m+"\n";
-		for(int i=0;i<m;i++) {
-			messageLf+= al.get(i).username+"\n";
-		}*/
-        // display message
-        //System.out.print(messageLf);
-        // ATENZIONE
-        //frame.aggiungitesto(messageLf);
-
-        // we loop in reverse order in case we would have to remove a Client
+    private boolean broadcast(int m) {
         // because it has disconnected
         for (int i = al.size(); --i >= 0; ) {
             ClientThread ct = al.get(i);
@@ -194,7 +172,7 @@ public class Server {
                 break;
             }
         }
-        broadcast(notif + disconnectedClient + " has left the chat room." + notif, al.size());
+        broadcast(al.size());
     }
 
 
@@ -240,7 +218,7 @@ public class Server {
                 sInput = new ObjectInputStream(socket.getInputStream());
                 // read the username
                 username = (String) sInput.readObject();
-                broadcast(notif + username + " has joined the chat room." + notif, al.size());
+                broadcast( al.size());
             } catch (IOException e) {
                 display("Exception creating new Input/output Streams: " + e);
                 return;
@@ -276,9 +254,7 @@ public class Server {
 
                 // different actions based on type message
                 switch (cm.getType()) {
-
                     case ChatMessage.MESSAGE:
-
                         //formato messaggio x@y@distance@angle
                         //dove x e y sono le coordinate del primo oggetto che si muove
                         if (!message.isEmpty()) {
@@ -289,24 +265,22 @@ public class Server {
                             if (selezionata != null)
                                 selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
                         }
-                        // controllare
                         timer = new Timer(1, (e) -> {
                             if (!modelField.allStop()) {
                                 modelField.updateGame();
-                                broadcast("", al.size());
-
+                                broadcast(al.size());
                             } else {
-
                                 timer.stop();
-                                broadcastFerme("", al.size());
+                                broadcastFerme(al.size());
                             }
                         });
                         timer.start();
                         break;
-                    case ChatMessage.LOGOUT:
+                    /*case ChatMessage.LOGOUT:
                         display(username + " disconnected with a LOGOUT message.");
                         keepGoing = false;
                         break;
+                    */
                 }
             }
             // if out of the loop then disconnected and remove from client list
@@ -352,22 +326,5 @@ public class Server {
             return true;
         }
     }
-
-    /**
-     * @return 0 Se nessuno ha vinto
-     * @return 1 Se team1 ha vinto
-     * @return 2 Se team2 ha vinto
-     */
-    public int checkVincitore() {
-        if (modelField.score1 == 3) {
-            return 1;
-        } else if (modelField.score2 == 3) {
-            return 2;
-        } else {
-            return 0;
-        }
-    }
-
-
 }
 

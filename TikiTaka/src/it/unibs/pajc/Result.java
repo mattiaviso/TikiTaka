@@ -4,8 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 
 public class Result extends JPanel {
@@ -17,9 +16,7 @@ public class Result extends JPanel {
     private BufferedImage Tabel;
     private Client client;
 
-    public Result(String n1, String n2,Client t) {
-        this.team1 = n1;
-        this.team2 = n2;
+    public Result(Client t) {
         this.client = t;
     }
 
@@ -34,24 +31,12 @@ public class Result extends JPanel {
         repaint();
     }
 
-    public void setUsername2(String t2) {
+    public void setUsernames(String t1, String t2) {
+        this.team1 = t1;
         this.team2 = t2;
         repaint();
     }
 
-    public void setUsernames(String t1, String t2) {
-        this.team1 = t1;
-        this.team2 = t2;
-
-    }
-
-    public int getScore1() {
-        return score1;
-    }
-
-    public int getScore2() {
-        return score2;
-    }
 
     public String getTeam1() {
         return team1;
@@ -59,10 +44,6 @@ public class Result extends JPanel {
 
     public String getTeam2() {
         return team2;
-    }
-
-    public BufferedImage getTabel() {
-        return Tabel;
     }
 
     public void setTable(int t1, int t2) {

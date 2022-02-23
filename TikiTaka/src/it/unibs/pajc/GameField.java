@@ -12,8 +12,6 @@ public class GameField {
 
     protected int score1 = 2;
     protected int score2 = 2;//
-
-
     protected FieldObject[] objectsPiece;
     protected String turno;
 
