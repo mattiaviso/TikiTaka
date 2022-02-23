@@ -6,14 +6,14 @@ import java.io.IOException;
 
 
 public class SoundClip {
-	
+
     private Clip clip;
     private boolean playing = false;
-    
-    public SoundClip(String s) {      
-        try {      
-            File soundFile = new File(s+".wav");
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);              
+
+    public SoundClip(String s) {
+        try {
+            File soundFile = new File(s + ".wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         } catch (UnsupportedAudioFileException e) {
@@ -24,13 +24,15 @@ public class SoundClip {
             e.printStackTrace();
         }
     }
-    public void start(){
+
+    public void start() {
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-15);
+        volume.setValue(-25);
         clip.loop(50);
         clip.start();
     }
-    public void stop(){
+
+    public void stop() {
         clip.stop();
     }
 }

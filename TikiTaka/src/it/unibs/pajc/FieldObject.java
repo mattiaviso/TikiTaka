@@ -3,7 +3,7 @@ package it.unibs.pajc;
 import java.awt.image.BufferedImage;
 
 
-abstract public class FieldObject implements Comparable<FieldObject>{
+abstract public class FieldObject implements Comparable<FieldObject> {
     public static final int MAXDISTANCE = 150;
 
     protected Vector2d position;
@@ -21,14 +21,14 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         this.massa = massa;
     }
 
-    public String getTeam(){
-        if(this instanceof Piece){
-           return this.getTeam();
+    public String getTeam() {
+        if (this instanceof Piece) {
+            return this.getTeam();
         }
         return null;
     }
 
-    public void setXY(double x,double y){
+    public void setXY(double x, double y) {
         this.position.setX(x);
         this.position.setY(y);
     }
@@ -46,7 +46,7 @@ abstract public class FieldObject implements Comparable<FieldObject>{
     }
 
     public boolean isBall() {
-        if(this instanceof Ball){
+        if (this instanceof Ball) {
             return true;
         }
         return false;
@@ -54,28 +54,30 @@ abstract public class FieldObject implements Comparable<FieldObject>{
 
     @Override
     public String toString() {
-    	// TODO Auto-generated method stub
-    	return radius+"@"+position.getX()+"@"+position.getY();
+        // TODO Auto-generated method stub
+        return radius + "@" + position.getX() + "@" + position.getY();
     }
 
     /**
      * Metodo che serve per far muovere la prima pallina, quella selezionata dal giocatore
+     *
      * @param distance Potenza
-     * @param angle Angolo di tiro
+     * @param angle    Angolo di tiro
      */
     public void start(int distance, double angle) {
         double vel;
-        if (distance > MAXDISTANCE){
+        if (distance > MAXDISTANCE) {
             distance = MAXDISTANCE;
         }
 
-        vel = distance/8.5;// 7.5
+        vel = distance / 7.5;// 7.5
         velocita.setXY(vel, angle);
         velocita.totalXY();
     }
 
     /**
      * Metodo che ritorna true se la pallina risulta ferma
+     *
      * @return True se la pallina è ferma
      */
     public boolean speedIsZero() {
@@ -85,21 +87,17 @@ abstract public class FieldObject implements Comparable<FieldObject>{
 
     /**
      * Metodo Override per confrontare due pedine
+     *
      * @param ball FieldObj
      * @return
      */
     @Override
     public int compareTo(FieldObject ball) {
-        if (this.position.getX() - this.getRadius() > ball.position.getX() - ball.getRadius())
-        {
+        if (this.position.getX() - this.getRadius() > ball.position.getX() - ball.getRadius()) {
             return 1;
-        }
-        else if (this.position.getX() - this.getRadius() < ball.position.getX() - ball.getRadius())
-        {
+        } else if (this.position.getX() - this.getRadius() < ball.position.getX() - ball.getRadius()) {
             return -1;
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
@@ -107,6 +105,7 @@ abstract public class FieldObject implements Comparable<FieldObject>{
 
     /**
      * Risolve collisione
+     *
      * @param p2
      */
     public void resolveCollision(FieldObject p2) {
@@ -124,7 +123,7 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         Vector2d mtd;
         if (d != 0.0f) {
             mtd = delta.multiply(((getRadius() + p2.getRadius()) - d) / d); // minimum translation distance to push balls apart after intersecting
-            this.position = this.position.add(mtd.multiply(1 /4));
+            this.position = this.position.add(mtd.multiply(1 / 4));
             p2.position = p2.position.subtract(mtd.multiply(1 / 4));
 
         } else // Special case. Balls are exactly on top of eachother.  Don't want to divide by zero.
@@ -136,8 +135,7 @@ abstract public class FieldObject implements Comparable<FieldObject>{
         }
 
 
-
-       // resolve intersection
+        // resolve intersection
         double im1 = 1 / getMassa(); // inverse mass quantities
         double im2 = 1 / p2.getMassa();
 
@@ -164,10 +162,10 @@ abstract public class FieldObject implements Comparable<FieldObject>{
     }
 
 
-    public void friction (double num ){
-        velocita.set(velocita.getX() - (velocita.getX()*num), velocita.getY()- (velocita.getY()*num) );
+    public void friction(double num) {
+        velocita.set(velocita.getX() - (velocita.getX() * num), velocita.getY() - (velocita.getY() * num));
 
-        if ( velocita.getLength() < 0.75) velocita = new Vector2d(0,0);
+        if (velocita.getLength() < 0.75) velocita = new Vector2d(0, 0);
     }
 
 }

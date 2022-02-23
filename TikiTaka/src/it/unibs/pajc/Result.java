@@ -8,37 +8,41 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class Result extends JPanel  {
+public class Result extends JPanel {
 
     private int score1;
     private int score2;
     private String team1;
     private String team2;
-    private  BufferedImage Tabel;
+    private BufferedImage Tabel;
+    private Client client;
 
-
-    public Result(String n1, String n2){
+    public Result(String n1, String n2,Client t) {
         this.team1 = n1;
         this.team2 = n2;
+        this.client = t;
     }
-    
+
     public void setUsername1(String t1) {
-    	this.team1 = t1;
-    	repaint();
+        this.team1 = t1;
+        repaint();
     }
-    public void setScore(int s1,int s2){
+
+    public void setScore(int s1, int s2) {
         score1 = s1;
         score2 = s2;
         repaint();
     }
 
     public void setUsername2(String t2) {
-    	this.team2 = t2;
-    	repaint();
-    }
-    public void setUsernames(String t1,String t2) {
-    	this.team1 = t1;
         this.team2 = t2;
+        repaint();
+    }
+
+    public void setUsernames(String t1, String t2) {
+        this.team1 = t1;
+        this.team2 = t2;
+
     }
 
     public int getScore1() {
@@ -61,7 +65,7 @@ public class Result extends JPanel  {
         return Tabel;
     }
 
-    public void setTable(int t1, int t2){
+    public void setTable(int t1, int t2) {
         //settare variabili
         this.score1 = t1;
         this.score2 = t2;
@@ -86,13 +90,13 @@ public class Result extends JPanel  {
 
         g2.drawImage(this.Tabel, 0, 0, 1285, 120, null);
 
-        g2.setFont(new Font("Ahoroni",Font.BOLD,30));
-        if(Client.turno != null) {
-            if (Client.turno.equals("T1")) {
+        g2.setFont(new Font("Ahoroni", Font.BOLD, 30));
+        if (client.getTurno() != null) {
+            if (client.getTurno().equals("T1")) {
                 g2.setColor(Color.RED);
                 g2.drawString(team1, 857, 30);
                 g2.setColor(Color.BLUE);
-                g2.drawString(team2, 230, 30);
+                g2.drawString(team2, 230, 30);client
             } else if (Client.turno.equals("T2")) {
                 g2.setColor(Color.RED);
                 g2.drawString(team2, 230, 30);
@@ -104,8 +108,8 @@ public class Result extends JPanel  {
             }
         }
 
-        g2.drawString(score2+"", 505,50);
-        g2.drawString(score1+"", 755,50);
+        g2.drawString(score2 + "", 505, 50);
+        g2.drawString(score1 + "", 755, 50);
 
     }
 

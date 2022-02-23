@@ -10,8 +10,8 @@ public class GameField {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
 
-    protected int score1=2;
-    protected int score2=2;//
+    protected int score1 = 2;
+    protected int score2 = 2;//
 
 
     protected FieldObject[] objectsPiece;
@@ -24,8 +24,7 @@ public class GameField {
         positionStart();
     }
 
-    
-    
+
     /**
      * Posizione iniziale delle pedine
      */
@@ -43,16 +42,16 @@ public class GameField {
         objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
 
-    
+
     public String messaggioPos() {
-    	String string = "";
-    	for(FieldObject f: objectsPiece) {
-    		string+=f.toString()+"\n";
-    	}
-    	return string;
+        String string = "";
+        for (FieldObject f : objectsPiece) {
+            string += f.toString() + "\n";
+        }
+        return string;
     }
-    
-    
+
+
     /**
      * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
      *
@@ -79,7 +78,7 @@ public class GameField {
         }
     }
 
-    public void setTurno(String team){
+    public void setTurno(String team) {
         turno = team;
     }
 
@@ -125,43 +124,37 @@ public class GameField {
         insertionSort(objectsPiece);
 
 
-
         // Controllo collisioni con bordi del campo
         for (int i = 0; i < objectsPiece.length; i++) {
 
 
-
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
-                    //bordiPorta(objectsPiece[i], 1 );
-                if(objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius  > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112)
-                {
-                    if(objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X ) {
+                //bordiPorta(objectsPiece[i], 1 );
+                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+                    if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
                         positionStart();
                         score2++;
 
 
                         setTurno("T2");
                     }
-                }
-                else{
+                } else {
                     objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
                     objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
                 }
             } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
-                if(objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius  > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112)
-                {
+                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
 
-                    if(objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X ) {
+                    if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
                         positionStart();
                         score1++;
 
 
                         setTurno("T1");
                     }
-                }
-                else {
+                } else {
 
                     objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
                     objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
@@ -181,9 +174,6 @@ public class GameField {
 
             // crea una frizione tra i 2 oggetti
             objectsPiece[i].friction(0.02);
-
-
-
 
 
             // Collisione pedina contro pedina
@@ -206,73 +196,69 @@ public class GameField {
     }
 
 
+    // PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
+    public void bordiPorta(FieldObject o, int direzione) {
 
-// PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
-    public void bordiPorta ( FieldObject o ,int  direzione){
-
-        if ( o.position.getY() + o.getRadius() <106 &&  o.position.getY() - o.getRadius() >-96 ){
+        if (o.position.getY() + o.getRadius() < 106 && o.position.getY() - o.getRadius() > -96) {
             // bordo interno
-            if(o.position.getX()-o.radius < -630 ){
+            if (o.position.getX() - o.radius < -630) {
                 o.position.setX(o.getRadius() + -630);
                 o.velocita = new Vector2d(-o.velocita.getX(), +o.velocita.getY());
-            // sopra
-            } if(o.position.getY()+ o.radius>106 && o.position.getX()<-566 && o.position.getX()>= -630){
+                // sopra
+            }
+            if (o.position.getY() + o.radius > 106 && o.position.getX() < -566 && o.position.getX() >= -630) {
                 o.position.setY(106 - o.getRadius());
                 o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
-            // sotto
-            } if (o.position.getY()- o.radius<-96&& o.position.getX()<-566 && o.position.getX()>= -630) {
-                o.position.setY(o.getRadius() -96);
+                // sotto
+            }
+            if (o.position.getY() - o.radius < -96 && o.position.getX() < -566 && o.position.getX() >= -630) {
+                o.position.setY(o.getRadius() - 96);
                 o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
 
             }
-        }else{
-            if (direzione ==1 ){ // sinistra
+        } else {
+            if (direzione == 1) { // sinistra
                 o.position.setX(o.getRadius() + MIN_X);
                 o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
-            }else{
+            } else {
                 o.position.setX(MAX_X - o.getRadius());
                 o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
 
-                }
+            }
         }
     }
 
 
-    public int gool(FieldObject o , double sup , double min ){
+    public int gool(FieldObject o, double sup, double min) {
 
 
-        if ( o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >-98 && o.isBall){
+        if (o.position.getY() + o.getRadius() < 108 && o.position.getY() - o.getRadius() > -98 && o.isBall) {
             return 1;
 
-        }
-        else if (o.position.getY() + o.getRadius() <108 &&  o.position.getY() - o.getRadius() >min && o.isBall){
+        } else if (o.position.getY() + o.getRadius() < 108 && o.position.getY() - o.getRadius() > min && o.isBall) {
             return 2;
-        }else
+        } else
             return 0;
     }
 
 
-     public FieldObject pedinaSelezionata(double x, double y){
+    public FieldObject pedinaSelezionata(double x, double y) {
         double EPS = 1E-3;
-         for (int i = 0; i< objectsPiece.length ; i++) {
-             if ( Math.abs(x-objectsPiece[i].position.getX()) < EPS &&  Math.abs(y-objectsPiece[i].position.getY())< EPS ){
-                 return objectsPiece[i];
-             }
-         }
+        for (int i = 0; i < objectsPiece.length; i++) {
+            if (Math.abs(x - objectsPiece[i].position.getX()) < EPS && Math.abs(y - objectsPiece[i].position.getY()) < EPS) {
+                return objectsPiece[i];
+            }
+        }
         return null;
-     }
+    }
 
 
-    public void checkVincitore(){
-        if(score1 == 3 || score2 == 3){
+    public void checkVincitore() {
+        if (score1 == 3 || score2 == 3) {
             score1 = 2;
             score2 = 2;
         }
     }
-
-
-
-
 
 
 }

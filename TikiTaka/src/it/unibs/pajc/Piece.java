@@ -4,20 +4,20 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-public class Piece extends FieldObject{
+public class Piece extends FieldObject {
 
     protected String team;
     private String imgPathString;
 
-    public Piece(double radius, double x, double y, String imagePath, String team ) {
+    public Piece(double radius, double x, double y, String imagePath, String team) {
         super(radius, x, y, 200);
-        
+
         imgPathString = imagePath;
 
         //Caricamento immagine **Metodo da estrarre
         try {
             imageObj = ImageIO.read(new File(imagePath));
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Image not found");
         }
 
@@ -25,16 +25,17 @@ public class Piece extends FieldObject{
 
     }
 
-    public String getTeam(){
+    public String getTeam() {
         return team;
     }
 
-    public boolean isBall(){
+    public boolean isBall() {
         return false;
     }
+
     @Override
     public String toString() {
-    	return "Piece@"+super.toString()+"@"+imgPathString+"@"+team;
+        return "Piece@" + super.toString() + "@" + imgPathString + "@" + team;
     }
 
 
