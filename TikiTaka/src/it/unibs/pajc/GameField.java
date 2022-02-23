@@ -9,13 +9,14 @@ public class GameField {
     public static final int MIN_Y = -302;
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
-    public static final float RESTITUTION = 0.85f; //potenza che la pedina perde quando va contro un ostacolo
+
     protected int score1=2;
     protected int score2=2;//
 
 
     protected FieldObject[] objectsPiece;
     protected String turno;
+
 
     public GameField() {
         turno = "T1";
@@ -139,7 +140,7 @@ public class GameField {
                         positionStart();
                         score2++;
 
-                        //TikiTakaGame.panel.setTable(score1,score2);
+
                         setTurno("T2");
                     }
                 }
@@ -156,7 +157,7 @@ public class GameField {
                         positionStart();
                         score1++;
 
-                        //TikiTakaGame.panel.setTable(score1,score2);
+
                         setTurno("T1");
                     }
                 }

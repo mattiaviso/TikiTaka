@@ -47,6 +47,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 		Graphics2D g2 = (Graphics2D) g;
 
 
+
 		 w = getWidth();
 		 h = getHeight();
 
@@ -86,9 +87,10 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 		}
 
 		if(wait){
-
-			g2.setColor(Color.RED);
-			g2.drawString("ATTENDI ALTRO GIOCATORE",-30,0);
+			g2.setColor(Color.red);
+			g2.setFont(new Font("Arial",0,100));
+			g2.scale(1,-1);
+			g2.drawString("Aspetta altro player",-400,-10);
 			g2.setColor(Color.BLUE);
 		}
 		
@@ -188,6 +190,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
 
 	public FieldObject checkClickAble(int xMouse, int yMouse) {
+		if(!wait)
 		for (FieldObject f : objectsPiece) {
 			if (f instanceof Piece);
 				if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2)) {

@@ -29,6 +29,7 @@ public class Client  {
 	public static String turno;
 	public static int score1,score2;
 
+
 	
 	private static boolean close=false;
 	// for I/O
@@ -152,6 +153,9 @@ public class Client  {
 	}
 	
 	public static void main(String[] args) {
+		//Musica
+		SoundClip sound;
+
 		// default values if not entered
 		int portNumber = 1500;
 		// immette ip
@@ -187,6 +191,8 @@ public class Client  {
 		frame.add(finestra, BorderLayout.CENTER);
 		frame.add(panel, BorderLayout.NORTH);
 
+		sound = new SoundClip("Song");
+		sound.start();
 
 		
 		
