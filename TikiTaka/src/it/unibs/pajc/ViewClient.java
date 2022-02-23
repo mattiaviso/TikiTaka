@@ -29,7 +29,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 	
 	
 	public ViewClient() {
-				
 
 		objectsPiece = new FieldObject[11];
 
@@ -45,8 +44,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-
-
 
 		 w = getWidth();
 		 h = getHeight();
