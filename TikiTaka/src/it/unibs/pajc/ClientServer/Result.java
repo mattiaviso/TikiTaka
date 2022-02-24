@@ -99,8 +99,8 @@ public class Result extends JPanel {
             }
         }
 
-        g2.drawString(score2 + "", 505, 50);
-        g2.drawString(score1 + "", 755, 50);
+        g2.drawString(score1 + "", 505, 50);
+        g2.drawString(score2 + "", 755, 50);
 
     }
 
