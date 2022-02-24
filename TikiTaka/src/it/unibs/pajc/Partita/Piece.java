@@ -1,4 +1,6 @@
-package it.unibs.pajc;
+package it.unibs.pajc.Partita;
+
+import it.unibs.pajc.Partita.FieldObject;
 
 import javax.imageio.ImageIO;
 import java.io.File;

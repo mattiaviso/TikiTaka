@@ -1,4 +1,4 @@
-package it.unibs.pajc;
+package it.unibs.pajc.Partita;
 
 import java.awt.image.BufferedImage;
 
@@ -6,14 +6,47 @@ import java.awt.image.BufferedImage;
 abstract public class FieldObject implements Comparable<FieldObject> {
     public static final int MAXDISTANCE = 150;
 
-    protected Vector2d position;
+    protected  Vector2d position;
     protected Vector2d velocita = new Vector2d();
     protected double radius;
     protected BufferedImage imageObj;
-    protected double massa;
+    private double massa;
+
 
     public boolean isBall;
 
+
+    public Vector2d getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2d position) {
+        this.position = position;
+    }
+
+    public Vector2d getVelocita() {
+        return velocita;
+    }
+
+    public void setVelocita(Vector2d velocita) {
+        this.velocita = velocita;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setImageObj(BufferedImage imageObj) {
+        this.imageObj = imageObj;
+    }
+
+    public void setMassa(double massa) {
+        this.massa = massa;
+    }
+
+    public void setBall(boolean ball) {
+        isBall = ball;
+    }
 
     public FieldObject(double radius, double x, double y, double massa) {
         this.radius = radius;
@@ -161,6 +194,10 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
     }
 
+    /**
+     * Frizione che diminuisce la velocita delle pedine
+     * @param num
+     */
 
     public void friction(double num) {
         velocita.set(velocita.getX() - (velocita.getX() * num), velocita.getY() - (velocita.getY() * num));

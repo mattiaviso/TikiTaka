@@ -1,6 +1,11 @@
 package it.unibs.pajc;
 
 
+import it.unibs.pajc.ClientServer.ChatMessage;
+import it.unibs.pajc.ClientServer.ViewServer;
+import it.unibs.pajc.Partita.FieldObject;
+import it.unibs.pajc.Partita.GameField;
+
 import java.io.*;
 import java.net.*;
 import javax.swing.Timer;
@@ -8,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-// the server that can be run as a console
+/**
+ * creazione del server
+ */
 public class Server {
     // a unique ID for each connection
     private static int uniqueId;
@@ -38,6 +45,7 @@ public class Server {
         al = new ArrayList<ClientThread>();
 
     }
+
     public void start() {
         keepGoing = true;
         //create socket server and wait for connection requests
@@ -62,7 +70,6 @@ public class Server {
 
 
                 broadcastFerme(al.size());
-
 
                 t.start();
             }
@@ -97,11 +104,22 @@ public class Server {
         }
     }*/
 
-    // Display an event to the console
+    /**
+     * manda dei messaggi alla console in un tempo definito
+     *
+     * @param msg
+     */
     private void display(String msg) {
         String time = sdf.format(new Date()) + " " + msg;
         System.out.println(time);
     }
+
+    /**
+     * messaggio per il cambio turno (quando tutte le palline sono ferme
+     *
+     * @param m
+     * @return
+     */
 
     private boolean broadcastFerme(int m) {
 
@@ -113,10 +131,12 @@ public class Server {
             } else {
                 team = "T2";
             }
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.turno + "@" + modelField.score1 + "@" + modelField.score2 + "\n";
+
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.getTurno() + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
+
 
             // try to write to the Client if it fails remove it from the list
             if (!ct.writeMsg(messageLf)) {
@@ -128,7 +148,12 @@ public class Server {
     }
 
 
-    // to broadcast a message to all Clients
+    /**
+     * messaggio che inviamo a tutti i client conessi in cui aggiorna la posizione
+     *
+     * @param m
+     * @return
+     */
     private boolean broadcast(int m) {
         // because it has disconnected
         for (int i = al.size(); --i >= 0; ) {
@@ -139,7 +164,7 @@ public class Server {
             } else {
                 team = "T2";
             }
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.score1 + "@" + modelField.score2 + "\n";
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
@@ -192,7 +217,7 @@ public class Server {
     }
 
     // One instance of this thread will run for each client
-    class ClientThread extends Thread {
+    public class ClientThread extends Thread {
         // the socket to get messages from client
         Socket socket;
         ObjectInputStream sInput;
@@ -200,7 +225,7 @@ public class Server {
         // my unique id (easier for deconnection)
         int id;
         // the Username of the Client
-        String username;
+        public String username;
         // message object to recieve message and its type
         ChatMessage cm;
         String date;
@@ -218,7 +243,7 @@ public class Server {
                 sInput = new ObjectInputStream(socket.getInputStream());
                 // read the username
                 username = (String) sInput.readObject();
-                broadcast( al.size());
+                broadcast(al.size());
             } catch (IOException e) {
                 display("Exception creating new Input/output Streams: " + e);
                 return;

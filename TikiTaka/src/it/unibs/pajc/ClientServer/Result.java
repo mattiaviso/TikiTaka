@@ -1,4 +1,6 @@
-package it.unibs.pajc;
+package it.unibs.pajc.ClientServer;
+
+import it.unibs.pajc.Client;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -54,6 +56,11 @@ public class Result extends JPanel {
         repaint();
     }
 
+    /**
+     * creazione del panello per il risultato
+     *
+     * @param g
+     */
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -77,14 +84,17 @@ public class Result extends JPanel {
                 g2.setColor(Color.RED);
                 g2.drawString(team1, 857, 30);
                 g2.setColor(Color.BLUE);
-                g2.drawString(team2, 230, 30);
+                if (team2 != null)
+                    g2.drawString(team2, 230, 30);
             } else if (client.getTurno().equals("T2")) {
                 g2.setColor(Color.RED);
-                g2.drawString(team2, 230, 30);
+                if (team2 != null)
+                    g2.drawString(team2, 230, 30);
                 g2.setColor(Color.BLUE);
                 g2.drawString(team1, 857, 30);
             } else {
-                g2.drawString(team2, 230, 30);
+                if (team2 != null)
+                    g2.drawString(team2, 230, 30);
                 g2.drawString(team1, 857, 30);
             }
         }

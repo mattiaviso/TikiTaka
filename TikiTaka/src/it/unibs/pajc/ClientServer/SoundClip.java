@@ -1,4 +1,4 @@
-package it.unibs.pajc;
+package it.unibs.pajc.ClientServer;
 
 import javax.sound.sampled.*;
 import java.io.File;

@@ -1,5 +1,10 @@
 package it.unibs.pajc;
 
+import it.unibs.pajc.ClientServer.ChatMessage;
+import it.unibs.pajc.ClientServer.Result;
+import it.unibs.pajc.ClientServer.SoundClip;
+import it.unibs.pajc.ClientServer.ViewClient;
+
 import java.net.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -117,8 +122,10 @@ public class Client {
         return true;
     }
 
-    /*
-     * To send a message to the console
+    /**
+     * manda un messaggio al controller
+     *
+     * @param msg
      */
     private void display(String msg) {
 
@@ -127,8 +134,10 @@ public class Client {
 
     }
 
-    /*
-     * To send a message to the server
+    /**
+     * manda un messaggio al server
+     *
+     * @param msg
      */
     public void sendMessage(ChatMessage msg) {
         try {
@@ -158,10 +167,22 @@ public class Client {
 
     }
 
+    /**
+     * controllo dell' ip se e' scritto corretamente
+     *
+     * @param ip
+     * @return
+     */
+
     public static boolean isValidIp(final String ip) {
         return ip.matches("^[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}$");
     }
 
+    /**
+     * richiamo metodo
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         //Musica
         SoundClip sound;
@@ -227,7 +248,9 @@ public class Client {
             }
         });
 
-        // MOUSE LISTENER
+        /**
+         * ascolta i movimenti del mouse
+         */
         finestra.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -276,6 +299,12 @@ public class Client {
 
     }
 
+    /**
+     * creare un messaggio da mandare al server
+     *
+     * @param msg
+     * @param client
+     */
     private static void elaboramessaggio(String msg, Client client) {
 
         if (msg.equalsIgnoreCase("LOGOUT")) {
@@ -290,8 +319,8 @@ public class Client {
     }
 
 
-    /*
-     * a class that waits for the message from the server
+    /**
+     * classe che ascolta il server splitta il messaggio ricevuto
      */
     class ListenFromServer extends Thread {
 
@@ -300,8 +329,9 @@ public class Client {
 
             while (true) {
                 try {
-                    // read the message form the input datastream
+                    //Legge il messaggio inviato dal dataStream
                     msg = (String) sInput.readObject();
+
                     // print the message
                     System.out.println(msg);
                     finestra.aggiornaPos(msg);

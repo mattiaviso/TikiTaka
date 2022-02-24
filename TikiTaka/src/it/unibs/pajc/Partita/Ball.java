@@ -1,4 +1,4 @@
-package it.unibs.pajc;
+package it.unibs.pajc.Partita;
 
 import javax.imageio.ImageIO;
 import java.io.File;

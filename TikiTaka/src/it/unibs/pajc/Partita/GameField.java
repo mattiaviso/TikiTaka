@@ -1,6 +1,4 @@
-package it.unibs.pajc;
-
-import javax.swing.*;
+package it.unibs.pajc.Partita;
 
 public class GameField {
 
@@ -10,17 +8,30 @@ public class GameField {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
 
-    protected int score1 = 2;
-    protected int score2 = 2;//
+    private int score1 = 0;
+    private int score2 = 0;//
     protected FieldObject[] objectsPiece;
-    protected String turno;
+    private String turno;
 
+    public String getTurno() {
+        return turno;
+    }
+
+    public int getScore1() {
+        return score1;
+    }
+
+    public int getScore2() {
+        return score2;
+    }
 
     public GameField() {
         turno = "T1";
         objectsPiece = new FieldObject[11];
         positionStart();
     }
+
+
 
 
     /**
@@ -50,23 +61,8 @@ public class GameField {
     }
 
 
-    /**
-     * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
-     *
-     * @param xMouse Coordinata x del mouse
-     * @param yMouse Coordinata y del mouse
-     * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
-     */
-    public FieldObject checkClickAble(int xMouse, int yMouse) {
-        if (!allStop()) return null;
-        for (FieldObject f : objectsPiece) {
-            if (f instanceof Piece)
-                if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2) && ((Piece) f).team.equals(turno)) {
-                    return f;
-                }
-        }
-        return null;
-    }
+
+
 
     public void cambioTurno() {
         if (turno.equals("T1")) {

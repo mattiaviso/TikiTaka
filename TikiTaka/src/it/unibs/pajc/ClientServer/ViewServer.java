@@ -1,4 +1,6 @@
-package it.unibs.pajc;
+package it.unibs.pajc.ClientServer;
+
+import it.unibs.pajc.Server;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

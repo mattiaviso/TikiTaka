@@ -1,4 +1,4 @@
-package it.unibs.pajc;
+package it.unibs.pajc.Partita;
 
 public class Vector2d {
 
