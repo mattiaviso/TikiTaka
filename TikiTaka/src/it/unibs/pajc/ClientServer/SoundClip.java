@@ -31,6 +31,11 @@ public class SoundClip {
         clip.loop(50);
         clip.start();
     }
+    public void startSound(){
+        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(-3);
+        clip.start();
+    }
 
     public void stop() {
         clip.stop();

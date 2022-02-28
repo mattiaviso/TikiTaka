@@ -384,14 +384,22 @@ public class Client {
         ImageIcon loser = new ImageIcon("loser.gif");
         if (score1 == 3) {
             if (panel.getTeam2().equals(username + "(you)")) {
+                SoundClip win = new SoundClip("win");
+                win.startSound();
                 JOptionPane.showMessageDialog(null, null, "Hai vinto", JOptionPane.INFORMATION_MESSAGE, winner);
             } else {
+                SoundClip los = new SoundClip("Loser");
+                los.startSound();
                 JOptionPane.showMessageDialog(null, null, "Hai perso", JOptionPane.INFORMATION_MESSAGE, loser);
             }
         } else if (score2 == 3) {
             if (panel.getTeam1().equals(username + "(you)")) {
+                SoundClip win = new SoundClip("win");
+                win.startSound();
                 JOptionPane.showMessageDialog(null, null, "Hai vinto", JOptionPane.INFORMATION_MESSAGE, winner);
             } else {
+                SoundClip los = new SoundClip("Loser");
+                los.startSound();
                 JOptionPane.showMessageDialog(null, null, "Hai perso", JOptionPane.INFORMATION_MESSAGE, loser);
 
             }
