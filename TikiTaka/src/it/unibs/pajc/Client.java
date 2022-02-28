@@ -340,11 +340,19 @@ public class Client {
                     String[] riga11 = parts[11].split("@");
 
                     int nUsers = Integer.parseInt(riga11[0]);
+                    int newScore1 = Integer.parseInt(riga11[3]);
+                    int newScore2 = Integer.parseInt(riga11[4]);
 
                     setTeam(riga11[1]);
                     setTurno(riga11[2]);
-                    setScore1(Integer.parseInt(riga11[3]));
-                    setScore2(Integer.parseInt(riga11[4]));
+
+                    if((newScore1 != getScore1() && newScore1<3) || (newScore2 != getScore2() && newScore2<3)){
+                        SoundClip gol = new SoundClip("Goal");
+                        gol.startSound();
+                    }
+
+                    setScore1(newScore1);
+                    setScore2(newScore2);
 
                     panel.setScore(score1, score2);
 

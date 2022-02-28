@@ -290,7 +290,7 @@ public class Server {
                             if (selezionata != null)
                                 selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
                         }
-                        timer = new Timer(1, (e) -> {
+                        timer = new Timer(9, (e) -> {
                             if (!modelField.allStop()) {
                                 modelField.updateGame();
                                 broadcast(al.size());
