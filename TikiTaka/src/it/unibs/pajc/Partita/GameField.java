@@ -8,8 +8,8 @@ public class GameField {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
 
-    private int score1 = 2;
-    private int score2 = 2;//
+    private int score1 = 0;
+    private int score2 = 0;//
     protected FieldObject[] objectsPiece;
     private String turno;
 
@@ -249,8 +249,8 @@ public class GameField {
 
     public void checkVincitore() {
         if (score1 == 3 || score2 == 3) {
-            score1 = 2;
-            score2 = 2;
+            score1 = 0;
+            score2 = 0;
         }
     }
 
