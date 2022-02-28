@@ -13,6 +13,8 @@ public class GameField {
     protected FieldObject[] objectsPiece;
     private String turno;
 
+    private boolean collision = false;
+
     public String getTurno() {
         return turno;
     }
@@ -60,9 +62,13 @@ public class GameField {
         return string;
     }
 
+    public void setCollision() {
+        this.collision = false;
+    }
 
-
-
+    public boolean getCollision(){
+        return collision;
+    }
 
     public void cambioTurno() {
         if (turno.equals("T1")) {
@@ -124,12 +130,12 @@ public class GameField {
 
             if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
             {
+                collision = true ;
                 //bordiPorta(objectsPiece[i], 1 );
                 if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
                     if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
                         positionStart();
                         score2++;
-
 
                         setTurno("T2");
                     }
@@ -139,12 +145,12 @@ public class GameField {
                 }
             } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
+                collision = true;
                 if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
 
                     if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
                         positionStart();
                         score1++;
-
 
                         setTurno("T1");
                     }
@@ -157,10 +163,12 @@ public class GameField {
 
             if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)                //Bordo Down
             {
+                collision = true;
                 objectsPiece[i].position.setY(objectsPiece[i].getRadius() + MIN_Y);
                 objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
             } else if (objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > MAX_Y) //Bordo UP
             {
+                collision = true;
                 objectsPiece[i].position.setY(MAX_Y - objectsPiece[i].getRadius());
                 objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
 
@@ -182,59 +190,13 @@ public class GameField {
                 objectsPiece[i].resolveCollision(objectsPiece[j]);
                 objectsPiece[i].friction(0.035);
                 objectsPiece[j].friction(0.015);
+                collision = true;
 
             }
         }
 
 
     }
-
-
-    // PROVATO A IMPLEMENTARE I BORDI DELLA PORTA
-    public void bordiPorta(FieldObject o, int direzione) {
-
-        if (o.position.getY() + o.getRadius() < 106 && o.position.getY() - o.getRadius() > -96) {
-            // bordo interno
-            if (o.position.getX() - o.radius < -630) {
-                o.position.setX(o.getRadius() + -630);
-                o.velocita = new Vector2d(-o.velocita.getX(), +o.velocita.getY());
-                // sopra
-            }
-            if (o.position.getY() + o.radius > 106 && o.position.getX() < -566 && o.position.getX() >= -630) {
-                o.position.setY(106 - o.getRadius());
-                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
-                // sotto
-            }
-            if (o.position.getY() - o.radius < -96 && o.position.getX() < -566 && o.position.getX() >= -630) {
-                o.position.setY(o.getRadius() - 96);
-                o.velocita = new Vector2d(o.velocita.getX(), -o.velocita.getY());
-
-            }
-        } else {
-            if (direzione == 1) { // sinistra
-                o.position.setX(o.getRadius() + MIN_X);
-                o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
-            } else {
-                o.position.setX(MAX_X - o.getRadius());
-                o.velocita = new Vector2d(-o.velocita.getX(), o.velocita.getY());
-
-            }
-        }
-    }
-
-
-    public int gool(FieldObject o, double sup, double min) {
-
-
-        if (o.position.getY() + o.getRadius() < 108 && o.position.getY() - o.getRadius() > -98 && o.isBall) {
-            return 1;
-
-        } else if (o.position.getY() + o.getRadius() < 108 && o.position.getY() - o.getRadius() > min && o.isBall) {
-            return 2;
-        } else
-            return 0;
-    }
-
 
     public FieldObject pedinaSelezionata(double x, double y) {
         double EPS = 1E-3;

@@ -132,7 +132,7 @@ public class Server {
                 team = "T2";
             }
 
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.getTurno() + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "\n";
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.getTurno() + "@" + modelField.getScore1() + "@" + modelField.getScore2() +"@"+modelField.getCollision() +"\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
@@ -144,6 +144,7 @@ public class Server {
                 display("Disconnected Client " + ct.username + " removed from list.");
             }
         }
+        modelField.setCollision();
         return true;
     }
 
@@ -164,7 +165,7 @@ public class Server {
             } else {
                 team = "T2";
             }
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "\n";
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.getScore1() + "@" + modelField.getScore2() +"@"+modelField.getCollision()+"\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
@@ -177,7 +178,7 @@ public class Server {
 
         }
         modelField.checkVincitore();
-
+        modelField.setCollision();
         return true;
 
 
@@ -351,5 +352,8 @@ public class Server {
             return true;
         }
     }
+
+
+
 }
 
