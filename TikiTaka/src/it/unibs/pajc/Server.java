@@ -302,11 +302,7 @@ public class Server {
                         });
                         timer.start();
                         break;
-                    /*case ChatMessage.LOGOUT:
-                        display(username + " disconnected with a LOGOUT message.");
-                        keepGoing = false;
-                        break;
-                    */
+
                 }
             }
             // if out of the loop then disconnected and remove from client list

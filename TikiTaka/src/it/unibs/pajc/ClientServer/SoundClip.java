@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class SoundClip {
+public class SoundClip  {
 
     private Clip clip;
     private boolean playing = false;
