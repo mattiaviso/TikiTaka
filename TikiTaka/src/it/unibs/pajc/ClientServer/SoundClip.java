@@ -27,13 +27,13 @@ public class SoundClip {
 
     public void start() {
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-45);
+        volume.setValue(-25);
         clip.loop(50);
         clip.start();
     }
     public void startSound(){
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-3);
+        volume.setValue(-6);
         clip.start();
     }
 

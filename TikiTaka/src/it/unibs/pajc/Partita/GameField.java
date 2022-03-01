@@ -13,7 +13,7 @@ public class GameField {
     protected FieldObject[] objectsPiece;
     private String turno;
 
-    private boolean collision = false;
+     static public boolean collision = false;
 
     public String getTurno() {
         return turno;
@@ -189,8 +189,7 @@ public class GameField {
 
                 objectsPiece[i].resolveCollision(objectsPiece[j]);
                 objectsPiece[i].friction(0.035);
-                objectsPiece[j].friction(0.015);
-                collision = true;
+                objectsPiece[j].friction(0.015);collision = true;
 
             }
         }

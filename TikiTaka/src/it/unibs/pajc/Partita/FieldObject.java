@@ -150,6 +150,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
         if (dist2 > r * r) return; // they aren't colliding
 
+        GameField.collision = true;
 
         double d = delta.getLength();
 
