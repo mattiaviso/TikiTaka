@@ -136,7 +136,7 @@ public class GameField {
                     if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
                         positionStart();
                         score2++;
-
+                        collision = false;
                         setTurno("T2");
                     }
                 } else {
@@ -151,7 +151,7 @@ public class GameField {
                     if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
                         positionStart();
                         score1++;
-
+                        collision = false;
                         setTurno("T1");
                     }
                 } else {
