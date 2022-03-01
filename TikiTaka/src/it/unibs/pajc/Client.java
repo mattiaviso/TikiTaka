@@ -340,7 +340,7 @@ public class Client {
                     String[] riga11 = parts[11].split("@");
 
                     if(riga11[5].equals("true")){
-                        SoundClip collision = new SoundClip("Goal");
+                        SoundClip collision = new SoundClip("collision");
                         collision.startSound();
                     }
 
@@ -352,7 +352,7 @@ public class Client {
                     setTurno(riga11[2]);
 
                     if ((newScore1 != getScore1() && newScore1 < 3) || (newScore2 != getScore2() && newScore2 < 3)) {
-                        SoundClip gol = new SoundClip("collision");
+                        SoundClip gol = new SoundClip("Goal");
                         gol.startSound();
                     }
 
