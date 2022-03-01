@@ -189,7 +189,7 @@ public class GameField {
 
                 objectsPiece[i].resolveCollision(objectsPiece[j]);
                 objectsPiece[i].friction(0.035);
-                objectsPiece[j].friction(0.015);collision = true;
+                objectsPiece[j].friction(0.015);
 
             }
         }
