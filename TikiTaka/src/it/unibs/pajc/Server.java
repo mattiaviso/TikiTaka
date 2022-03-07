@@ -54,11 +54,14 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port);
 
             // infinite loop to wait for connections ( till server is active )
-            while (keepGoing) {
+            while (keepGoing && al.size()<2) {
                 display("Server waiting for Clients on port " + port + ".");
 
                 // accept connection if requested from client
                 Socket socket = serverSocket.accept();
+
+
+
                 // break if server stoped
                 if (!keepGoing)
                     break;
@@ -237,7 +240,8 @@ public class Server {
             // a unique id
             id = ++uniqueId;
             this.socket = socket;
-            //Creating both Data Stream
+            //Creating both Data Str
+            System.out.println("ip clinet " + socket.getInetAddress() +"Port " +socket.getPort());
             System.out.println("Thread trying to create Object Input/Output Streams");
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
