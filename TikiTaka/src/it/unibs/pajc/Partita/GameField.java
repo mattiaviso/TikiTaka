@@ -180,11 +180,11 @@ public class GameField {
 
             // Collisione pedina contro pedina
             for (int j = i + 1; j < objectsPiece.length; j++) {
-                if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
+                if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) <= (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
                     break;
 
-                if ((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) < (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) ||
-                        (objectsPiece[j].position.getY() + objectsPiece[j].getRadius()) < (objectsPiece[i].position.getY() - objectsPiece[i].getRadius()))
+                if ((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) <= (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) ||
+                        (objectsPiece[j].position.getY() + objectsPiece[j].getRadius()) <= (objectsPiece[i].position.getY() - objectsPiece[i].getRadius()))
                     continue;
 
                 objectsPiece[i].resolveCollision(objectsPiece[j]);
