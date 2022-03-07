@@ -7,6 +7,7 @@ import it.unibs.pajc.ClientServer.ViewClient;
 
 import java.net.*;
 import java.awt.*;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -339,20 +340,6 @@ public class Client {
 
                     String[] riga11 = parts[11].split("@");
 
-                    /*if(riga11[5].equals("true")){
-                        SoundClip collision = new SoundClip("collision");
-                        collision.startSound();
-                    }*/
-                    Runnable task = ()->{
-                        if(riga11[5].equals("true")){
-                            SoundClip collision = new SoundClip("collision");
-                            collision.startSound();
-                        }
-                    };
-                    task.run();
-
-                    Thread thread = new Thread(task);
-                    thread.start();
 
                     int nUsers = Integer.parseInt(riga11[0]);
                     int newScore1 = Integer.parseInt(riga11[3]);

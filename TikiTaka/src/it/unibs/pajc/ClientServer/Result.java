@@ -70,6 +70,7 @@ public class Result extends JPanel {
         g.setColor(Color.BLUE);
         //g.fillRect(0,0,1300,120);
 
+
         try {
             this.Tabel = ImageIO.read(new File("Tabellone.png"));
         } catch (IOException var4) {
