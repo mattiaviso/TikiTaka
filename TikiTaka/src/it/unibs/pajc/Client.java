@@ -91,7 +91,9 @@ public class Client {
         }
         // exception handler if it failed
         catch (Exception ec) {
-            display("Error connectiong to server:" + ec);
+            display("CONNESIONE NON RIUSCITA SERVER PIENO");
+            frame.dispose();
+
             return false;
         }
 

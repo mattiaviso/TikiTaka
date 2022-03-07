@@ -54,11 +54,14 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port);
 
             // infinite loop to wait for connections ( till server is active )
-            while (keepGoing && al.size()<2) {
+            while (keepGoing) {
                 display("Server waiting for Clients on port " + port + ".");
 
                 // accept connection if requested from client
-                Socket socket = serverSocket.accept();
+                Socket socket = null;
+                if(al.size()<2)
+                     socket = serverSocket.accept();
+
 
 
 
@@ -66,9 +69,20 @@ public class Server {
                 if (!keepGoing)
                     break;
                 // if client is connected, create its thread
-                ClientThread t = new ClientThread(socket);
+                ClientThread t = null;
+                if(socket != null)
+                     t = new ClientThread(socket);
+                if(al.size()>=2){
+                    t.sInput.close();
+                    t.sOutput.close();
+                    t.socket.close();
+                    System.out.println("NON PUOI ENTRARE ");
+                t = null;
+                }
                 //add this client to arraylist
-                al.add(t);
+                    if(t != null)
+                    al.add(t);
+
                 frame.repaintPeople(al);
 
 
