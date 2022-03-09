@@ -91,13 +91,13 @@ public class Client {
         }
         // exception handler if it failed
         catch (Exception ec) {
-            display("CONNESIONE NON RIUSCITA SERVER PIENO");
+            display("CONNESIONE NON RIUSCITA, SERVER PIENO");
             frame.dispose();
 
             return false;
         }
 
-        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
+        String msg = "Connessione accettata " + socket.getInetAddress() + ":" + socket.getPort();
         display(msg);
 
         /* Creating both Data Stream */
@@ -105,7 +105,8 @@ public class Client {
             sInput = new ObjectInputStream(socket.getInputStream());
             sOutput = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException eIO) {
-            display("Exception creating new Input/output Streams: " + eIO);
+            display("CONNESIONE NON RIUSCITA, SERVER PIENO");
+            frame.dispose();
             return false;
         }
 
@@ -125,7 +126,7 @@ public class Client {
     }
 
     /**
-     * manda un messaggio al controller
+     * manda un messaggio alla riga di comando
      *
      * @param msg
      */
@@ -145,7 +146,7 @@ public class Client {
         try {
             sOutput.writeObject(msg);
         } catch (IOException e) {
-            display("Exception writing to server: " + e);
+            display("Eccezione scrittura su server: " + e);
         }
     }
 
@@ -186,13 +187,10 @@ public class Client {
      * @param args
      */
     public static void main(String[] args) {
-        //Musica
-        SoundClip sound;
-
-        // default values if not entered
+        SoundClip sound;//Musica
         int portNumber = 1500;
-        // immette ip
         String serverAddress;
+
         String ipServer = JOptionPane.showInputDialog("inserire ipServer (premere invio per il localhost)");
         if (ipServer != null && isValidIp(ipServer)) {
             serverAddress = ipServer;
@@ -200,14 +198,14 @@ public class Client {
             serverAddress = "localhost";
         }
 
-
-        String userName = "Anonymous";
+        String userName = "";
         Scanner scan = new Scanner(System.in);
 
+        do {
+            userName = JOptionPane.showInputDialog(finestra, "Inserisci username");
+        }while(userName.equals(""));
 
-        userName = JOptionPane.showInputDialog(finestra, "Inserisci username");
-
-        // create the Client object
+        // creazione oggetto Client
         Client client = new Client(serverAddress, portNumber, userName);
 
         panel = new Result(client);
@@ -218,7 +216,6 @@ public class Client {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setTable(0, 0);
         panel.setPreferredSize(new Dimension(1300, 120));
-
 
         finestra = new ViewClient();
         finestra.setVisible(true);
@@ -260,7 +257,9 @@ public class Client {
                 if (finestra.getValido() != null) {
                     if (!(finestra.getDistance() <= finestra.getValidoRadius())) {
                         //finestra.valido.start(finestra.distance, finestra.angle);
-                        System.out.println(finestra.getPosValidX() + finestra.getPosValidY() + finestra.getDistance() + finestra.getAngle());
+
+                        ///System.out.println(finestra.getPosValidX() + finestra.getPosValidY() + finestra.getDistance() + finestra.getAngle());
+
                         //Dare formo al messaggio x@y@distance@angle
                         elaboramessaggio(finestra.getPosValidX() + "@" + finestra.getPosValidY() + "@" + finestra.getDistance() + "@" + finestra.getAngle(), client);
                     }
@@ -268,7 +267,6 @@ public class Client {
                 finestra.setValido(null);
                 finestra.setRadiusPower(0);
                 finestra.repaint();
-
             }
 
             @Override
@@ -290,14 +288,12 @@ public class Client {
 
         });
 
-
         if (close == true) {
             // chiude le risorse dal server
             scan.close();
             // Client ha finito il suo lavoro, disconnessione client
             client.disconnect();
         }
-
 
     }
 
@@ -334,8 +330,9 @@ public class Client {
                     //Legge il messaggio inviato dal dataStream
                     msg = (String) sInput.readObject();
 
-                    // print the message
-                    System.out.println(msg);
+                    // STAMPA MESSAGGIO RICEVUTO DAL SERVER
+                    /*System.out.println(msg);*/
+
                     finestra.aggiornaPos(msg);
                     String[] parts = msg.split("\n");
 
@@ -389,10 +386,9 @@ public class Client {
 
                     checkVincitore();
 
-
                 } catch (IOException e) {
 
-                    display("Server has closed the connection: " + e);
+                    display("La connessione al server è stata interrotta");
                     break;
                 } catch (ClassNotFoundException e2) {
                 }
@@ -430,7 +426,5 @@ public class Client {
             }
         }
     }
-
-
 }
 

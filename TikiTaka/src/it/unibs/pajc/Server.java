@@ -6,11 +6,15 @@ import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 
-import java.io.*;
-import java.net.*;
-import javax.swing.Timer;
+import javax.swing.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -57,35 +61,26 @@ public class Server {
             while (keepGoing) {
                 display("Server waiting for Clients on port " + port + ".");
 
+                // break if server stoped
+                if (!keepGoing)
+                    break;
                 // accept connection if requested from client
-                ;
+                Socket socket = serverSocket.accept();
                 if (al.size() < 2) {
-                    Socket socket = serverSocket.accept();
 
-
-                    // break if server stoped
-                    if (!keepGoing)
-                        break;
                     // if client is connected, create its thread
-
-
                     ClientThread t = new ClientThread(socket);
-                    if (al.size() >= 2) {
-                        t.sInput.close();
-                        t.sOutput.close();
-                        t.socket.close();
-                        System.out.println("NON PUOI ENTRARE ");
-                        t = null;
-                    }
                     //add this client to arraylist
-                    if (t != null)
-                        al.add(t);
+
+                    al.add(t);
                     frame.repaintPeople(al);
                     broadcastFerme(al.size());
                     t.start();
                 } else {
+                    socket.close();
                     serverSocket.close();
                 }
+
 
 
             }
