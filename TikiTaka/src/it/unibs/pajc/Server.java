@@ -58,37 +58,36 @@ public class Server {
                 display("Server waiting for Clients on port " + port + ".");
 
                 // accept connection if requested from client
-                Socket socket = null;
-                if(al.size()<2)
-                     socket = serverSocket.accept();
+                ;
+                if (al.size() < 2) {
+                    Socket socket = serverSocket.accept();
 
 
+                    // break if server stoped
+                    if (!keepGoing)
+                        break;
+                    // if client is connected, create its thread
 
 
-                // break if server stoped
-                if (!keepGoing)
-                    break;
-                // if client is connected, create its thread
-                ClientThread t = null;
-                if(socket != null)
-                     t = new ClientThread(socket);
-                if(al.size()>=2){
-                    t.sInput.close();
-                    t.sOutput.close();
-                    t.socket.close();
-                    System.out.println("NON PUOI ENTRARE ");
-                t = null;
+                    ClientThread t = new ClientThread(socket);
+                    if (al.size() >= 2) {
+                        t.sInput.close();
+                        t.sOutput.close();
+                        t.socket.close();
+                        System.out.println("NON PUOI ENTRARE ");
+                        t = null;
+                    }
+                    //add this client to arraylist
+                    if (t != null)
+                        al.add(t);
+                    frame.repaintPeople(al);
+                    broadcastFerme(al.size());
+                    t.start();
+                } else {
+                    serverSocket.close();
                 }
-                //add this client to arraylist
-                    if(t != null)
-                    al.add(t);
-
-                frame.repaintPeople(al);
 
 
-                broadcastFerme(al.size());
-
-                t.start();
             }
             // try to stop the server
             try {
@@ -149,7 +148,7 @@ public class Server {
                 team = "T2";
             }
 
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.getTurno() + "@" + modelField.getScore1() + "@" + modelField.getScore2() +"@"+modelField.getCollision() +"\n";
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@" + modelField.getTurno() + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "@" + modelField.getCollision() + "\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
@@ -182,7 +181,7 @@ public class Server {
             } else {
                 team = "T2";
             }
-            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.getScore1() + "@" + modelField.getScore2() +"@"+modelField.getCollision()+"\n";
+            String messageLf = modelField.messaggioPos() + m + "@" + team + "@null" + "@" + modelField.getScore1() + "@" + modelField.getScore2() + "@" + modelField.getCollision() + "\n";
             for (int j = 0; j < m; j++) {
                 messageLf += al.get(j).username + "\n";
             }
@@ -255,7 +254,7 @@ public class Server {
             id = ++uniqueId;
             this.socket = socket;
             //Creating both Data Str
-            System.out.println("ip clinet " + socket.getInetAddress() +"Port " +socket.getPort());
+            System.out.println("ip clinet " + socket.getInetAddress() + "Port " + socket.getPort());
             System.out.println("Thread trying to create Object Input/Output Streams");
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
@@ -366,7 +365,6 @@ public class Server {
             return true;
         }
     }
-
 
 
 }
