@@ -24,7 +24,7 @@ public class Client {
     public static Result panel;
 
     // variabili gioco
-    protected String turno;
+    protected  String turno;
     protected int score1, score2;
     protected String team = null;
 
@@ -92,13 +92,11 @@ public class Client {
         // exception handler if it failed
         catch (Exception ec) {
             display("CONNESIONE NON RIUSCITA, SERVER PIENO");
-            frame.dispose();
 
             return false;
         }
 
-        String msg = "Connessione accettata " + socket.getInetAddress() + ":" + socket.getPort();
-        display(msg);
+
 
         /* Creating both Data Stream */
         try {
@@ -107,6 +105,7 @@ public class Client {
         } catch (IOException eIO) {
             display("CONNESIONE NON RIUSCITA, SERVER PIENO");
             frame.dispose();
+            System.exit(0);
             return false;
         }
 
@@ -119,6 +118,8 @@ public class Client {
         } catch (IOException eIO) {
             display("Exception doing login : " + eIO);
             disconnect();
+            frame.dispose();
+            System.exit(0);
             return false;
         }
         // success we inform the caller that it worked
@@ -132,7 +133,7 @@ public class Client {
      */
     private void display(String msg) {
 
-        System.out.println(msg);
+        //System.out.println(msg);
         JOptionPane.showMessageDialog(finestra, msg);
 
     }
@@ -147,6 +148,8 @@ public class Client {
             sOutput.writeObject(msg);
         } catch (IOException e) {
             display("Eccezione scrittura su server: " + e);
+            frame.dispose();
+            System.exit(0);
         }
     }
 
@@ -387,8 +390,9 @@ public class Client {
                     checkVincitore();
 
                 } catch (IOException e) {
-
                     display("La connessione al server è stata interrotta");
+                    frame.dispose();
+                    System.exit(0);
                     break;
                 } catch (ClassNotFoundException e2) {
                 }

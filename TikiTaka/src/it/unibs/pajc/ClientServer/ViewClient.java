@@ -1,5 +1,6 @@
 package it.unibs.pajc.ClientServer;
 
+import it.unibs.pajc.Client;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
@@ -29,7 +30,14 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     private int distance;
     private double angle;
     protected FieldObject[] objectsPiece;
+    // aspettare un giocatore
     private boolean wait = false;
+    // colorare bordo del giocatore che tocca
+    private String viewBordoPedina;
+
+    public void setViewBordoPedina(String viewBordoPedina) {
+        this.viewBordoPedina = viewBordoPedina;
+    }
 
     public double getAngle() {
         return angle;
@@ -159,6 +167,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             if (f != null)
                 g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }
+
 
         if (wait) {
             g2.setColor(Color.red);
