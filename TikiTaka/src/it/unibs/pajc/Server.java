@@ -10,8 +10,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -213,13 +215,13 @@ public class Server {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         // start server on port 1500 unless a PortNumber is specified
-        frame = new ViewServer();
+    	int portNumber = 1500;
+        frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(),portNumber);
         frame.setVisible(true);
 
-        int portNumber = 1500;
-
+        
         modelField = new GameField();
         //System.out.println(modelField.messaggioPos());
 
@@ -249,8 +251,8 @@ public class Server {
             id = ++uniqueId;
             this.socket = socket;
             //Creating both Data Str
-            System.out.println("ip clinet " + socket.getInetAddress() + "Port " + socket.getPort());
-            System.out.println("Thread trying to create Object Input/Output Streams");
+            //System.out.println("ip clinet " + socket.getInetAddress() + "Port " + socket.getPort());
+            //System.out.println("Thread trying to create Object Input/Output Streams");
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
                 sInput = new ObjectInputStream(socket.getInputStream());

@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 public class ViewServer extends JFrame {
 
@@ -27,7 +28,7 @@ public class ViewServer extends JFrame {
     /**
      * Create the frame.
      */
-    public ViewServer() {
+    public ViewServer(String ip,int pNumber) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 501, 363);
         contentPane = new JPanel();
@@ -59,6 +60,12 @@ public class ViewServer extends JFrame {
         people.setBackground(Color.WHITE);
         people.setBounds(322, 49, 151, 242);
         contentPane.add(people);
+        
+        JTextPane info = new JTextPane();
+        info.setEditable(false);
+        info.setText("Ip server: " + ip + " Porta: "+pNumber);
+        info.setBounds(103, 302, 254, 16);
+        contentPane.add(info);
     }
 
 

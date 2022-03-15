@@ -189,9 +189,17 @@ public class Client {
      *
      * @param args
      */
+
     public static void main(String[] args) {
         SoundClip sound;//Musica
-        int portNumber = 1500;
+
+
+    	Ma home = new Ma();
+		home.setVisible(true);
+		
+		
+    	
+       /* int portNumber = 1500;
         String serverAddress;
 
         String ipServer = JOptionPane.showInputDialog("inserire ipServer (premere invio per il localhost)");
@@ -209,7 +217,13 @@ public class Client {
         }while(userName.equals(""));
 
         // creazione oggetto Client
-        Client client = new Client(serverAddress, portNumber, userName);
+        avvioClient(portNumber, serverAddress, userName);*/
+
+    }
+
+	public static void avvioClient(int portNumber, String serverAddress, String userName) {
+		SoundClip sound;
+		Client client = new Client(serverAddress, portNumber, userName);
 
         panel = new Result(client);
         frame = new JFrame();
@@ -293,12 +307,11 @@ public class Client {
 
         if (close == true) {
             // chiude le risorse dal server
-            scan.close();
+            //scan.close();
             // Client ha finito il suo lavoro, disconnessione client
             client.disconnect();
         }
-
-    }
+	}
 
     /**
      * creare un messaggio da mandare al server
