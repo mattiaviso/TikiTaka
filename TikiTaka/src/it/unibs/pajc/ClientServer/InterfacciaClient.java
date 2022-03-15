@@ -1,4 +1,4 @@
-package it.unibs.pajc.server;
+package it.unibs.pajc.ClientServer;
 
 
 import javax.swing.*;
@@ -60,7 +60,6 @@ public class InterfacciaClient extends JFrame {
 		
 		txtUser = new JTextField();
 		txtUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtUser.setToolTipText("inserire il tuo username ");
 		txtUser.setText("Inserisci qui il tuo username");
 		txtUser.setHorizontalAlignment(SwingConstants.LEFT);
 		txtUser.setBounds(10, 30, 386, 36);

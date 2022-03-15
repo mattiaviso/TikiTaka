@@ -4,7 +4,7 @@ import it.unibs.pajc.ClientServer.ChatMessage;
 import it.unibs.pajc.ClientServer.Result;
 import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.ClientServer.ViewClient;
-import it.unibs.pajc.server.InterfacciaClient;
+import it.unibs.pajc.ClientServer.InterfacciaClient;
 
 import java.net.*;
 import java.awt.*;
