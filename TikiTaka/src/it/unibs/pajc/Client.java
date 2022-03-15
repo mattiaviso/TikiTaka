@@ -4,13 +4,13 @@ import it.unibs.pajc.ClientServer.ChatMessage;
 import it.unibs.pajc.ClientServer.Result;
 import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.ClientServer.ViewClient;
+import it.unibs.pajc.server.InterfacciaClient;
 
 import java.net.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.util.*;
 
 import javax.swing.*;
 
@@ -194,7 +194,7 @@ public class Client {
         SoundClip sound;//Musica
 
 
-    	Ma home = new Ma();
+    	InterfacciaClient home = new InterfacciaClient();
 		home.setVisible(true);
 		
 		

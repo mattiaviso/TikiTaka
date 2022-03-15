@@ -133,10 +133,10 @@ public class GameField {
                 collision = true ;
                 //bordiPorta(objectsPiece[i], 1 );
                 if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+                    collision = false;
                     if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
                         positionStart();
                         score2++;
-                        collision = false;
                         setTurno("T2");
                     }
                 } else {
@@ -148,10 +148,10 @@ public class GameField {
                 collision = true;
                 if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
 
+                    collision = false;
                     if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
                         positionStart();
                         score1++;
-                        collision = false;
                         setTurno("T1");
                     }
                 } else {
