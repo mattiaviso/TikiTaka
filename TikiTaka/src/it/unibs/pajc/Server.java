@@ -135,7 +135,9 @@ public class Server {
      */
 
     private boolean broadcastFerme(int m) {
-
+        if(al.size()==2){
+            modelField.setImage(al.get(0).path,al.get(1).path);
+        }
         for (int i = al.size(); --i >= 0; ) {
             ClientThread ct = al.get(i);
             String team;
@@ -170,6 +172,9 @@ public class Server {
      */
     private boolean broadcast(int m) {
         // because it has disconnected
+        if(al.size()==2){
+            modelField.setImage(al.get(0).path,al.get(1).path);
+        }
         for (int i = al.size(); --i >= 0; ) {
             ClientThread ct = al.get(i);
             String team;
@@ -241,6 +246,7 @@ public class Server {
         // the Username of the Client
         public String username;
         // message object to recieve message and its type
+        String path;
         ChatMessage cm;
         String date;
         Timer timer;
@@ -256,9 +262,13 @@ public class Server {
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
                 sInput = new ObjectInputStream(socket.getInputStream());
-                // read the username
-                username = (String) sInput.readObject();
+                // Legge il primo messaggio inviato
+                String[] parts = ((String) sInput.readObject()).split("=img=");
+                username = parts[0];
+                path = parts[1];
+
                 broadcast(al.size());
+
             } catch (IOException e) {
                 display("Exception creating new Input/output Streams: " + e);
                 return;

@@ -28,12 +28,23 @@ public class GameField {
     }
 
     public GameField() {
+        String pathT1="Pedina1.png";
+        String pathT2="Pedina2.png";
         turno = "T1";
         objectsPiece = new FieldObject[11];
         positionStart();
     }
 
-
+    public void setImage(String s1,String s2){
+        for (FieldObject f: objectsPiece) {
+            if(f instanceof  Piece && f.getTeam().equals("T1")){
+                ((Piece) f).setImage(s1);
+            }
+            if(f instanceof  Piece && f.getTeam().equals("T2")){
+                ((Piece) f).setImage(s2);
+            }
+        }
+    }
 
 
     /**

@@ -27,6 +27,11 @@ public class Piece extends FieldObject {
 
     }
 
+    public void setImage(String imgPathString) {
+        this.imgPathString = imgPathString;
+
+    }
+
     public String getTeam() {
         return team;
     }

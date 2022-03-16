@@ -33,7 +33,7 @@ public class Client {
     protected ObjectInputStream sInput;        // to read from the socket
     protected ObjectOutputStream sOutput;        // to write on the socket
     protected Socket socket;                    // socket object
-    protected String server, username;    // server and username
+    protected String server, username,path;    // server and username
     protected int port;
 
 
@@ -75,10 +75,11 @@ public class Client {
      *  username: the username
      */
 
-    Client(String server, int port, String username) {
+    Client(String server, int port, String username,String path) {
         this.server = server;
         this.port = port;
         this.username = username;
+        this.path = path;
     }
 
     /*
@@ -114,7 +115,7 @@ public class Client {
         // Send our username to the server this is the only message that we
         // will send as a String. All other messages will be ChatMessage objects
         try {
-            sOutput.writeObject(username);
+            sOutput.writeObject(username+"=img="+path);
         } catch (IOException eIO) {
             display("Exception doing login : " + eIO);
             disconnect();
@@ -196,7 +197,7 @@ public class Client {
 
     	InterfacciaClient home = new InterfacciaClient();
 		home.setVisible(true);
-		
+
 		
     	
        /* int portNumber = 1500;
@@ -221,9 +222,9 @@ public class Client {
 
     }
 
-	public static void avvioClient(int portNumber, String serverAddress, String userName) {
+	public static void avvioClient(int portNumber, String serverAddress, String userName,String path) {
 		SoundClip sound;
-		Client client = new Client(serverAddress, portNumber, userName);
+		Client client = new Client(serverAddress, portNumber, userName,path);
 
         panel = new Result(client);
         frame = new JFrame();

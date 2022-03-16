@@ -21,16 +21,34 @@ public class InterfacciaClient extends JFrame {
 	private JTextField txtIp;
 	private JTextField txtUser;
 	private JButton btnEsterno;
-
+	JComboBox comboBox;
 
 	public InterfacciaClient() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 287);
+		contentPane = new JPanel();
 		ImageIcon img = new ImageIcon("Ball.png");
 		this.setIconImage(img.getImage());
 		this.setTitle("TikiTaka");
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 287);
-		contentPane = new JPanel();
+		Object[] items =
+				{
+						new ImageIcon("Pedina1.png"),
+						new ImageIcon("Pedina2.png"),
+						new ImageIcon("Pedina2.png"),
+
+				};
+		contentPane.setLayout(null);
+		comboBox = new JComboBox( items );
+		comboBox.setBounds(180, 150, 100, 100);
+		contentPane.add(comboBox);
+		comboBox.setSelectedIndex(1);
+		comboBox.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		comboBox.setMaximumRowCount(3);
+		comboBox.setPreferredSize(new Dimension(100, 100));
+
+
+
 		contentPane.setBackground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -56,7 +74,7 @@ public class InterfacciaClient extends JFrame {
 		btnLocal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!(txtUser.getText().equals("") || txtUser.getText().equals(MSG_NOME) || txtUser.getText().equals(ERRORE_NOME))) {
-					Client.avvioClient(1500, "localhost", txtUser.getText());
+					Client.avvioClient(1500, "localhost", txtUser.getText(),comboBox.getSelectedItem().toString());
 					setVisible(false);
 				} else {
 					txtUser.setText(ERRORE_NOME);
@@ -88,7 +106,7 @@ public class InterfacciaClient extends JFrame {
 		btnEsterno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (isValidIp(txtIp.getText()) && !txtUser.getText().equals("") && !txtUser.getText().equals(MSG_NOME) && !txtUser.getText().equals(ERRORE_NOME)) {
-					Client.avvioClient(1500, txtIp.getText(), txtUser.getText());
+					Client.avvioClient(1500, txtIp.getText(), txtUser.getText(),comboBox.getSelectedItem().toString());
 					setVisible(false);
 				} else {
 					if(!isValidIp(txtIp.getText())){
@@ -112,3 +130,4 @@ public class InterfacciaClient extends JFrame {
 	        return ip.matches("^[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}$");
 	    }
 }
+
