@@ -1,7 +1,7 @@
 package it.unibs.pajc;
 
 import it.unibs.pajc.ClientServer.ChatMessage;
-import it.unibs.pajc.ClientServer.Result;
+import it.unibs.pajc.ClientServer.ResultOnline;
 import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.ClientServer.ViewClient;
 
@@ -22,7 +22,7 @@ public class Client {
     //componenti grafiche
     public static JFrame frame;
     public static ViewClient finestra;
-    public static Result panel;
+    public static ResultOnline panel;
 
     // variabili gioco
     protected String turno;
@@ -209,7 +209,7 @@ public class Client {
         // create the Client object
         Client client = new Client(serverAddress, portNumber, userName);
 
-        panel = new Result(client);
+        panel = new ResultOnline(client);
         frame = new JFrame();
         frame.setVisible(true);
         frame.setResizable(false);

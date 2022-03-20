@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 
-public class Result extends JPanel {
+public class ResultOnline extends JPanel {
 
     private int score1;
     private int score2;
@@ -18,7 +18,7 @@ public class Result extends JPanel {
     private BufferedImage Tabel;
     private Client client;
 
-    public Result(Client t) {
+    public ResultOnline(Client t) {
         this.client = t;
     }
 

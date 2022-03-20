@@ -1,5 +1,9 @@
 package it.unibs.pajc.Partita;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Vector;
+
 public class GameField {
 
     public static final int MAX_X = 566;
@@ -27,13 +31,46 @@ public class GameField {
         return score2;
     }
 
+    public FieldObject[] getObjectsPiece() {
+        return objectsPiece;
+    }
+
+    public void setObjectsPiece(FieldObject[] objectsPiece) {
+        this.objectsPiece = objectsPiece;
+    }
+    // partite online
     public GameField() {
         turno = "T1";
         objectsPiece = new FieldObject[11];
         positionStart();
     }
 
+<<<<<<< Updated upstream
 
+=======
+    // partite offline
+    // non so come risolvere il probelema del secondo costruttore uguale
+    public GameField(int ciao){
+        String pathT1="Pedina1.png";
+        String pathT2="Pedina2.png";
+        turno = "T1";
+        objectsPiece = new FieldObject[6];
+        positionTraining();
+    }
+
+
+
+    public void setImage(String s1,String s2){
+        for (FieldObject f: objectsPiece) {
+            if(f instanceof  Piece && f.getTeam().equals("T1")){
+                ((Piece) f).setImage(s1);
+            }
+            if(f instanceof  Piece && f.getTeam().equals("T2")){
+                ((Piece) f).setImage(s2);
+            }
+        }
+    }
+>>>>>>> Stashed changes
 
 
     /**
@@ -51,6 +88,40 @@ public class GameField {
         objectsPiece[8] = (new Piece(40, -170, -70, "Pedina2.png", "T2"));
         objectsPiece[9] = (new Piece(40, -350, 180, "Pedina2.png", "T2"));
         objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
+    }
+
+// posizione per allenamento
+    private void positionTraining (){
+         int randomBall = (int) (Math.random()*3);
+    // TIRO DA DRITTO
+         if (randomBall == 0){
+
+             objectsPiece[0] = (new Piece(40, -110, 0, "Pedina1.png", "T1"));
+             objectsPiece[1] = (new Ball(18, 0, 0));
+             objectsPiece[2] = (new Piece(40, 145, 150, "Pedina2.png", "T2"));
+             objectsPiece[3] = (new Piece(40, 175, 0, "Pedina2.png", "T2"));
+             objectsPiece[4] = (new Piece(40, 125, -150, "Pedina2.png", "T2"));
+             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
+    //TIRO DAL BASSO
+         }else if (randomBall ==1 ){
+             objectsPiece[0] = (new Piece(40, -120, -180, "Pedina1.png", "T1"));
+             objectsPiece[1] = (new Ball(18, -30, -250));
+             objectsPiece[2] = (new Piece(40, 145, -150, "Pedina2.png", "T2"));
+             objectsPiece[3] = (new Piece(40, 160, -80, "Pedina2.png", "T2"));
+             objectsPiece[4] = (new Piece(40, 140, -30, "Pedina2.png", "T2"));
+             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
+
+    //TIRO DAL ALTO
+         }else{
+             objectsPiece[0] = (new Piece(40, -120, 180, "Pedina1.png", "T1"));
+             objectsPiece[1] = (new Ball(18, -30, 250));
+             objectsPiece[2] = (new Piece(40, 150, 150, "Pedina2.png", "T2"));
+             objectsPiece[3] = (new Piece(40, 160, 80, "Pedina2.png", "T2"));
+             objectsPiece[4] = (new Piece(40, 145,30 , "Pedina2.png", "T2"));
+             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
+         }
+
+
     }
 
 
@@ -118,6 +189,23 @@ public class GameField {
 
         checkCollisions();
 
+    }
+    /**
+     * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
+     *
+     * @param xMouse Coordinata x del mouse
+     * @param yMouse Coordinata y del mouse
+     * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
+     */
+    public FieldObject checkClickAble(int xMouse, int yMouse) {
+        if (!allStop()) return null;
+        for (FieldObject f : objectsPiece) {
+            if (f instanceof Piece)
+                if (Math.pow((xMouse - f.position.getX()), 2) + Math.pow((yMouse - f.position.getY()), 2) < Math.pow((f.radius), 2) && ((Piece) f).team.equals(turno)) {
+                    return f;
+                }
+        }
+        return null;
     }
 
     public void checkCollisions() {
@@ -214,6 +302,7 @@ public class GameField {
             score2 = 0;
         }
     }
+
 
 
 }
