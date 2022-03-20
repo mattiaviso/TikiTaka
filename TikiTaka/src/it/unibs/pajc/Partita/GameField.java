@@ -35,95 +35,35 @@ public class GameField {
         return objectsPiece;
     }
 
+    public void setScore1(int score1) {
+        this.score1 = score1;
+    }
+
+    public void setScore2(int score2) {
+        this.score2 = score2;
+    }
+
     public void setObjectsPiece(FieldObject[] objectsPiece) {
         this.objectsPiece = objectsPiece;
     }
     // partite online
     public GameField() {
         turno = "T1";
-        objectsPiece = new FieldObject[11];
-        positionStart();
+
+        //objectsPiece = new FieldObject[11];
+        //positionStart();
     }
 
-<<<<<<< Updated upstream
 
-=======
     // partite offline
     // non so come risolvere il probelema del secondo costruttore uguale
-    public GameField(int ciao){
-        String pathT1="Pedina1.png";
-        String pathT2="Pedina2.png";
-        turno = "T1";
-        objectsPiece = new FieldObject[6];
-        positionTraining();
-    }
 
 
 
-    public void setImage(String s1,String s2){
-        for (FieldObject f: objectsPiece) {
-            if(f instanceof  Piece && f.getTeam().equals("T1")){
-                ((Piece) f).setImage(s1);
-            }
-            if(f instanceof  Piece && f.getTeam().equals("T2")){
-                ((Piece) f).setImage(s2);
-            }
-        }
-    }
->>>>>>> Stashed changes
 
 
-    /**
-     * Posizione iniziale delle pedine
-     */
-    private void positionStart() {
-        objectsPiece[0] = (new Piece(40, 520, 0, "Pedina1.png", "T1"));
-        objectsPiece[1] = (new Piece(40, 170, 70, "Pedina1.png", "T1"));
-        objectsPiece[2] = (new Piece(40, 170, -70, "Pedina1.png", "T1"));
-        objectsPiece[3] = (new Piece(40, 350, 180, "Pedina1.png", "T1"));
-        objectsPiece[4] = (new Piece(40, 350, -180, "Pedina1.png", "T1"));
-        objectsPiece[5] = (new Ball(18, 0, 0));
-        objectsPiece[6] = (new Piece(40, -520, 0, "Pedina2.png", "T2"));
-        objectsPiece[7] = (new Piece(40, -170, 70, "Pedina2.png", "T2"));
-        objectsPiece[8] = (new Piece(40, -170, -70, "Pedina2.png", "T2"));
-        objectsPiece[9] = (new Piece(40, -350, 180, "Pedina2.png", "T2"));
-        objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
-    }
 
-// posizione per allenamento
-    private void positionTraining (){
-         int randomBall = (int) (Math.random()*3);
-    // TIRO DA DRITTO
-         if (randomBall == 0){
-
-             objectsPiece[0] = (new Piece(40, -110, 0, "Pedina1.png", "T1"));
-             objectsPiece[1] = (new Ball(18, 0, 0));
-             objectsPiece[2] = (new Piece(40, 145, 150, "Pedina2.png", "T2"));
-             objectsPiece[3] = (new Piece(40, 175, 0, "Pedina2.png", "T2"));
-             objectsPiece[4] = (new Piece(40, 125, -150, "Pedina2.png", "T2"));
-             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
-    //TIRO DAL BASSO
-         }else if (randomBall ==1 ){
-             objectsPiece[0] = (new Piece(40, -120, -180, "Pedina1.png", "T1"));
-             objectsPiece[1] = (new Ball(18, -30, -250));
-             objectsPiece[2] = (new Piece(40, 145, -150, "Pedina2.png", "T2"));
-             objectsPiece[3] = (new Piece(40, 160, -80, "Pedina2.png", "T2"));
-             objectsPiece[4] = (new Piece(40, 140, -30, "Pedina2.png", "T2"));
-             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
-
-    //TIRO DAL ALTO
-         }else{
-             objectsPiece[0] = (new Piece(40, -120, 180, "Pedina1.png", "T1"));
-             objectsPiece[1] = (new Ball(18, -30, 250));
-             objectsPiece[2] = (new Piece(40, 150, 150, "Pedina2.png", "T2"));
-             objectsPiece[3] = (new Piece(40, 160, 80, "Pedina2.png", "T2"));
-             objectsPiece[4] = (new Piece(40, 145,30 , "Pedina2.png", "T2"));
-             objectsPiece[5] = (new Piece(40, 520, 0, "Pedina2.png", "T2"));
-         }
-
-
-    }
-
+    // online
 
     public String messaggioPos() {
         String string = "";
@@ -140,13 +80,8 @@ public class GameField {
     public boolean getCollision(){
         return collision;
     }
-
+    // online
     public void cambioTurno() {
-        if (turno.equals("T1")) {
-            turno = "T2";
-        } else if (turno.equals("T2")) {
-            turno = "T1";
-        }
     }
 
     public void setTurno(String team) {
@@ -222,10 +157,9 @@ public class GameField {
                 //bordiPorta(objectsPiece[i], 1 );
                 if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
                     if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
-                        positionStart();
-                        score2++;
-                        collision = false;
-                        setTurno("T2");
+
+                        ifGoal1();
+
                     }
                 } else {
                     objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
@@ -239,8 +173,9 @@ public class GameField {
                     if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
                         positionStart();
                         score1++;
-                        collision = false;
+
                         setTurno("T1");
+                        ifGoal("T2");
                     }
                 } else {
 
@@ -295,13 +230,20 @@ public class GameField {
         return null;
     }
 
+// solo online
+public void checkVincitore() {
+}
 
-    public void checkVincitore() {
-        if (score1 == 3 || score2 == 3) {
-            score1 = 0;
-            score2 = 0;
-        }
-    }
+// sistemato malissimo ricontrollare
+public void ifGoal(String who){
+    collision = false;
+
+
+}
+
+
+
+
 
 
 
