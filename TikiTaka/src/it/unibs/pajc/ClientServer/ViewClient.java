@@ -181,7 +181,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             //g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
         }
 
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(  4);
+        //ScheduledExecutorService executor = Executors.newScheduledThreadPool(  4);
         Runnable task = ()->{
             for (FieldObject f : objectsPiece) {
                 if (f != null){
@@ -203,7 +203,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         task.run();
         Thread thr1 = new Thread(task);
         thr1.start();
-        executor.scheduleAtFixedRate(task,0,1, TimeUnit.MILLISECONDS);
+        //executor.scheduleAtFixedRate(task,0,1, TimeUnit.MILLISECONDS);
 
 
         if (wait) {
