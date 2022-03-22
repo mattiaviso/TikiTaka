@@ -7,12 +7,15 @@ import it.unibs.pajc.Partita.Piece;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class ViewClient extends JPanel implements MouseListener, MouseMotionListener {
@@ -110,8 +113,24 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         return h;
     }
 
+    private BufferedImage img1,img2;
 
     public ViewClient() {
+
+        try {
+            img1 = ImageIO.read(new File("Pedina1.png"));
+            //img1 = resize(img1,80,80);
+            System.out.println("ciao");
+        } catch (IOException e) {
+            System.out.println("Image not found");
+        }
+
+        try {
+            img2 = ImageIO.read(new File("Pedina2.png"));
+            //imageObj = resize(imageObj,80,80);
+        } catch (IOException e) {
+            System.out.println("Image not found");
+        }
 
         objectsPiece = new FieldObject[11];
 
@@ -162,11 +181,29 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             //g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
         }
 
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(  4);
+        Runnable task = ()->{
+            for (FieldObject f : objectsPiece) {
+                if (f != null){
+                    g2.drawImage(img1, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())),(int) f.getRadius()*2,( int )f.getRadius()*2, null);
+                  /*  if(f.getTeam().equals("T1")){
+                        g2.drawImage(img1, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())),(int) f.getRadius()*2,( int )f.getRadius()*2, null);
+                    }else if(f.getTeam().equals("T2")){
+                        g2.drawImage(img2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())),(int) f.getRadius()*2,( int )f.getRadius()*2, null);
+                    }
+                    else{
+                        g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())),(int) f.getRadius()*2,( int )f.getRadius()*2, null);
 
-        for (FieldObject f : objectsPiece) {
-            if (f != null)
-                g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
-        }
+                    }*/
+
+                }
+            }
+
+        };
+        task.run();
+        Thread thr1 = new Thread(task);
+        thr1.start();
+        executor.scheduleAtFixedRate(task,0,1, TimeUnit.MILLISECONDS);
 
 
         if (wait) {
@@ -178,6 +215,18 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         }
 
 
+    }
+
+
+    public  BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
     }
 
     /**
