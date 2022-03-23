@@ -7,6 +7,7 @@ import it.unibs.pajc.Partita.Piece;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
@@ -110,8 +111,17 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         return h;
     }
 
-
+    public BufferedImage imgg,img2;
     public ViewClient() {
+
+        try {
+            imgg = ImageIO.read(new File("Pedina1HD.png"));
+        } catch (IOException e) {
+        }
+        try {
+            img2 = ImageIO.read(new File("Pedina2HD.png"));
+        } catch (IOException e) {
+        }
 
         objectsPiece = new FieldObject[11];
 
@@ -163,9 +173,21 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         }
 
 
-        for (FieldObject f : objectsPiece) {
+        /*for (FieldObject f : objectsPiece) {
             if (f != null)
                 g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
+        }*/
+        for (FieldObject f : objectsPiece) {
+            if (f != null) {
+                if(f.getTeam() == null) {
+                    g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
+                } else {
+                    if(f.getTeam().equals("T1"))
+                        g2.drawImage(imgg, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), 80, 80, null);
+                    else
+                        g2.drawImage(img2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), 80, 80, null);
+                }
+            }
         }
 
 
@@ -284,7 +306,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public FieldObject checkClickAble(int xMouse, int yMouse) {
         if (!wait)
             for (FieldObject f : objectsPiece) {
-                if (f instanceof Piece) ;
+                if (f instanceof Piece ) ;
                 if (Math.pow((xMouse - f.getPosition().getX()), 2) + Math.pow((yMouse - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2)) {
                     return f;
                 }
