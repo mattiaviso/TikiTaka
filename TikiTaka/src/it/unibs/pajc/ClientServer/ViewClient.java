@@ -306,7 +306,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public FieldObject checkClickAble(int xMouse, int yMouse) {
         if (!wait)
             for (FieldObject f : objectsPiece) {
-                if (f instanceof Piece ) ;
+                if (f instanceof Piece )
                 if (Math.pow((xMouse - f.getPosition().getX()), 2) + Math.pow((yMouse - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2)) {
                     return f;
                 }
