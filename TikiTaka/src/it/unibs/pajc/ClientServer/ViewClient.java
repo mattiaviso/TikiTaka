@@ -111,15 +111,19 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         return h;
     }
 
-    public BufferedImage imgg,img2;
+    public BufferedImage imgT1,imgT2,ball;
     public ViewClient() {
 
         try {
-            imgg = ImageIO.read(new File("Pedina1HD.png"));
+            imgT1 = ImageIO.read(new File("Pedina1HD.png"));
         } catch (IOException e) {
         }
         try {
-            img2 = ImageIO.read(new File("Pedina2HD.png"));
+            imgT2 = ImageIO.read(new File("Pedina2HD.png"));
+        } catch (IOException e) {
+        }
+        try {
+            ball = ImageIO.read(new File("BallHD.png"));
         } catch (IOException e) {
         }
 
@@ -180,12 +184,12 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         for (FieldObject f : objectsPiece) {
             if (f != null) {
                 if(f.getTeam() == null) {
-                    g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
+                    g2.drawImage(ball, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
                 } else {
                     if(f.getTeam().equals("T1"))
-                        g2.drawImage(imgg, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), 80, 80, null);
+                        g2.drawImage(imgT1, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
                     else
-                        g2.drawImage(img2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), 80, 80, null);
+                        g2.drawImage(imgT2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
                 }
             }
         }

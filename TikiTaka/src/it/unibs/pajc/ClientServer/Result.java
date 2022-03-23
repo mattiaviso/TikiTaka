@@ -81,25 +81,38 @@ public class Result extends JPanel {
         g2.setFont(new Font("Ahoroni", Font.BOLD, 30));
         if (client.getTurno() != null) {
             if (client.getTurno().equals("T1")) {
-                g2.setColor(Color.RED);
+                if(team1.contains("(you)")){
+                    g2.setColor(Color.GREEN);
+                }else{
+                    g2.setColor(Color.BLUE);
+                }
                 g2.drawString(team1, 857, 30);
-                g2.setColor(Color.BLUE);
+                g2.setColor(Color.RED);
                 if (team2 != null)
                     g2.drawString(team2, 230, 30);
             } else if (client.getTurno().equals("T2")) {
-                g2.setColor(Color.RED);
+                if(team2.contains("(you)")){
+                    g2.setColor(Color.GREEN);
+                }else{
+                    g2.setColor(Color.RED);
+                }
                 if (team2 != null)
                     g2.drawString(team2, 230, 30);
                 g2.setColor(Color.BLUE);
                 g2.drawString(team1, 857, 30);
             } else {
-                if (team2 != null)
+                if (team2 != null){
+                    g2.setColor(Color.RED);
                     g2.drawString(team2, 230, 30);
+                }
+                g.setColor(Color.BLUE);
                 g2.drawString(team1, 857, 30);
             }
         }
 
+        g2.setColor(Color.RED);
         g2.drawString(score1 + "", 505, 50);
+        g2.setColor(Color.BLUE);
         g2.drawString(score2 + "", 755, 50);
 
     }
