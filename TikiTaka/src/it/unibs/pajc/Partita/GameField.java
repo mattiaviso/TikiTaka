@@ -51,7 +51,7 @@ public class GameField {
      * Posizione iniziale delle pedine
      */
     private void positionStart() {
-        objectsPiece[0] = (new Piece(40, 520, 0, "Pedina1.png", "T1"));
+        objectsPiece[0] = (new Piece(40, 500, 0, "Pedina1.png", "T1"));
         objectsPiece[1] = (new Piece(40, 170, 70, "Pedina1.png", "T1"));
         objectsPiece[2] = (new Piece(40, 170, -70, "Pedina1.png", "T1"));
         objectsPiece[3] = (new Piece(40, 350, 180, "Pedina1.png", "T1"));

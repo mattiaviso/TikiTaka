@@ -19,7 +19,7 @@ import java.awt.geom.Point2D;
 public class ViewClient extends JPanel implements MouseListener, MouseMotionListener {
 
     //Immagine del campo
-    private Image field;
+    public Image field;
 
     private int w;
     private int h;
@@ -127,6 +127,11 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         } catch (IOException e) {
         }
 
+        try {
+            field = ImageIO.read(new File("campoHD.png"));
+        } catch (IOException var4) {
+            System.out.println("Image d'arriere plan non trouvee");
+        }
         objectsPiece = new FieldObject[11];
 
         this.setFocusable(true);
@@ -211,12 +216,12 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
      * @param g2
      */
     private void creatingfield(Graphics2D g2) {
-        try {
-            this.field = ImageIO.read(new File("campogiusto.jpg"));
+        /*try {
+            this.field = ImageIO.read(new File("campoHD.png"));
         } catch (IOException var4) {
             System.out.println("Image d'arriere plan non trouvee");
-        }
-        g2.drawImage(this.field, -655, -320, 1300, 645, null);
+        }*/
+        g2.drawImage(field, -655, -320, 1300, 645, null);
     }
 
     /**

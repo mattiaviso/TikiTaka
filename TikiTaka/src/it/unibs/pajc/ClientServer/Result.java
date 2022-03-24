@@ -71,7 +71,7 @@ public class Result extends JPanel {
         //g.fillRect(0,0,1300,120);
 
         try {
-            this.Tabel = ImageIO.read(new File("Tabellone.png"));
+            this.Tabel = ImageIO.read(new File("TabelloneHD.png"));
         } catch (IOException var4) {
             System.out.println("Image d'arriere plan non trouvee");
         }
