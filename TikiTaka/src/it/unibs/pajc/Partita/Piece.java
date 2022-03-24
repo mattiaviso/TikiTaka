@@ -17,11 +17,12 @@ public class Piece extends FieldObject {
         imgPathString = imagePath;
 
         //Caricamento immagine **Metodo da estrarre
-        try {
+
+        /*try {
             imageObj = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
             System.out.println("Image not found");
-        }
+        }*/
 
         this.team = team;
 

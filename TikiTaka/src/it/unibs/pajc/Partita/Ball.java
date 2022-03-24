@@ -10,11 +10,11 @@ public class Ball extends FieldObject {
         super(radius, x, y, 100);
 
         //Caricamento immagine **Metodo da estrarre
-        try {
+        /*try {
             imageObj = ImageIO.read(new File("Ball.png"));
         } catch (IOException e) {
             System.out.println("Image not found");
-        }
+        }*/
     }
 
 
