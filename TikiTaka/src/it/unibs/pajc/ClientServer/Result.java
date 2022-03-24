@@ -81,6 +81,7 @@ public class Result extends JPanel {
         g2.setFont(new Font("Ahoroni", Font.BOLD, 30));
         if (client.getTurno() != null) {
             if (client.getTurno().equals("T1")) {
+                if(team1 != null)
                 if(team1.contains("(you)")){
                     g2.setColor(Color.GREEN);
                 }else{
@@ -91,6 +92,7 @@ public class Result extends JPanel {
                 if (team2 != null)
                     g2.drawString(team2, 230, 30);
             } else if (client.getTurno().equals("T2")) {
+                if(team2 !=null )
                 if(team2.contains("(you)")){
                     g2.setColor(Color.GREEN);
                 }else{
