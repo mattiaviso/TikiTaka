@@ -49,11 +49,7 @@ public class GameFieldOnline extends GameField{
     }
 
 
-    @Override
-    public void ifGoal2() {
-        super.ifGoal1();
 
-    }
 
 
     @Override
@@ -65,7 +61,77 @@ public class GameFieldOnline extends GameField{
             setScore2(getScore2()+1);
             setTurno("T2");
         }else if (who == "T1"){
-            s
+            positionStart();
+            setScore2(getScore1()+1);
+            setTurno("T1");
         }
     }
+
+
+    @Override
+    public void checkCollisions() {
+        super.checkCollisions();
+        insertionSort(objectsPiece);
+
+
+        // Controllo collisioni con bordi del campo
+        for (int i = 0; i < objectsPiece.length; i++) {
+
+
+            if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
+            {
+                collision = true ;
+                //bordiPorta(objectsPiece[i], 1 );
+                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+                    if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
+
+                        ifGoal("T1");
+
+                    }
+                } else {
+                    objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
+                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
+                }
+            } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
+            {
+                collision = true;
+                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+
+                    if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
+                        positionStart();
+
+                        ifGoal("T2");
+                    }
+                } else {
+
+                    objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
+                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
+                }
+            }
+
+            checkCollisionUpDown(i);
+
+            // crea una frizione tra i 2 oggetti
+            objectsPiece[i].friction(0.02);
+
+
+
+            collisionPiece(i);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+

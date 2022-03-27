@@ -148,6 +148,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         double r = getRadius() + p2.getRadius();
         double dist2 = delta.dot(delta);
 
+
         if (dist2 > r * r) return; // they aren't colliding
         if(GameField.collision == false){
 

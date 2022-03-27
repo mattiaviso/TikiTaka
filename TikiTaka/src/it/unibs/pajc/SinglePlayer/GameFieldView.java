@@ -2,6 +2,7 @@ package it.unibs.pajc.SinglePlayer;
 
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
+import it.unibs.pajc.Partita.GameFieldOffline;
 
 
 import javax.imageio.ImageIO;
@@ -28,7 +29,7 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 	 public int distance;
 	 public double angle;
 	int ciao = 0;
-	GameField fieldModel = new GameField(ciao);
+	GameFieldOffline fieldModel = new GameFieldOffline();
 
 	public GameFieldView() {
 		Timer timer = new Timer(1, (e) -> {
@@ -152,6 +153,8 @@ public class GameFieldView extends JPanel implements MouseListener , MouseMotion
 				valido.start(distance, angle);
 
 				fieldModel.cambioTurno();
+				fieldModel.setTirato(true);
+
 			}
 		}
 		valido = null;

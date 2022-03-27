@@ -4,6 +4,7 @@ import it.unibs.pajc.ClientServer.ChatMessage;
 import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
+import it.unibs.pajc.Partita.GameFieldOnline;
 
 import java.io.*;
 import java.net.*;
@@ -29,7 +30,7 @@ public class Server {
     // notification
     private String notif = " *** ";
 
-    public static GameField modelField;
+    public static GameFieldOnline modelField;
 
     public static ViewServer frame;
 
@@ -208,7 +209,7 @@ public class Server {
 
         int portNumber = 1500;
 
-        modelField = new GameField();
+        modelField = new GameFieldOnline();
         //System.out.println(modelField.messaggioPos());
 
         // create a server object and start it
