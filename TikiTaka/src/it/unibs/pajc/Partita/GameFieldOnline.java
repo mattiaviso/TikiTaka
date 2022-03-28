@@ -3,7 +3,7 @@ package it.unibs.pajc.Partita;
 public class GameFieldOnline extends GameField{
 
     public GameFieldOnline() {
-        objectsPiece = new FieldObject[6];
+        objectsPiece = new FieldObject[11];
         positionStart();
 
     }
