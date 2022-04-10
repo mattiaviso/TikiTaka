@@ -4,12 +4,15 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-
 public class SoundClip  {
 
     private Clip clip;
     private boolean playing = false;
 
+    /**
+     * Costruttore della classe per la riproduzione di file audio
+     * @param s Filepath dell'audio che vogliamo usare
+     */
     public SoundClip(String s) {
         try {
             File soundFile = new File(s + ".wav");
@@ -25,18 +28,29 @@ public class SoundClip  {
         }
     }
 
+    /**
+     * Metodo che se invocato riproduce il file audio
+     * Continua all'infinito
+     */
     public void start() {
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         volume.setValue(-25);
         clip.loop(50);
         clip.start();
     }
+
+    /**
+     * Metodo che esegue SOLO UNA VOLTA l'audio
+     */
     public void startSound(){
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         volume.setValue(-6);
         clip.start();
     }
 
+    /**
+     * Metodo usato per stoppare la riproduzione dell'audio
+     */
     public void stop() {
         clip.stop();
     }

@@ -1,6 +1,5 @@
 package it.unibs.pajc.ClientServer;
 
-
 import it.unibs.pajc.Client;
 
 import javax.swing.*;
@@ -11,43 +10,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-public class InterfacciaClient extends JFrame {
+public class HomePage extends JFrame {
 
 	public static final String MSG_NOME = "Inserisci qui il tuo username";
 	public static final String ERRORE_NOME = "INSERIRE IL NOME";
 	public static final String ERRORE_IP = "IP SERVER NON CORRETTO";
+
 	private JPanel contentPane;
 	private JTextField txtIp;
 	private JTextField txtUser;
 	private JButton btnEsterno;
-	//JComboBox comboBox;
 
-	public InterfacciaClient() {
+	/**
+	 * Costruzione schermata principale
+	 */
+	public HomePage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 287);
 		contentPane = new JPanel();
 		ImageIcon img = new ImageIcon("Ball.png");
 		this.setIconImage(img.getImage());
 		this.setTitle("TikiTaka");
-
-		/*Object[] items =
-				{
-						new ImageIcon("Pedina1.png"),
-						new ImageIcon("Pedina2.png"),
-						new ImageIcon("Pedina2.png"),
-
-				};
-		contentPane.setLayout(null);
-		//comboBox = new JComboBox( items );
-		comboBox.setBounds(180, 150, 100, 100);
-		contentPane.add(comboBox);
-		comboBox.setSelectedIndex(1);
-		comboBox.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-		comboBox.setMaximumRowCount(3);
-		comboBox.setPreferredSize(new Dimension(100, 100));*/
-
-
 
 		contentPane.setBackground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,6 +76,7 @@ public class InterfacciaClient extends JFrame {
 				txtUser.setBackground(Color.WHITE);
 			}
 		});
+
 		txtUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtUser.setText(MSG_NOME);
 		txtUser.setHorizontalAlignment(SwingConstants.LEFT);
@@ -117,15 +101,18 @@ public class InterfacciaClient extends JFrame {
 						txtUser.setText(ERRORE_NOME);
 						txtUser.setBackground(Color.RED);
 					}
-
 				}
 			}
 		});
 		btnEsterno.setBounds(235, 143, 180, 47);
 		contentPane.add(btnEsterno);
-	
 	}
 
+	/**
+	 * Metodo che controlla se l'ip inserito è scritto nella forma corretta
+	 * @param ip
+	 * @return True se è valido False altrimenti
+	 */
 	 public static boolean isValidIp(final String ip) {
 	        return ip.matches("^[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}$");
 	    }

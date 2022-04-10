@@ -1,7 +1,7 @@
 package it.unibs.pajc;
 
 
-import it.unibs.pajc.ClientServer.ChatMessage;
+import it.unibs.pajc.ClientServer.Message;
 import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
@@ -14,67 +14,59 @@ import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 /**
- * creazione del server
+ * Classe Server
  */
 public class Server {
-    // a unique ID for each connection
     private static int uniqueId;
-    // an ArrayList to keep the list of the Client
+    // Lista client connessi
     private ArrayList<ClientThread> al;
-    // to display time
-    private SimpleDateFormat sdf;
-    // the port number to listen for connection
+    // numero porta connessione
     private int port;
-    // to check if server is running
+    // attributo che indica se il server è in esecuzione
     private boolean keepGoing;
-    // notification
     private String notif = " *** ";
-
+    //Model del gioco
     public static GameField modelField;
-
+    //Frame che ci permette di vedere cosa succede sul server
     public static ViewServer frame;
 
-
-    //constructor that receive the port to listen to for connection as parameter
+    /**
+     * Costruttore classe Server
+     *
+     * @param port Porta di connessione
+     */
     public Server(int port) {
-        // the port
         this.port = port;
-        // to display hh:mm:ss
-        sdf = new SimpleDateFormat("HH:mm:ss");
-        // an ArrayList to keep the list of the Client
         al = new ArrayList<ClientThread>();
-
     }
 
+    /**
+     * Metodo che avvia il server
+     */
     public void start() {
         keepGoing = true;
-        //create socket server and wait for connection requests
+        //crea il socket e aspetta connessioni dai client
         try {
-            // the socket used by the server
             ServerSocket serverSocket = new ServerSocket(port);
-
-            // infinite loop to wait for connections ( till server is active )
+            // Loop infinito per aspettare connessioni
             while (keepGoing) {
                 display("Server waiting for Clients on port " + port + ".");
 
-                // break if server stoped
-                if (!keepGoing)
-                    break;
-                // accept connection if requested from client
+                if (!keepGoing) break;
+
+                //Accetto connessione al server se gli utenti connessi sono meno di 2
+                //altrimenti la richiesta di connessione viene rifuitata
                 Socket socket = serverSocket.accept();
                 if (al.size() < 2) {
 
-                    // if client is connected, create its thread
+                    // thread client
                     ClientThread t = new ClientThread(socket);
-                    //add this client to arraylist
-
                     al.add(t);
+
                     frame.repaintPeople(al);
                     broadcastFerme(al.size());
                     t.start();
@@ -82,17 +74,15 @@ public class Server {
                     socket.close();
                     serverSocket.close();
                 }
-
-
-
             }
-            // try to stop the server
+
+            // chiusura del server
             try {
                 serverSocket.close();
                 for (int i = 0; i < al.size(); ++i) {
                     ClientThread tc = al.get(i);
                     try {
-                        // close all data streams and socket
+                        // Chiusura di DataStream
                         tc.sInput.close();
                         tc.sOutput.close();
                         tc.socket.close();
@@ -103,37 +93,28 @@ public class Server {
                 display("Exception closing the server and clients: " + e);
             }
         } catch (IOException e) {
-            String msg = sdf.format(new Date()) + " Exception on new ServerSocket: " + e + "\n";
+            String msg = " Exception on new ServerSocket: " + e + "\n";
             display(msg);
         }
     }
 
-    /*// to stop the server
-    protected void stop() {
-        keepGoing = false;
-        try {
-            new Socket("localhost", port);
-        } catch (Exception e) {
-        }
-    }*/
 
     /**
-     * manda dei messaggi alla console in un tempo definito
+     * Stampa in console messaggi per controllare stato server
      *
      * @param msg
      */
     private void display(String msg) {
-        String time = sdf.format(new Date()) + " " + msg;
+        String time = msg;
         System.out.println(time);
     }
 
     /**
-     * messaggio per il cambio turno (quando tutte le palline sono ferme
+     * messaggio per il cambio turno (quando tutte le palline sono ferme)
      *
      * @param m
      * @return
      */
-
     private boolean broadcastFerme(int m) {
 
         for (int i = al.size(); --i >= 0; ) {
@@ -151,25 +132,25 @@ public class Server {
             }
 
 
-            // try to write to the Client if it fails remove it from the list
+            // Provo a scrivere al Client, se la procedura fallisce lo elimino dall'array al
             if (!ct.writeMsg(messageLf)) {
                 al.remove(i);
                 display("Disconnected Client " + ct.username + " removed from list.");
             }
         }
         modelField.setCollision();
+
         return true;
     }
 
 
     /**
-     * messaggio che inviamo a tutti i client conessi in cui aggiorna la posizione
+     * messaggio che inviamo a tutti i client conessi in cui aggiorna la posizione, quando sono in movimento
      *
      * @param m
      * @return
      */
     private boolean broadcast(int m) {
-        // because it has disconnected
 
         for (int i = al.size(); --i >= 0; ) {
             ClientThread ct = al.get(i);
@@ -184,28 +165,29 @@ public class Server {
                 messageLf += al.get(j).username + "\n";
             }
 
-            // try to write to the Client if it fails remove it from the list
             if (!ct.writeMsg(messageLf)) {
                 al.remove(i);
                 display("Disconnected Client " + ct.username + " removed from list.");
             }
-
         }
+
         modelField.checkVincitore();
         modelField.setCollision();
+
         return true;
-
-
     }
 
-    // if client sent LOGOUT message to exit
+    /**
+     * Se il client invia un messaggio di tipo LOGOUT
+     * il client viene elimintao dalla lista al
+     *
+     * @param id
+     */
     synchronized void remove(int id) {
 
         String disconnectedClient = "";
-        // scan the array list until we found the Id
         for (int i = 0; i < al.size(); ++i) {
             ClientThread ct = al.get(i);
-            // if found remove it
             if (ct.id == id) {
                 disconnectedClient = ct.getUsername();
                 al.remove(i);
@@ -217,43 +199,37 @@ public class Server {
 
 
     public static void main(String[] args) throws UnknownHostException {
-        // start server on port 1500 unless a PortNumber is specified
+
     	int portNumber = 1500;
-        frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(),portNumber);
+        frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(), portNumber);
         frame.setVisible(true);
 
-        
         modelField = new GameField();
-        //System.out.println(modelField.messaggioPos());
 
-        // create a server object and start it
+        //Crea l'oggetto server e lo esegue
         Server server = new Server(portNumber);
         server.start();
     }
 
-    // One instance of this thread will run for each client
+    /**
+     * Un instanza di questo thread sarà eseguita per ogni client
+     */
     public class ClientThread extends Thread {
-        // the socket to get messages from client
+        // socket ricezione messaggio client
         Socket socket;
         ObjectInputStream sInput;
         ObjectOutputStream sOutput;
-        // my unique id (easier for deconnection)
         int id;
-        // the Username of the Client
         public String username;
-        // message object to recieve message and its type
-        ChatMessage cm;
+        Message cm;
         String date;
         Timer timer;
 
-        // Constructor
+        //Costruttore
         ClientThread(Socket socket) {
-            // a unique id
             id = ++uniqueId;
             this.socket = socket;
-            //Creating both Data Str
-            //System.out.println("ip clinet " + socket.getInetAddress() + "Port " + socket.getPort());
-            //System.out.println("Thread trying to create Object Input/Output Streams");
+
             try {
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
                 sInput = new ObjectInputStream(socket.getInputStream());
@@ -273,30 +249,27 @@ public class Server {
             return username;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        // infinite loop to read and forward message
+        /**
+         * Metodo che esegue un loop infinito e prende i messaggi del client
+         * finchè non viene eseguito il messaggio di LOGOUT
+         */
         public void run() {
-            // to loop until LOGOUT
             boolean keepGoing = true;
             while (keepGoing) {
-                // read a String (which is an object)
                 try {
-                    cm = (ChatMessage) sInput.readObject();
+                    cm = (Message) sInput.readObject();
                 } catch (IOException e) {
                     display(username + " Exception reading Streams: " + e);
                     break;
                 } catch (ClassNotFoundException e2) {
                     break;
                 }
-                // get the message from the ChatMessage object received
+                // Prende il messaggio ricevuto dal client
                 String message = cm.getMessage();
 
-                // different actions based on type message
+                // Azioni differenti in base all'azione scelta
                 switch (cm.getType()) {
-                    case ChatMessage.MESSAGE:
+                    case Message.MESSAGE:
                         //formato messaggio x@y@distance@angle
                         //dove x e y sono le coordinate del primo oggetto che si muove
                         if (!message.isEmpty()) {
@@ -321,14 +294,15 @@ public class Server {
 
                 }
             }
-            // if out of the loop then disconnected and remove from client list
             remove(id);
 
             close();
             frame.repaintPeople(al);
         }
 
-        // close everything
+        /**
+         * Chiude tutto
+         */
         private void close() {
             try {
                 if (sOutput != null) sOutput.close();
@@ -345,26 +319,27 @@ public class Server {
             }
         }
 
-        // write a String to the Client output stream
+        /**
+         * Metodo che ci permette di scrivere il messaggio al client
+         * @param msg
+         * @return
+         */
         private boolean writeMsg(String msg) {
-            // if Client is still connected send the message to it
+            //invia il messaggio se il client è ancora connesso
             if (!socket.isConnected()) {
                 close();
                 return false;
             }
-            // write the message to the stream
             try {
                 sOutput.writeObject(msg);
-            }
-            // if an error occurs, do not abort just inform the user
-            catch (IOException e) {
+
+            } catch (IOException e) {
                 display(notif + "Error sending message to " + username + notif);
                 display(e.toString());
             }
             return true;
         }
     }
-
 
 }
 

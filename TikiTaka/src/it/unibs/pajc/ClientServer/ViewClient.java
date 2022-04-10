@@ -1,6 +1,5 @@
 package it.unibs.pajc.ClientServer;
 
-import it.unibs.pajc.Client;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
@@ -15,17 +14,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 
-
+/**
+Classe usata per la gestione della parte grafica del gioco
+ */
 public class ViewClient extends JPanel implements MouseListener, MouseMotionListener {
 
-    //Immagine del campo
     public Image field;
 
     private int w;
     private int h;
-
     private FieldObject valido;
-    // getRadius() selezionato
+    // radisu selezionato
     private int radiusPower = 0;
     private int xnew, ynew;
     private int distance;
@@ -142,7 +141,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     }
 
     /**
-     * creazione del gamefield e del contorno delle pedine quando andiamo a schiacciare
+     * Creazione del campo come sfondo e del contorno delle pedine quando andiamo a schiacciare per eseguire il tiro
      * @param g
      */
     protected void paintComponent(Graphics g) {
@@ -155,7 +154,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         g2.translate(0, h);
         g2.scale(1, -1);
         g2.translate(w / 2, h / 2);
-
 
         // CREAZIONE CAMPO
         creatingfield(g2);
@@ -177,15 +175,8 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             distance = (int) (Math.min(Math.sqrt(Math.pow(valido.getPosition().getX() - xOpposta, 2) + Math.pow(valido.getPosition().getY() - yOpposta, 2)), 150));
             angle = Math.atan2(yOpposta - valido.getPosition().getY(), xOpposta - valido.getPosition().getX());
             drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
-            //mi danno la direzione se faccio divisione
-            //g2.drawLine((int)valido.getX(), (int)valido.getY() , xOpposta,yOpposta);
         }
 
-
-        /*for (FieldObject f : objectsPiece) {
-            if (f != null)
-                g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
-        }*/
         for (FieldObject f : objectsPiece) {
             if (f != null) {
                 if(f.getTeam() == null) {
@@ -198,8 +189,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
                 }
             }
         }
-
-
+        // stampa a video attesa secondo giocatore
         if (wait) {
             g2.setColor(Color.red);
             g2.setFont(new Font("Arial", 0, 100));
@@ -207,8 +197,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             g2.drawString("Aspetta altro player", -400, -10);
             g2.setColor(Color.BLUE);
         }
-
-
     }
 
     /**
@@ -216,11 +204,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
      * @param g2
      */
     private void creatingfield(Graphics2D g2) {
-        /*try {
-            this.field = ImageIO.read(new File("campoHD.png"));
-        } catch (IOException var4) {
-            System.out.println("Image d'arriere plan non trouvee");
-        }*/
         g2.drawImage(field, -655, -320, 1300, 645, null);
     }
 
@@ -239,7 +222,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
         int ARR_SIZE = 10;
 
-        // Draw horizontal arrow starting in (0, 0)
         g.setStroke(new BasicStroke(2.5f));
         g.drawLine(0, 0, len - 5, 0);
         g.setStroke(new BasicStroke(1f));
@@ -249,14 +231,12 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     }
 
     /**
-     * dal messaggio ricevuto dal server va ad aggiornare le posizione delle palline
+     * Dal messaggio ricevuto dal server va ad aggiornare le posizione delle palline
      * @param msg
      */
-
-    public void aggiornaPos(String msg) {
+    public void setPos(String msg) {
 
         String[] parts = msg.split("\n");
-
 
         for (int i = 0; i < 11; i++) {
             String[] subpartStrings = parts[i].split("@");
@@ -269,7 +249,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
         String[] riga11 = parts[11].split("@");
         int nUte = Integer.parseInt(riga11[0]);
-
 
         if (nUte == 1) {
             wait = true;
@@ -284,25 +263,27 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
     }
-
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
     }
-
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
+    }
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+    @Override
+    public void mouseMoved(MouseEvent e) {
     }
 
     /**
@@ -321,13 +302,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
                 }
             }
         return null;
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-    @Override
-    public void mouseMoved(MouseEvent e) {
     }
 }
 

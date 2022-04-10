@@ -1,21 +1,16 @@
 package it.unibs.pajc;
 
-import it.unibs.pajc.ClientServer.ChatMessage;
-import it.unibs.pajc.ClientServer.Result;
-import it.unibs.pajc.ClientServer.SoundClip;
-import it.unibs.pajc.ClientServer.ViewClient;
-import it.unibs.pajc.ClientServer.InterfacciaClient;
+import it.unibs.pajc.ClientServer.*;
 
-import java.net.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
-import javax.swing.*;
-
-
-//The Client that can be run as a console
 public class Client {
 
     //componenti grafiche
@@ -69,10 +64,10 @@ public class Client {
         this.score2 = score2;
     }
     /*
-     *  Constructor to set below things
-     *  server: the server address
-     *  port: the port number
-     *  username: the username
+     *  costruttore
+     *  server: Ip del server
+     *  port: Numero di porta per la connessione
+     *  username: Username
      */
 
     Client(String server, int port, String username) {
@@ -81,24 +76,22 @@ public class Client {
         this.username = username;
     }
 
-    /*
-     * To start the chat
+    /**
+     * conessione al server
+     *
+     * @return true se la connessione va a buon fine
      */
+
     public boolean start() {
-        // try to connect to the server
         try {
             socket = new Socket(server, port);
-        }
-        // exception handler if it failed
-        catch (Exception ec) {
+        } catch (Exception ec) {
             display("CONNESIONE NON RIUSCITA, SERVER PIENO");
 
             return false;
         }
 
-
-
-        /* Creating both Data Stream */
+        //Creazione Data Stream ( per scambiare messaggi)
         try {
             sInput = new ObjectInputStream(socket.getInputStream());
             sOutput = new ObjectOutputStream(socket.getOutputStream());
@@ -109,11 +102,10 @@ public class Client {
             return false;
         }
 
-        // creates the Thread to listen from the server
+        // creazione thread per ascoltare dal server
         new ListenFromServer().start();
-        // Send our username to the server this is the only message that we
-        // will send as a String. All other messages will be ChatMessage objects
         try {
+            //invio username per giocare
             sOutput.writeObject(username);
         } catch (IOException eIO) {
             display("Exception doing login : " + eIO);
@@ -122,28 +114,24 @@ public class Client {
             System.exit(0);
             return false;
         }
-        // success we inform the caller that it worked
         return true;
     }
 
     /**
-     * manda un messaggio alla riga di comando
+     * Stampa a video in un pop-up una certa stringa msg
      *
      * @param msg
      */
     private void display(String msg) {
-
-        //System.out.println(msg);
         JOptionPane.showMessageDialog(finestra, msg);
-
     }
 
     /**
-     * manda un messaggio al server
+     * Manda un messaggio msg al server
      *
      * @param msg
      */
-    public void sendMessage(ChatMessage msg) {
+    public void sendMessage(Message msg) {
         try {
             sOutput.writeObject(msg);
         } catch (IOException e) {
@@ -153,9 +141,9 @@ public class Client {
         }
     }
 
-    /*
-     * When something goes wrong
-     * Close the Input/Output streams and disconnect
+    /**
+     * Quando la connessione salta
+     * Vengono chiusi tutti gli stream di dati
      */
     private void disconnect() {
         try {
@@ -170,35 +158,17 @@ public class Client {
             if (socket != null) socket.close();
         } catch (Exception e) {
         }
-
     }
-
-    /**
-     * controllo dell' ip se e' scritto corretamente
-     *
-     * @param ip
-     * @return
-     */
-
-    public static boolean isValidIp(final String ip) {
-        return ip.matches("^[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}\\.[\\d]{1,3}$");
-    }
-
-    /**
-     * richiamo metodo
-     *
-     * @param args
-     */
 
     public static void main(String[] args) {
         SoundClip sound;//Musica
+        HomePage home = new HomePage();
+        home.setVisible(true);
 
 
-    	InterfacciaClient home = new InterfacciaClient();
-		home.setVisible(true);
-
-		
-    	
+        /*
+         * Runnare client da riga di comando
+         */
        /* int portNumber = 1500;
         String serverAddress;
 
@@ -221,9 +191,16 @@ public class Client {
 
     }
 
-	public static void avvioClient(int portNumber, String serverAddress, String userName) {
-		SoundClip sound;
-		Client client = new Client(serverAddress, portNumber, userName);
+    /**
+     * Creazione del pannello grafico per il gioco
+     *
+     * @param portNumber
+     * @param serverAddress
+     * @param userName
+     */
+    public static void avvioClient(int portNumber, String serverAddress, String userName) {
+        SoundClip sound;
+        Client client = new Client(serverAddress, portNumber, userName);
 
         panel = new Result(client);
         frame = new JFrame();
@@ -243,7 +220,6 @@ public class Client {
         sound = new SoundClip("Song");
         sound.start();
 
-        // try to connect to the server and return if not connected
         if (!client.start())
             return;
 
@@ -264,21 +240,16 @@ public class Client {
             }
         });
 
-        /**
-         * ascolta i movimenti del mouse
-         */
+
         finestra.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
 
                 if (finestra.getValido() != null) {
                     if (!(finestra.getDistance() <= finestra.getValidoRadius())) {
-                        //finestra.valido.start(finestra.distance, finestra.angle);
 
-                        ///System.out.println(finestra.getPosValidX() + finestra.getPosValidY() + finestra.getDistance() + finestra.getAngle());
-
-                        //Dare formo al messaggio x@y@distance@angle
-                        elaboramessaggio(finestra.getPosValidX() + "@" + finestra.getPosValidY() + "@" + finestra.getDistance() + "@" + finestra.getAngle(), client);
+                        //Dare forma al messaggio x@y@distance@angle che verrà in seguito inviato al server
+                        buildMessage(finestra.getPosValidX() + "@" + finestra.getPosValidY() + "@" + finestra.getDistance() + "@" + finestra.getAngle(), client);
                     }
                 }
                 finestra.setValido(null);
@@ -306,35 +277,31 @@ public class Client {
         });
 
         if (close == true) {
-            // chiude le risorse dal server
-            //scan.close();
             // Client ha finito il suo lavoro, disconnessione client
             client.disconnect();
         }
-	}
-
-    /**
-     * creare un messaggio da mandare al server
-     *
-     * @param msg
-     * @param client
-     */
-    private static void elaboramessaggio(String msg, Client client) {
-
-        if (msg.equalsIgnoreCase("LOGOUT")) {
-            client.sendMessage(new ChatMessage(ChatMessage.LOGOUT, ""));
-            close = true;
-        }
-        // regular text message
-        else {
-            client.sendMessage(new ChatMessage(ChatMessage.MESSAGE, msg));
-        }
-
     }
 
+    /**
+     * Richiamo il metodo che ci permette di inviare il messaggio al server
+     * dopo aver costruito il messaggio
+     *
+     * @param msg    Contentuto messaggio
+     * @param client
+     */
+    private static void buildMessage(String msg, Client client) {
+
+        if (msg.equalsIgnoreCase("LOGOUT")) {
+            client.sendMessage(new Message(Message.LOGOUT, ""));
+            close = true;
+        } else {
+            client.sendMessage(new Message(Message.MESSAGE, msg));
+        }
+    }
 
     /**
-     * classe che ascolta il server splitta il messaggio ricevuto
+     * Classe che resta in ascolto dei messaggi dal server
+     * Ed elabora le informazioni ricevute
      */
     class ListenFromServer extends Thread {
 
@@ -346,18 +313,11 @@ public class Client {
                     //Legge il messaggio inviato dal dataStream
                     msg = (String) sInput.readObject();
 
-                    // STAMPA MESSAGGIO RICEVUTO DAL SERVER
-                    /*System.out.println(msg);*/
-
-                    finestra.aggiornaPos(msg);
+                    finestra.setPos(msg);
                     String[] parts = msg.split("\n");
 
                     String[] riga11 = parts[11].split("@");
 
-                    /*if(riga11[5].equals("true")){
-                        SoundClip collision = new SoundClip("collision");
-                        collision.startSound();
-                    }*/
                     Runnable task = ()->{
                         if(riga11[5].equals("true")){
                             SoundClip collision = new SoundClip("collision");
@@ -400,7 +360,7 @@ public class Client {
                         panel.setUsernames(parts[12], parts[13]);
                     }
 
-                    checkVincitore();
+                    checkWinner();
 
                 } catch (IOException e) {
                     display("La connessione al server è stata interrotta");
@@ -415,9 +375,10 @@ public class Client {
     }
 
     /**
-     * Metodo che controlla se qualcuno ha vinto
+     * Metodo che controlla se il vincitore
+     * E stampa a video gif vincitore e perdente
      */
-    public void checkVincitore() {
+    public void checkWinner() {
         ImageIcon winner = new ImageIcon("winner.gif");
         ImageIcon loser = new ImageIcon("loser.gif");
         if (score1 == 3) {

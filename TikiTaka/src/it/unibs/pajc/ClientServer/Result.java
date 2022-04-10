@@ -6,9 +6,12 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-
+/**
+ * Pannello usato per la visualizzazione del risultato
+ */
 public class Result extends JPanel {
 
     private int score1;
