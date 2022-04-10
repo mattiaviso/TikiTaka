@@ -1,5 +1,9 @@
 package it.unibs.pajc.Partita;
 
+/**
+ * Classe presa in prestito su internet
+ * che ci permette di gestire la posizione delle pedine
+ */
 public class Vector2d {
 
     protected double x;

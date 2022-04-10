@@ -26,7 +26,7 @@ public class ViewServer extends JFrame {
     private JScrollPane scrollPane;
 
     /**
-     * Create the frame.
+     * Creo il frame dove posso visualizzare a video i  nomi dei giocatori connessi
      */
     public ViewServer(String ip,int pNumber) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,8 +69,10 @@ public class ViewServer extends JFrame {
     }
 
 
-
-
+    /**
+     * Metodo che stampa sul pannello i nomi dei giocatori
+     * @param al
+     */
     public void repaintPeople(ArrayList<Server.ClientThread> al) {
         String string = "Partecipanti:\n";
         for (Server.ClientThread c : al) {

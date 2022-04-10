@@ -12,7 +12,6 @@ abstract public class FieldObject implements Comparable<FieldObject> {
     protected BufferedImage imageObj;
     private double massa;
 
-
     public boolean isBall;
 
 
@@ -54,6 +53,9 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         this.massa = massa;
     }
 
+    /**
+     * Metodo che ritorno il team di appartenenza della pedina
+     */
     public String getTeam() {
         if (this instanceof Piece) {
             return this.getTeam();
@@ -61,6 +63,11 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         return null;
     }
 
+    /**
+     * Metodo che setta coordinate x e y della pedina
+     * @param x Double X
+     * @param y Double Y
+     */
     public void setXY(double x, double y) {
         this.position.setX(x);
         this.position.setY(y);
@@ -120,9 +127,12 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
     /**
      * Metodo Override per confrontare due pedine
+     * in base alle coordiante
      *
-     * @param ball FieldObj
-     * @return
+     * @param ball FieldObj ball
+     * @return 1 Se this.X > ball.X
+     * @return -1 se this.X < ball.X
+     * @return 0 In nessuno dei casi precedenti
      */
     @Override
     public int compareTo(FieldObject ball) {
@@ -137,18 +147,19 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
 
     /**
-     * Risolve collisione
+     * Metodo per risolvere le collissioni con un altro oggetto
      *
      * @param p2
      */
     public void resolveCollision(FieldObject p2) {
 
-        // get the mtd
+
         Vector2d delta = (position.subtract(p2.position));
         double r = getRadius() + p2.getRadius();
         double dist2 = delta.dot(delta);
 
-        if (dist2 > r * r) return; // they aren't colliding
+        // non esiste collisoni
+        if (dist2 > r * r) return;
 
         GameField.collision = true;
 
@@ -160,7 +171,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
             this.position = this.position.add(mtd.multiply(1 / 4));
             p2.position = p2.position.subtract(mtd.multiply(1 / 4));
 
-        } else // Special case. Balls are exactly on top of eachother.  Don't want to divide by zero.
+        } else
         {
             d = p2.getRadius() + getRadius() - 1.0f;
             delta = new Vector2d(p2.getRadius() + getRadius(), 0.0f);
@@ -168,41 +179,32 @@ abstract public class FieldObject implements Comparable<FieldObject> {
             mtd = delta.multiply(((getRadius() + p2.getRadius()) - d) / d);
         }
 
-
-        // resolve intersection
-        double im1 = 1 / getMassa(); // inverse mass quantities
+        double im1 = 1 / getMassa();
         double im2 = 1 / p2.getMassa();
 
-        // push-pull them apart
+        // angolo di direzione direzione dopo l'urto
         position = position.add(mtd.multiply(im1 / (im1 + im2)));
         p2.position = p2.position.subtract(mtd.multiply(im2 / (im1 + im2)));
 
-        // impact speed
+        // velocità dopo l'urto
         Vector2d v = (this.velocita.subtract(p2.velocita));
         double vn = v.dot(mtd.normalize());
 
-        // sphere intersecting but moving away from each other already
         if (vn > 0.0f) return;
 
-        // collision impulse
         double i = (-(1.0D + 0.99D) * vn) / (im1 + im2);
         Vector2d impulse = mtd.multiply(i);
 
-        // change in momentum
         this.velocita = this.velocita.add(impulse.multiply(im1));
         p2.velocita = p2.velocita.subtract(impulse.multiply(im2));
-
-
     }
 
     /**
-     * Frizione che diminuisce la velocita delle pedine
+     * Attrito che diminuisce la velocita delle pedine
      * @param num
      */
-
     public void friction(double num) {
         velocita.set(velocita.getX() - (velocita.getX() * num), velocita.getY() - (velocita.getY() * num));
-
         if (velocita.getLength() < 0.75) velocita = new Vector2d(0, 0);
     }
 
