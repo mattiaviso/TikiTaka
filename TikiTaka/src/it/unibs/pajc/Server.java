@@ -20,7 +20,7 @@ import java.util.Date;
 /**
  * Classe Server
  */
-public class Server {
+public class Server  {
     private static int uniqueId;
     // Lista client connessi
     private ArrayList<ClientThread> al;
@@ -144,6 +144,9 @@ public class Server {
     }
 
 
+
+
+
     /**
      * messaggio che inviamo a tutti i client conessi in cui aggiorna la posizione, quando sono in movimento
      *
@@ -251,6 +254,7 @@ public class Server {
 
         /**
          * Metodo che esegue un loop infinito e prende i messaggi del client
+         * ogni azione fatta dal client viene inviata qua e fatta
          * finchè non viene eseguito il messaggio di LOGOUT
          */
         public void run() {

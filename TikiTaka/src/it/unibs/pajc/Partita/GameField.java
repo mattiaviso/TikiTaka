@@ -2,6 +2,7 @@ package it.unibs.pajc.Partita;
 
 /**
  * Model
+ *
  */
 public class GameField {
 
@@ -42,22 +43,6 @@ public class GameField {
         positionStart();
     }
 
-    /**
-     * Metodo che setta le immagini in base al team di appartenenza delle pedine
-     *
-     * @param s1 Filepath immagine pedina1
-     * @param s2 Filepath immagine pedina1
-     */
-    public void setImage(String s1, String s2) {
-        for (FieldObject f : objectsPiece) {
-            if (f instanceof Piece && f.getTeam().equals("T1")) {
-                ((Piece) f).setImage(s1);
-            }
-            if (f instanceof Piece && f.getTeam().equals("T2")) {
-                ((Piece) f).setImage(s2);
-            }
-        }
-    }
 
 
     /**
@@ -176,7 +161,7 @@ public class GameField {
             {
                 collision = true ;
                 //bordiPorta(objectsPiece[i], 1 );
-                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+                if ((objectsPiece[i] instanceof Ball )&& objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > -98 && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() < 112) {
                     collision = false;
                     if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
                         positionStart();
@@ -190,7 +175,7 @@ public class GameField {
             } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
             {
                 collision = true;
-                if (objectsPiece[i].isBall() && objectsPiece[i].position.getY() + objectsPiece[i].radius > -98 && objectsPiece[i].position.getY() + objectsPiece[i].radius < 112) {
+                if ((objectsPiece[i] instanceof Ball) && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > -98 && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() < 112) {
 
                     collision = false;
                     if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {

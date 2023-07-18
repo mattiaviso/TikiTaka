@@ -8,7 +8,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
     protected  Vector2d position;
     protected Vector2d velocita = new Vector2d();
-    protected double radius;
+    private double radius;
     protected BufferedImage imageObj;
     private double massa;
 
@@ -31,9 +31,11 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         this.velocita = velocita;
     }
 
+
     public void setRadius(double radius) {
         this.radius = radius;
     }
+
 
     public void setImageObj(BufferedImage imageObj) {
         this.imageObj = imageObj;
@@ -85,12 +87,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         return massa;
     }
 
-    public boolean isBall() {
-        if (this instanceof Ball) {
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public String toString() {
@@ -126,7 +123,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
     }
 
     /**
-     * Metodo Override per confrontare due pedine
+     * confrontare se si toccano oppure no 2 pedine
      * in base alle coordiante
      *
      * @param ball FieldObj ball

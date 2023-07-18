@@ -52,6 +52,7 @@ public class HomePage extends JFrame {
 		contentPane.add(txtIp);
 		txtIp.setColumns(10);
 
+
 		JButton btnLocal = new JButton("LocalHost");
 		btnLocal.setFont(new Font("Arial", Font.BOLD, 14));
 		btnLocal.addActionListener(new ActionListener() {

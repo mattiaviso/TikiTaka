@@ -25,6 +25,8 @@ public class Result extends JPanel {
         this.client = t;
     }
 
+
+
     public void setUsername1(String t1) {
         this.team1 = t1;
         repaint();

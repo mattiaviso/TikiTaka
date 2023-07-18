@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Client {
+public class Client  implements ObServer{
 
     //componenti grafiche
     public static JFrame frame;
@@ -201,7 +201,7 @@ public class Client {
     public static void avvioClient(int portNumber, String serverAddress, String userName) {
         SoundClip sound;
         Client client = new Client(serverAddress, portNumber, userName);
-
+        // potrebbe essere portato nella view del client
         panel = new Result(client);
         frame = new JFrame();
         frame.setVisible(true);
@@ -299,12 +299,17 @@ public class Client {
         }
     }
 
+    @Override
+    public void uptade(String message) {
+
+    }
+
     /**
      * Classe che resta in ascolto dei messaggi dal server
      * Ed elabora le informazioni ricevute
      */
     class ListenFromServer extends Thread {
-
+// sistemare questa classe di messaggi utilizzando qualcosa di asincrono
         public void run() {
             String msg = null;
 

@@ -239,6 +239,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         String[] parts = msg.split("\n");
 
         for (int i = 0; i < 11; i++) {
+            // ci permette di andare a identificare l'elemento che viene passato , e spostarlo direttamente
             String[] subpartStrings = parts[i].split("@");
             if (subpartStrings[0].equals("Piece")) {
                 objectsPiece[i] = (new Piece(Double.parseDouble(subpartStrings[1]), Double.parseDouble(subpartStrings[2]), Double.parseDouble(subpartStrings[3]), subpartStrings[4], subpartStrings[5]));
@@ -287,8 +288,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     }
 
     /**
-     * Metodo permette di vedere se l'utente ha selezionato una pedina oppure il nulla
-     *
+     *ci permette di andare a selezionare una pedina
      * @param xMouse Coordinata x del mouse
      * @param yMouse Coordinata y del mouse
      * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
@@ -303,5 +303,6 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             }
         return null;
     }
+
 }
 
