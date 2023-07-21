@@ -19,35 +19,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         return position;
     }
 
-    public void setPosition(Vector2d position) {
-        this.position = position;
-    }
 
-    public Vector2d getVelocita() {
-        return velocita;
-    }
-
-    public void setVelocita(Vector2d velocita) {
-        this.velocita = velocita;
-    }
-
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-
-    public void setImageObj(BufferedImage imageObj) {
-        this.imageObj = imageObj;
-    }
-
-    public void setMassa(double massa) {
-        this.massa = massa;
-    }
-
-    public void setBall(boolean ball) {
-        isBall = ball;
-    }
 
     public FieldObject(double radius, double x, double y, double massa) {
         this.radius = radius;

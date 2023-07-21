@@ -1,4 +1,4 @@
-package it.unibs.pajc.ClientServer;
+package it.unibs.pajc.ClientServer.ResultComposite;
 
 import it.unibs.pajc.Client;
 
@@ -18,13 +18,12 @@ public class Result extends JPanel {
     private int score2;
     private String team1;
     private String team2;
-    private BufferedImage Tabel;
+
     private Client client;
 
     public Result(Client t) {
         this.client = t;
     }
-
 
 
     public void setUsername1(String t1) {
@@ -75,52 +74,45 @@ public class Result extends JPanel {
         g.setColor(Color.BLUE);
         //g.fillRect(0,0,1300,120);
 
-        try {
-            this.Tabel = ImageIO.read(new File("TabelloneHD.png"));
-        } catch (IOException var4) {
-            System.out.println("Image d'arriere plan non trouvee");
-        }
 
-        g2.drawImage(this.Tabel, 0, 0, 1285, 120, null);
+        ComponenteGraficoSetColore testoteam1 = new TestoGrafico(team1, Color.GREEN, 857, 30, new Font("Ahoroni", Font.BOLD, 30));
+        ComponenteGraficoSetColore testoteam2 = new TestoGrafico(team2, Color.GREEN, 230, 30, new Font("Ahoroni", Font.BOLD, 30));
+        GruppoComponent gruppo = new GruppoComponent();
 
-        g2.setFont(new Font("Ahoroni", Font.BOLD, 30));
+        gruppo.addComponente(new FormaGrafica());
+        gruppo.addComponente(testoteam1);
+        gruppo.addComponente(testoteam2);
+        gruppo.addComponente(new TestoGrafico(score1 + "", Color.RED, 505, 50, new Font("Ahoroni", Font.BOLD, 30)));
+        gruppo.addComponente(new TestoGrafico(score2 + "", Color.BLUE, 755, 50, new Font("Ahoroni", Font.BOLD, 30)));
+
+
         if (client.getTurno() != null) {
             if (client.getTurno().equals("T1")) {
-                if(team1 != null)
-                if(team1.contains("(you)")){
-                    g2.setColor(Color.GREEN);
-                }else{
-                    g2.setColor(Color.BLUE);
-                }
-                g2.drawString(team1, 857, 30);
-                g2.setColor(Color.RED);
-                if (team2 != null)
-                    g2.drawString(team2, 230, 30);
+                    if (team1.contains("(you)")) {
+
+                        testoteam1.setColor(Color.GREEN);
+                    } else {
+                        testoteam1.setColor(Color.BLUE);
+                    }
+                    testoteam2.setColor(Color.RED);
             } else if (client.getTurno().equals("T2")) {
-                if(team2 !=null )
-                if(team2.contains("(you)")){
-                    g2.setColor(Color.GREEN);
-                }else{
-                    g2.setColor(Color.RED);
-                }
-                if (team2 != null)
-                    g2.drawString(team2, 230, 30);
-                g2.setColor(Color.BLUE);
-                g2.drawString(team1, 857, 30);
+                    if (team2.contains("(you)")) {
+                        testoteam2.setColor(Color.GREEN);
+                    } else {
+                        testoteam2.setColor(Color.RED);
+
+                    }
+                    testoteam1.setColor(Color.BLUE);
             } else {
-                if (team2 != null){
-                    g2.setColor(Color.RED);
-                    g2.drawString(team2, 230, 30);
+                if (team2 != null) {
+                    testoteam2.setColor(Color.RED);
                 }
-                g.setColor(Color.BLUE);
-                g2.drawString(team1, 857, 30);
+                testoteam1.setColor(Color.BLUE);
+
             }
         }
 
-        g2.setColor(Color.RED);
-        g2.drawString(score1 + "", 505, 50);
-        g2.setColor(Color.BLUE);
-        g2.drawString(score2 + "", 755, 50);
+        gruppo.draw(g2);
 
     }
 

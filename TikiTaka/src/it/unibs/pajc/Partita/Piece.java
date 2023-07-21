@@ -20,10 +20,7 @@ public class Piece extends FieldObject {
         return team;
     }
 
-    public boolean isBall() {
-        return false;
-    }
-// e' da togliere
+
     @Override
     public String toString() {
         return "Piece@" + super.toString() + "@" + imgPathString + "@" + team;

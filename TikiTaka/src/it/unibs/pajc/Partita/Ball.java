@@ -6,9 +6,6 @@ public class Ball extends FieldObject {
         super(radius, x, y, 100);
     }
 
-    public boolean isBall() {
-        return true;
-    }
 
     @Override
     public String toString() {

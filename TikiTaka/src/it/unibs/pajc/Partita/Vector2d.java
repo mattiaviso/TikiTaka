@@ -53,9 +53,6 @@ public class Vector2d {
         return Math.sqrt(getX() * getX() + getY() * getY());
     }
 
-    public double getDistance(Vector2d v2) {
-        return Math.sqrt((v2.getX() - getX()) * (v2.getX() - getX()) + (v2.getY() - getY()) * (v2.getY() - getY()));
-    }
 
     public Vector2d add(Vector2d v2) {
         Vector2d result = new Vector2d(x, y);
@@ -95,13 +92,6 @@ public class Vector2d {
         return "X: " + getX() + " Y: " + getY();
     }
 
-    public double getAngle() {
-        return angle;
-    }
-
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
 
     public void setXY(double total, double angle) {
         if (angle < 0) angle = (2 * Math.PI) + angle;
@@ -112,27 +102,6 @@ public class Vector2d {
 
     }
 
-    public double getSum() {
-        return total;
-    }
-
-    public void setSum(double speed) {
-        this.total = speed;
-
-
-    }
-
-    public void change(double x, double y) {
-        this.x = x * this.x;
-        this.y = y * this.y;
-
-    }
-
-    public void subtract(double x, double y) {
-        this.x -= x;
-        this.y -= y;
-
-    }
 
     public void totalXY() {
         total = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));

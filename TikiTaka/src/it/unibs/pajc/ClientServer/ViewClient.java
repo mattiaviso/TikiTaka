@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
 
 
 /**
-Classe usata per la gestione della parte grafica del gioco
+ * Classe usata per la gestione della parte grafica del gioco
  */
 public class ViewClient extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -43,17 +43,10 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         return angle;
     }
 
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-
     public int getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
 
     public int getXnew() {
         return xnew;
@@ -87,18 +80,19 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         this.valido = valido;
     }
 
-    public String getValidoTeam(){
+    public String getValidoTeam() {
         return valido.getTeam();
     }
 
-    public double getValidoRadius(){
+    public double getValidoRadius() {
         return valido.getRadius();
     }
 
-    public double getPosValidX(){
+    public double getPosValidX() {
         return valido.getPosition().getX();
     }
-    public double getPosValidY(){
+
+    public double getPosValidY() {
         return valido.getPosition().getY();
     }
 
@@ -110,7 +104,8 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         return h;
     }
 
-    public BufferedImage imgT1,imgT2,ball;
+    public BufferedImage imgT1, imgT2, ball;
+
     public ViewClient() {
 
         try {
@@ -142,6 +137,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
     /**
      * Creazione del campo come sfondo e del contorno delle pedine quando andiamo a schiacciare per eseguire il tiro
+     *
      * @param g
      */
     protected void paintComponent(Graphics g) {
@@ -160,11 +156,11 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
         if (valido != null) {
             g2.setColor(Color.RED);
-            g2.drawOval((int) (valido.getPosition().getX() - valido.getRadius()), (int) (valido.getPosition().getY() - valido.getRadius()), (int) valido.getRadius() * 2, (int) valido.getRadius()* 2);
+            g2.drawOval((int) (valido.getPosition().getX() - valido.getRadius()), (int) (valido.getPosition().getY() - valido.getRadius()), (int) valido.getRadius() * 2, (int) valido.getRadius() * 2);
         }
         if (radiusPower != 0) {
             g2.setColor(new Color(0, 100, 0, 100));
-            g2.fillOval((int) (valido.getPosition().getX() - radiusPower), (int) (valido.getPosition().getY() - radiusPower ), (int) radiusPower * 2, (int) radiusPower * 2);
+            g2.fillOval((int) (valido.getPosition().getX() - radiusPower), (int) (valido.getPosition().getY() - radiusPower), (int) radiusPower * 2, (int) radiusPower * 2);
 
             g2.setColor(Color.black);
             int dy = (int) (ynew - valido.getPosition().getY());
@@ -179,10 +175,10 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
         for (FieldObject f : objectsPiece) {
             if (f != null) {
-                if(f.getTeam() == null) {
+                if (f.getTeam() == null) {
                     g2.drawImage(ball, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
                 } else {
-                    if(f.getTeam().equals("T1"))
+                    if (f.getTeam().equals("T1"))
                         g2.drawImage(imgT1, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
                     else
                         g2.drawImage(imgT2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
@@ -201,6 +197,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
     /**
      * creazione del campo da calcio
+     *
      * @param g2
      */
     private void creatingfield(Graphics2D g2) {
@@ -209,10 +206,11 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
     /**
      * Metodo che permette di disegnare a video una linea con una freccia
-     * @param g Graphics2d g2
+     *
+     * @param g     Graphics2d g2
      * @param point Punto di partenza della freccia
      * @param angle Angolo formato dalla freccia
-     * @param len lunghezza della retta
+     * @param len   lunghezza della retta
      */
     private static void drawArrow(Graphics2D g, Point2D point, double angle, int len) {
         AffineTransform at = AffineTransform.getTranslateInstance(point.getX(), point.getY());
@@ -232,6 +230,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
     /**
      * Dal messaggio ricevuto dal server va ad aggiornare le posizione delle palline
+     *
      * @param msg
      */
     public void setPos(String msg) {
@@ -264,31 +263,38 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mouseDragged(MouseEvent e) {
     }
+
     @Override
     public void mouseMoved(MouseEvent e) {
     }
 
     /**
-     *ci permette di andare a selezionare una pedina
+     * ci permette di andare a selezionare una pedina
+     *
      * @param xMouse Coordinata x del mouse
      * @param yMouse Coordinata y del mouse
      * @return Ritorna l'oggetto premuto, altrimenti null se non si preme nulla
@@ -296,10 +302,10 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public FieldObject checkClickAble(int xMouse, int yMouse) {
         if (!wait)
             for (FieldObject f : objectsPiece) {
-                if (f instanceof Piece )
-                if (Math.pow((xMouse - f.getPosition().getX()), 2) + Math.pow((yMouse - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2)) {
-                    return f;
-                }
+                if (f instanceof Piece)
+                    if (Math.pow((xMouse - f.getPosition().getX()), 2) + Math.pow((yMouse - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2)) {
+                        return f;
+                    }
             }
         return null;
     }

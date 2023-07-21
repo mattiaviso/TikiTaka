@@ -1,6 +1,7 @@
 package it.unibs.pajc;
 
 import it.unibs.pajc.ClientServer.*;
+import it.unibs.pajc.ClientServer.ResultComposite.Result;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Client  implements ObServer{
+public class Client  {
 
     //componenti grafiche
     public static JFrame frame;
@@ -166,29 +167,6 @@ public class Client  implements ObServer{
         home.setVisible(true);
 
 
-        /*
-         * Runnare client da riga di comando
-         */
-       /* int portNumber = 1500;
-        String serverAddress;
-
-        String ipServer = JOptionPane.showInputDialog("inserire ipServer (premere invio per il localhost)");
-        if (ipServer != null && isValidIp(ipServer)) {
-            serverAddress = ipServer;
-        } else {
-            serverAddress = "localhost";
-        }
-
-        String userName = "";
-        Scanner scan = new Scanner(System.in);
-
-        do {
-            userName = JOptionPane.showInputDialog(finestra, "Inserisci username");
-        }while(userName.equals(""));
-
-        // creazione oggetto Client
-        avvioClient(portNumber, serverAddress, userName);*/
-
     }
 
     /**
@@ -201,7 +179,6 @@ public class Client  implements ObServer{
     public static void avvioClient(int portNumber, String serverAddress, String userName) {
         SoundClip sound;
         Client client = new Client(serverAddress, portNumber, userName);
-        // potrebbe essere portato nella view del client
         panel = new Result(client);
         frame = new JFrame();
         frame.setVisible(true);
@@ -299,10 +276,7 @@ public class Client  implements ObServer{
         }
     }
 
-    @Override
-    public void uptade(String message) {
 
-    }
 
     /**
      * Classe che resta in ascolto dei messaggi dal server
