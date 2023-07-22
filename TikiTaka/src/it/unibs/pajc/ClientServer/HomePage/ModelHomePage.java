@@ -1,4 +1,4 @@
-package it.unibs.pajc.ClientServer;
+package it.unibs.pajc.ClientServer.HomePage;
 
 public class ModelHomePage {
     private String ipAddress;

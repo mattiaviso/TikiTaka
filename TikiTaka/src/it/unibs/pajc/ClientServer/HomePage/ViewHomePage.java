@@ -1,4 +1,4 @@
-package it.unibs.pajc.ClientServer;
+package it.unibs.pajc.ClientServer.HomePage;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,8 +47,8 @@ public class ViewHomePage extends JFrame {
 
         btnLocal = new JButton("LocalHost");
         btnLocal.setFont(new Font("Arial", Font.BOLD, 14));
-        btnLocal.setBounds(10, 142, 174, 48);
-        contentPane.add(btnLocal);
+//        btnLocal.setBounds(10, 142, 174, 48);
+//        contentPane.add(btnLocal);
 
         txtUser = new JTextField();
         txtUser.addMouseListener(new MouseAdapter() {
@@ -68,8 +68,7 @@ public class ViewHomePage extends JFrame {
 
         btnEsterno = new JButton("Server Esterno");
         btnEsterno.setFont(new Font("Arial", Font.BOLD, 14));
-        btnEsterno.setBounds(235, 143, 180, 47);
-        contentPane.add(btnEsterno);
+
     }
 
     public JTextField getTxtIp() {

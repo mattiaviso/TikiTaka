@@ -1,6 +1,9 @@
 package it.unibs.pajc;
 
 import it.unibs.pajc.ClientServer.*;
+import it.unibs.pajc.ClientServer.HomePage.ControllerHomePage;
+import it.unibs.pajc.ClientServer.HomePage.ModelHomePage;
+import it.unibs.pajc.ClientServer.HomePage.ViewHomePage;
 import it.unibs.pajc.ClientServer.ResultComposite.Result;
 
 import javax.swing.*;
@@ -163,8 +166,8 @@ public class Client  {
 
     public static void main(String[] args) {
         SoundClip sound;//Musica
-        HomePage home = new HomePage();
-        home.setVisible(true);
+        ControllerHomePage home = new ControllerHomePage(new ViewHomePage(), new ModelHomePage());
+        home.getView().setVisible(true);
 
 
     }
