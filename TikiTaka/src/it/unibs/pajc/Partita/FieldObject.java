@@ -6,14 +6,21 @@ import java.awt.image.BufferedImage;
 abstract public class FieldObject implements Comparable<FieldObject> {
     public static final int MAXDISTANCE = 150;
 
-    protected  Vector2d position;
-    protected Vector2d velocita = new Vector2d();
+    private  Vector2d position;
+    private  Vector2d velocita = new Vector2d();
     private double radius;
     protected BufferedImage imageObj;
     private double massa;
 
     public boolean isBall;
 
+    public Vector2d getVelocita() {
+        return velocita;
+    }
+
+    public void setVelocita(Vector2d velocita) {
+        this.velocita = velocita;
+    }
 
     public Vector2d getPosition() {
         return position;

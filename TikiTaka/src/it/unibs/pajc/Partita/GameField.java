@@ -1,10 +1,11 @@
 package it.unibs.pajc.Partita;
 
+import it.unibs.pajc.Partita.Collision.Collision;
+
 /**
  * Model
- *
  */
-public class GameField {
+public class GameField implements GameFieldInterface {
 
     public static final int MAX_X = 566;
     public static final int MIN_X = -566;
@@ -44,11 +45,13 @@ public class GameField {
     }
 
 
-
     /**
      * Metodo che setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
+     *
+     *
      */
-    private void positionStart() {
+    @Override
+    public void positionStart() {
         objectsPiece[0] = (new Piece(40, 500, 0, "Pedina1.png", "T1"));
         objectsPiece[1] = (new Piece(40, 170, 70, "Pedina1.png", "T1"));
         objectsPiece[2] = (new Piece(40, 170, -70, "Pedina1.png", "T1"));
@@ -61,7 +64,6 @@ public class GameField {
         objectsPiece[9] = (new Piece(40, -350, 180, "Pedina2.png", "T2"));
         objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
-
 
     /**
      * Creazione stringa con posizioni di tutte le pedine, che verra in seguito invitato al server
@@ -81,6 +83,11 @@ public class GameField {
         this.collision = false;
     }
 
+    @Override
+    public void setCollisionForBouard(Boolean collision) {
+        this.collision = collision;
+    }
+
     public boolean getCollision() {
         return collision;
     }
@@ -95,9 +102,19 @@ public class GameField {
             turno = "T1";
         }
     }
-
+    @Override
     public void setTurno(String team) {
         turno = team;
+    }
+
+    @Override
+    public void setScore(int score) {
+        if ( score ==1){
+            score1= score1+1;
+        }
+        if ( score ==2){
+            score2= score2+1;
+        }
     }
 
     /**
@@ -112,116 +129,38 @@ public class GameField {
         return true;
     }
 
-    /**
-     * Metodo che mette in ordine le pedine grazie all'interfaccia Comparable
-     *
-     * @param a
-     */
-    public void insertionSort(Comparable[] a) {
-        for (int p = 1; p < objectsPiece.length; p++) {
-            Comparable tmp = a[p];
-            int j = p;
 
-            for (; j > 0 && tmp.compareTo(a[j - 1]) < 0; j--)
-                a[j] = a[j - 1];
-
-            a[j] = tmp;
-        }
-    }
 
     /**
      * Metodo che se invocato manda avanti di un esecuzione il gioco, si occupa dello spostamento e dei controlli vari
      * Come se fosse lo StepNext
      */
     public void updateGame() {
-        for (int i = 0; i < objectsPiece.length; i++) {
-            objectsPiece[i].velocita.setY(objectsPiece[i].velocita.getY());
-            objectsPiece[i].position.setX(objectsPiece[i].position.getX() + (objectsPiece[i].velocita.getX() * (1)));
-            objectsPiece[i].position.setY(objectsPiece[i].position.getY() + (objectsPiece[i].velocita.getY() * (1)));
 
-            if (Math.abs(objectsPiece[i].velocita.getX()) < EPSILON)
-                objectsPiece[i].velocita.setX(0);
-            if (Math.abs(objectsPiece[i].velocita.getY()) < EPSILON)
-                objectsPiece[i].velocita.setY(0);
+        for (int i = 0; i < objectsPiece.length; i++) {
+            Vector2d velocity = objectsPiece[i].getVelocita();
+            Vector2d position = objectsPiece[i].getPosition();
+
+            velocity.setY(velocity.getY());
+            position.setX(position.getX() + (velocity.getX() * 1));
+            position.setY(position.getY() + (velocity.getY() * 1));
+
+            if (Math.abs(velocity.getX()) < EPSILON) {
+                velocity.setX(0);
+            }
+            if (Math.abs(velocity.getY()) < EPSILON) {
+                velocity.setY(0);
+            }
         }
 
-        checkCollisions();
+        Collision  gestioneCollisioni= new Collision();
+        gestioneCollisioni.checkCollision(objectsPiece, this);
     }
 
-    /**
-     * Metodo generale che controlla se ci sno collisioni e se si verificano le risolve
-     *
-     */
-    public void checkCollisions() {
-        insertionSort(objectsPiece);
-
-        // Controllo collisioni con bordi del campo
-        for (int i = 0; i < objectsPiece.length; i++) {
-            if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() < MIN_X) // Bordo Sx
-            {
-                collision = true ;
-                //bordiPorta(objectsPiece[i], 1 );
-                if ((objectsPiece[i] instanceof Ball )&& objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > -98 && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() < 112) {
-                    collision = false;
-                    if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() < MIN_X) {
-                        positionStart();
-                        score2++;
-                        setTurno("T2");
-                    }
-                } else {
-                    objectsPiece[i].position.setX(objectsPiece[i].getRadius() + MIN_X);
-                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), +objectsPiece[i].velocita.getY());
-                }
-            } else if (objectsPiece[i].position.getX() + objectsPiece[i].getRadius() > MAX_X) // Bordo DX
-            {
-                collision = true;
-                if ((objectsPiece[i] instanceof Ball) && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > -98 && objectsPiece[i].position.getY() + objectsPiece[i].getRadius() < 112) {
-
-                    collision = false;
-                    if (objectsPiece[i].position.getX() - objectsPiece[i].getRadius() > MAX_X) {
-                        positionStart();
-                        score1++;
-                        setTurno("T1");
-                    }
-                } else {
-
-                    objectsPiece[i].position.setX(MAX_X - objectsPiece[i].getRadius());
-                    objectsPiece[i].velocita = new Vector2d(-objectsPiece[i].velocita.getX(), objectsPiece[i].velocita.getY());
-                }
-            }
-
-            if (objectsPiece[i].position.getY() - objectsPiece[i].getRadius() < MIN_Y)                //Bordo Down
-            {
-                collision = true;
-                objectsPiece[i].position.setY(objectsPiece[i].getRadius() + MIN_Y);
-                objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
-            } else if (objectsPiece[i].position.getY() + objectsPiece[i].getRadius() > MAX_Y)       //Bordo UP
-            {
-                collision = true;
-                objectsPiece[i].position.setY(MAX_Y - objectsPiece[i].getRadius());
-                objectsPiece[i].velocita = new Vector2d(objectsPiece[i].velocita.getX(), -objectsPiece[i].velocita.getY());
-            }
-
-            // crea una attrito tra i 2 oggetti
-            objectsPiece[i].friction(0.02);
-
-            // Controllo collisione pedine contro pedina
-            for (int j = i + 1; j < objectsPiece.length; j++) {
-                if ((objectsPiece[i].position.getX() + objectsPiece[i].getRadius()) <= (objectsPiece[j].position.getX() - objectsPiece[j].getRadius()))
-                    break;
-
-                if ((objectsPiece[i].position.getY() + objectsPiece[i].getRadius()) <= (objectsPiece[j].position.getY() - objectsPiece[j].getRadius()) || (objectsPiece[j].position.getY() + objectsPiece[j].getRadius()) <= (objectsPiece[i].position.getY() - objectsPiece[i].getRadius()))
-                    continue;
-
-                objectsPiece[i].resolveCollision(objectsPiece[j]);
-                objectsPiece[i].friction(0.035);
-                objectsPiece[j].friction(0.015);
-            }
-        }
-    }
 
     /**
      * Metodo che ritorna la pedina premuta  date le coordinate x e y
+     *
      * @param x Double x
      * @param y Double y
      * @return pedina seleziononata
@@ -229,7 +168,7 @@ public class GameField {
     public FieldObject pedinaSelezionata(double x, double y) {
         double EPS = 1E-3;
         for (int i = 0; i < objectsPiece.length; i++) {
-            if (Math.abs(x - objectsPiece[i].position.getX()) < EPS && Math.abs(y - objectsPiece[i].position.getY()) < EPS) {
+            if (Math.abs(x - objectsPiece[i].getPosition().getX()) < EPS && Math.abs(y - objectsPiece[i].getPosition().getY()) < EPS) {
                 return objectsPiece[i];
             }
         }
