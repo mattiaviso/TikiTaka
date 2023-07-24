@@ -1,13 +1,9 @@
 package it.unibs.pajc.ClientServer.ResultComposite;
 
-import it.unibs.pajc.Client;
+import it.unibs.pajc.Client.ModelClientForComunication;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Pannello usato per la visualizzazione del risultato
@@ -19,10 +15,10 @@ public class Result extends JPanel {
     private String team1;
     private String team2;
 
-    private Client client;
+    private ModelClientForComunication modelClientForComunication;
 
-    public Result(Client t) {
-        this.client = t;
+    public Result(ModelClientForComunication t) {
+        this.modelClientForComunication = t;
     }
 
 
@@ -86,8 +82,8 @@ public class Result extends JPanel {
         gruppo.addComponente(new TestoGrafico(score2 + "", Color.BLUE, 755, 50, new Font("Ahoroni", Font.BOLD, 30)));
 
 
-        if (client.getTurno() != null) {
-            if (client.getTurno().equals("T1")) {
+        if (modelClientForComunication.getTurno() != null) {
+            if (modelClientForComunication.getTurno().equals("T1")) {
                     if (team1.contains("(you)")) {
 
                         testoteam1.setColor(Color.GREEN);
@@ -95,7 +91,7 @@ public class Result extends JPanel {
                         testoteam1.setColor(Color.BLUE);
                     }
                     testoteam2.setColor(Color.RED);
-            } else if (client.getTurno().equals("T2")) {
+            } else if (modelClientForComunication.getTurno().equals("T2")) {
                     if (team2.contains("(you)")) {
                         testoteam2.setColor(Color.GREEN);
                     } else {

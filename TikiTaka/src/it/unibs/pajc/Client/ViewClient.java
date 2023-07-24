@@ -1,5 +1,6 @@
-package it.unibs.pajc.ClientServer;
+package it.unibs.pajc.Client;
 
+import it.unibs.pajc.ClientServer.ResultComposite.Result;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
@@ -28,12 +29,18 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     private int radiusPower = 0;
     private int xnew, ynew;
     private int distance;
+
     private double angle;
-    protected FieldObject[] objectsPiece;
+   private FieldObject[] objectsPiece;
     // aspettare un giocatore
     private boolean wait = false;
     // colorare bordo del giocatore che tocca
     private String viewBordoPedina;
+
+
+    private JFrame frame ;
+
+
 
     public void setViewBordoPedina(String viewBordoPedina) {
         this.viewBordoPedina = viewBordoPedina;
@@ -107,6 +114,8 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
     public BufferedImage imgT1, imgT2, ball;
 
     public ViewClient() {
+
+        frame = new JFrame();
 
         try {
             imgT1 = ImageIO.read(new File("Pedina1HD.png"));
@@ -309,6 +318,37 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
             }
         return null;
     }
+
+
+    // creazione pannello per l'inizzializzazione
+    private Result panel;
+
+    public Result getPanel() {
+        return panel;
+    }
+
+    public void setPanel(Result panel) {
+        this.panel = panel;
+    }
+
+    // agigunto dopo
+    public void createComponents(ModelClientForComunication modelClientForComunication) {
+        panel = new Result(modelClientForComunication);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setBounds(100, 50, 1300, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.setTable(0, 0);
+        panel.setPreferredSize(new Dimension(1300, 120));
+        setVisible(true);
+        frame.add(this, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.NORTH);
+    }
+
+    public void frameDispose(){
+        frame.dispose();
+    }
+
 
 }
 

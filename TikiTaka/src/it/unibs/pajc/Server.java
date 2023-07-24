@@ -132,10 +132,10 @@ public class Server  {
             }
 
 
-            // Provo a scrivere al Client, se la procedura fallisce lo elimino dall'array al
+            // Provo a scrivere al ModelClientForComunication, se la procedura fallisce lo elimino dall'array al
             if (!ct.writeMsg(messageLf)) {
                 al.remove(i);
-                display("Disconnected Client " + ct.username + " removed from list.");
+                display("Disconnected ModelClientForComunication " + ct.username + " removed from list.");
             }
         }
         modelField.setCollision();
@@ -170,7 +170,7 @@ public class Server  {
 
             if (!ct.writeMsg(messageLf)) {
                 al.remove(i);
-                display("Disconnected Client " + ct.username + " removed from list.");
+                display("Disconnected ModelClientForComunication " + ct.username + " removed from list.");
             }
         }
 

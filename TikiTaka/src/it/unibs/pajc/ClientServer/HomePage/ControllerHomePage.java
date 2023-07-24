@@ -1,6 +1,6 @@
 package it.unibs.pajc.ClientServer.HomePage;
 
-import it.unibs.pajc.Client;
+import it.unibs.pajc.Client.ControllerClient;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -42,7 +42,7 @@ public class ControllerHomePage {
                 if (!(userName.equals("") || userName.equals(MSG_NOME) || userName.equals(ERRORE_NOME))) {
                     model.setUserName(userName);
                     model.setIpAddress("localhost");
-                    Client.avvioClient(1500, model.getIpAddress(), model.getUserName());
+                    new ControllerClient(1500, model.getIpAddress(), model.getUserName());
                     view.setVisible(false);
                 } else {
                     view.getTxtUser().setText(ERRORE_NOME);
@@ -62,7 +62,7 @@ public class ControllerHomePage {
                 if (isValidIp(ipAddress) && !userName.equals("") && !userName.equals(MSG_NOME) && !userName.equals(ERRORE_NOME)) {
                     model.setUserName(userName);
                     model.setIpAddress(ipAddress);
-                    Client.avvioClient(1500, model.getIpAddress(), model.getUserName());
+                    new ControllerClient(1500, model.getIpAddress(), model.getUserName());
                     view.setVisible(false);
                 }else{
                     if (!isValidIp(ipAddress)) {

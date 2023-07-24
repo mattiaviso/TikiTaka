@@ -19,7 +19,7 @@
 ///**
 // * Suono al gol
 // * Quando si vince? e immagine
-// * Server Client
+// * Server ModelClientForComunication
 // * Musica in gioco
 // *
 // */
