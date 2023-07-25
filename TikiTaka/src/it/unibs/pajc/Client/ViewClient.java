@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -40,6 +42,8 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
 
     private JFrame frame ;
+
+
 
 
 
@@ -144,6 +148,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         this.addMouseMotionListener(this);
         repaint();
     }
+
 
     /**
      * Creazione del campo come sfondo e del contorno delle pedine quando andiamo a schiacciare per eseguire il tiro

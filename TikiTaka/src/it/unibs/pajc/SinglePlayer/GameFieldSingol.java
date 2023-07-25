@@ -34,7 +34,8 @@ public class GameFieldSingol extends GameField {
         if (!allStop()) return null;
         for (FieldObject f : getObjectsPiece()) {
             if (f instanceof Piece)
-                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
+                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)
+                        < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
                     return f;
                 }
         }
@@ -45,6 +46,8 @@ public class GameFieldSingol extends GameField {
     public void checkVincitore() {
 
     }
+
+    
 
 
 }

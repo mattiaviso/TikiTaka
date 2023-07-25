@@ -1,5 +1,6 @@
 package it.unibs.pajc.SinglePlayer;
 
+import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Utility;
@@ -15,6 +16,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GameFieldViewSingle1 extends JPanel implements MouseListener, MouseMotionListener {
@@ -29,17 +32,21 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     private int distance;
     private double angle;
     private BufferedImage ball, imgT1, imgT2;
+    private BufferedImage background;
+
+    private Map<String, BufferedImage> imageCache = new HashMap<>();
 
 
     GameField fieldModel = new GameFieldSingol();
 
     public GameFieldViewSingle1() {
-        Timer timer = new Timer(1, (e) -> {
+        Timer timer = new Timer(10, (e) -> {
             fieldModel.updateGame();
-
             repaint();
         });
         timer.start();
+
+        this.setDoubleBuffered(true);
 
         //riceve il focus degli eventi
         this.setFocusable(true);
@@ -60,15 +67,42 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             ball = ImageIO.read(new File("BallHD.png"));
         } catch (IOException e) {
         }
+        // creazione in background dell'immagine
+        SwingWorker<Void, Void> imageLoader = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                try {
+                    background = ImageIO.read(new File("campoHD.png"));
+                } catch (IOException e) {
+                    System.out.println("non trovata ");
+                }
+                return null;
+            }
 
-        try {
-            field = ImageIO.read(new File("campoHD.png"));
-        } catch (IOException var4) {
-            System.out.println("Image d'arriere plan non trouvee");
-        }
-
+            @Override
+            protected void done() {
+                // Aggiorna l'interfaccia quando il caricamento è completato
+                repaint();
+            }
+        };
+        imageLoader.execute();
     }
 
+
+
+    public BufferedImage loadImage(String filename) {
+        if (imageCache.containsKey(filename)) {
+            return imageCache.get(filename);
+        } else {
+            try {
+                BufferedImage image = ImageIO.read(new File(filename));
+                imageCache.put(filename, image); // Aggiungiamo l'immagine alla cache
+                return image;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -79,21 +113,32 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         w = getWidth();
         h = getHeight();
 
+
         g2.translate(0, h);
         g2.scale(1, -1);
         g2.translate(w / 2, h / 2);
+        // andiamo a caricare in background l'immagine
+        if (background != null) {
+            g2.drawImage(background, -655, -320, 1300, 645, null);
+        }
 
-
-        creatingfield(g2);
         for (FieldObject f : fieldModel.getObjectsPiece()) {
             if (f != null) {
+                int x = (int) (f.getPosition().getX() - f.getRadius());
+                int y = (int) (f.getPosition().getY() - f.getRadius());
+                int diameter = (int) (f.getRadius() * 2);
+
+                BufferedImage image;
                 if (f.getTeam() == null) {
-                    g2.drawImage(ball, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
+                    image = loadImage("BallHD.png");
+                } else if (f.getTeam().equals("T1")) {
+                    image = loadImage("Pedina1HD.png");
                 } else {
-                    if (f.getTeam().equals("T1"))
-                        g2.drawImage(imgT1, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
-                    else
-                        g2.drawImage(imgT2, (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), (int) f.getRadius() * 2, (int) f.getRadius() * 2, null);
+                    image = loadImage("Pedina2HD.png");
+                }
+
+                if (image != null) {
+                    g2.drawImage(image, x, y, diameter, diameter, null);
                 }
             }
         }
@@ -107,8 +152,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             g2.drawOval((int) (valido.getPosition().getX() - valido.getRadius()), (int) (valido.getPosition().getY() - valido.getRadius()), (int) valido.getRadius() * 2, (int) valido.getRadius() * 2);
         }
         if (newradius != 0) {
-            g2.setColor(new Color(0, 100, 0, 100));
-            g2.fillOval((int) (valido.getPosition().getX() - newradius), (int) (valido.getPosition().getY() - newradius), (int) newradius * 2, (int) newradius * 2);
 
             g2.setColor(Color.black);
             int dy = (int) (ynew - valido.getPosition().getY());
@@ -188,19 +231,9 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     }
 
 
-    private void creatingfield(Graphics2D g2) {
-        try {
-            this.field = ImageIO.read(new File("campoHD.png"));
-        } catch (IOException var4) {
-            System.out.println("Image d'arriere plan non trouvee");
-        }
-        g2.drawImage(this.field, -655, -320, 1300, 645, null);
-    }
 
 
-    public GameField getModel() {
-        return fieldModel;
-    }
+
 }
 
 
