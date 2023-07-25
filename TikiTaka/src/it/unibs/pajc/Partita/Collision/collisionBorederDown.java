@@ -4,7 +4,7 @@ import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameFieldInterface;
 import it.unibs.pajc.Partita.Vector2d;
 
-import static it.unibs.pajc.Partita.GameField.MIN_Y;
+import static it.unibs.pajc.Partita.GameFieldClientServer.MIN_Y;
 
 public class collisionBorederDown implements StrategyCollision {
     GameFieldInterface gameFieldInterface;

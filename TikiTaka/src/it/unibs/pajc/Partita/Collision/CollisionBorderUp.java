@@ -3,7 +3,7 @@ package it.unibs.pajc.Partita.Collision;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Vector2d;
 
-import static it.unibs.pajc.Partita.GameField.MAX_Y;
+import static it.unibs.pajc.Partita.GameFieldClientServer.MAX_Y;
 
 public class CollisionBorderUp implements StrategyCollision {
 

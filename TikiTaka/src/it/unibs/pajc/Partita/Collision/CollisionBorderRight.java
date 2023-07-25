@@ -2,7 +2,7 @@ package it.unibs.pajc.Partita.Collision;
 
 import it.unibs.pajc.Partita.*;
 
-import static it.unibs.pajc.Partita.GameField.MAX_X;
+import static it.unibs.pajc.Partita.GameFieldClientServer.MAX_X;
 
 public class CollisionBorderRight implements StrategyCollision {
     GameFieldInterface gameFieldInterface ;
@@ -18,7 +18,7 @@ public class CollisionBorderRight implements StrategyCollision {
 
             gameFieldInterface.setCollisionForBouard(false);
             if (object.getPosition().getX() - object.getRadius() > MAX_X) {
-                GameFieldInterface fieldInterface = new GameField();
+                GameFieldInterface fieldInterface = new GameFieldClientServer();
                 gameFieldInterface.positionStart();
                 gameFieldInterface.setScore(1);
                 gameFieldInterface.setTurno("T1");

@@ -14,6 +14,14 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
     public boolean isBall;
 
+    public boolean isBall() {
+        return isBall;
+    }
+
+    public void setBall(boolean ball) {
+        isBall = ball;
+    }
+
     public Vector2d getVelocita() {
         return velocita;
     }
@@ -65,6 +73,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
     public double getMassa() {
         return massa;
     }
+
 
 
 
@@ -137,7 +146,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         // non esiste collisoni
         if (dist2 > r * r) return;
 
-        GameField.collision = true;
+        GameFieldClientServer.collision = true;
 
         double d = delta.getLength();
 

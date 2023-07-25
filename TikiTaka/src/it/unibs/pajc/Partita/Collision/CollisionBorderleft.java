@@ -2,7 +2,7 @@ package it.unibs.pajc.Partita.Collision;
 
 import it.unibs.pajc.Partita.*;
 
-import static it.unibs.pajc.Partita.GameField.MIN_X;
+import static it.unibs.pajc.Partita.GameFieldClientServer.MIN_X;
 
 public class CollisionBorderleft implements StrategyCollision {
     GameFieldInterface gameFieldInterface ;

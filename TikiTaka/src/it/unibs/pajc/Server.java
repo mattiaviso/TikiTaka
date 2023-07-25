@@ -4,7 +4,7 @@ package it.unibs.pajc;
 import it.unibs.pajc.ClientServer.Message;
 import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
-import it.unibs.pajc.Partita.GameField;
+import it.unibs.pajc.Partita.GameFieldClientServer;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class Server  {
     private boolean keepGoing;
     private String notif = " *** ";
     //Model del gioco
-    public static GameField modelField;
+    public static GameFieldClientServer modelField;
     //Frame che ci permette di vedere cosa succede sul server
     public static ViewServer frame;
 
@@ -207,7 +207,7 @@ public class Server  {
         frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(), portNumber);
         frame.setVisible(true);
 
-        modelField = new GameField();
+        modelField = new GameFieldClientServer();
 
         //Crea l'oggetto server e lo esegue
         Server server = new Server(portNumber);

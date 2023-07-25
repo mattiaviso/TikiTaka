@@ -82,6 +82,13 @@ public class Result extends JPanel {
         gruppo.addComponente(new TestoGrafico(score2 + "", Color.BLUE, 755, 50, new Font("Ahoroni", Font.BOLD, 30)));
 
 
+        colorareScritta(testoteam1, testoteam2);
+
+        gruppo.draw(g2);
+
+    }
+
+    private void colorareScritta(ComponenteGraficoSetColore testoteam1, ComponenteGraficoSetColore testoteam2) {
         if (modelClientForComunication.getTurno() != null) {
             if (modelClientForComunication.getTurno().equals("T1")) {
                     if (team1.contains("(you)")) {
@@ -107,9 +114,6 @@ public class Result extends JPanel {
 
             }
         }
-
-        gruppo.draw(g2);
-
     }
 
 }

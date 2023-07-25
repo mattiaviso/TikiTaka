@@ -28,6 +28,10 @@ public class Vector2d {
     public double getX() {
         return x;
     }
+    public void setPosition(double x , double y){
+        this.x = x;
+        this.y = y;
+    }
 
     public void setY(double y) {
         this.y = y;
