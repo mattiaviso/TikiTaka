@@ -71,9 +71,7 @@ public class GameFieldSingle extends GameFiled {
     }*/
 
 
-    public void setCollisionForBouard(Boolean collision) {
 
-    }
 
     /*public boolean allStop() {
             for (FieldObject o : objectsPiece) {
@@ -132,6 +130,8 @@ public class GameFieldSingle extends GameFiled {
     public String messaggioPos() {
         return null;
     }
+
+
 
 
 }

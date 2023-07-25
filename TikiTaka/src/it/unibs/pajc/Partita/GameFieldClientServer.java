@@ -18,7 +18,6 @@ public class GameFieldClientServer extends GameFiled {
     public static final float EPSILON = 0.09f;
 
 
-    static public boolean collision = false;
 
 
 
@@ -48,24 +47,36 @@ public class GameFieldClientServer extends GameFiled {
         return string;
     }
 
+    /**
+     * Metodo che ritorna la pedina premuta  date le coordinate x e y
+     *
+     * @param x Double x
+     * @param y Double y
+     * @return pedina seleziononata
+     */
+    public FieldObject pedinaSelezionata(double x, double y) {
 
-    public void setCollision() {
-        this.collision = false;
+        double EPS = 1E-3;
+        for (int i = 0; i < getObjectsPiece().length; i++) {
+            if (Math.abs(x - getObjectsPiece()[i].getPosition().getX()) < EPS && Math.abs(y - getObjectsPiece()[i].getPosition().getY()) < EPS) {
+                return getObjectsPiece()[i];
+            }
+        }
+        return null;
     }
 
-    @Override
-    public void setCollisionForBouard(Boolean collision) {
-        this.collision = collision;
-    }
+
+
+
+
+
 
     @Override
     public int gool(FieldObject o, double sup, double min) {
         return 0;
     }
 
-    public boolean getCollision() {
-        return collision;
-    }
+
 
 
 

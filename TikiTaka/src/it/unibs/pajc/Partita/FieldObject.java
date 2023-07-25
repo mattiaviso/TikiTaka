@@ -146,7 +146,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         // non esiste collisoni
         if (dist2 > r * r) return;
 
-        GameFieldClientServer.collision = true;
+
 
         double d = delta.getLength();
 

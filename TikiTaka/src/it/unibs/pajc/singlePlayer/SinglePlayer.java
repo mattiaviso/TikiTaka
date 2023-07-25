@@ -1,7 +1,6 @@
 package it.unibs.pajc.singlePlayer;
 
-import it.unibs.pajc.ClientServer.ResultComposite.Result;
-import it.unibs.pajc.singlePlayer.GameFieldView;
+import it.unibs.pajc.ClientServer.ResultComposite.ResultClientServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,16 +12,8 @@ public class SinglePlayer extends Canvas {
     private JTextField txtGioco;
     /*private BufferedImage sfondo = null;*/
     GameFieldView battleFieldView = new  GameFieldView();
-    public static Result panel;
+    public static ResultSingle panel;
 
-
-/**
- * Suono al gol
- * Quando si vince? e immagine
- * Server Client
- * Musica in gioco
- *
- */
 
 
 
@@ -34,7 +25,7 @@ public class SinglePlayer extends Canvas {
         String team1 = JOptionPane.showInputDialog("Dammi il nome del team1");
         String team2 = JOptionPane.showInputDialog("Dammi il nome del team2");
         // da apportare delle modificiche tramite template
-        panel = new Result(team1,team2);
+        panel = new ResultSingle(team1,team2);
 
         EventQueue.invokeLater(new Runnable() {
             public void run() {

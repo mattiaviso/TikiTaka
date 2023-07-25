@@ -1,6 +1,6 @@
 package it.unibs.pajc.Client;
 
-import it.unibs.pajc.ClientServer.ResultComposite.Result;
+import it.unibs.pajc.ClientServer.ResultComposite.ResultClientServer;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 
@@ -301,19 +300,19 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
 
     // creazione pannello per l'inizzializzazione
-    private Result panel;
+    private ResultClientServer panel;
 
-    public Result getPanel() {
+    public ResultClientServer getPanel() {
         return panel;
     }
 
-    public void setPanel(Result panel) {
+    public void setPanel(ResultClientServer panel) {
         this.panel = panel;
     }
 
     // agigunto dopo
     public void createComponents(ModelClientForComunication modelClientForComunication) {
-        panel = new Result(modelClientForComunication);
+        panel = new ResultClientServer(modelClientForComunication);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setBounds(100, 50, 1300, 800);

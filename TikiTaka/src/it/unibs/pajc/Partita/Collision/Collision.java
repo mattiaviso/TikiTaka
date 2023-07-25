@@ -1,7 +1,6 @@
 package it.unibs.pajc.Partita.Collision;
 
 import it.unibs.pajc.Partita.*;
-import it.unibs.pajc.singlePlayer.GameFiled;
 
 import static it.unibs.pajc.Partita.GameFieldClientServer.*;
 
@@ -11,7 +10,7 @@ public class Collision {
      *
      * @param objectsPiece
      */
-    public void checkCollision(FieldObject[] objectsPiece, GameFiled gameFieldInterface) {
+    public void checkCollision(FieldObject[] objectsPiece,GameFieldInterface gameFieldInterface) {
         insertionSort(objectsPiece);
 
         // Controllo collisioni con bordi del campo
@@ -44,7 +43,7 @@ public class Collision {
      *
      * @param object
      */
-    private void borderCollision(FieldObject object, GameFiled gameFieldInterface) {
+    private void borderCollision(FieldObject object, GameFieldInterface gameFieldInterface) {
         double x = object.getPosition().getX();
         double y = object.getPosition().getY();
         double radius = object.getRadius();

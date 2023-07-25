@@ -5,6 +5,7 @@ import it.unibs.pajc.ClientServer.Message;
 import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameFieldClientServer;
+import it.unibs.pajc.singlePlayer.GameFiled;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.Date;
 /**
  * Classe Server
  */
-public class Server  {
+public class Server {
     private static int uniqueId;
     // Lista client connessi
     private ArrayList<ClientThread> al;
@@ -30,7 +31,7 @@ public class Server  {
     private boolean keepGoing;
     private String notif = " *** ";
     //Model del gioco
-    public static GameFieldClientServer modelField;
+    public static GameFiled modelField;
     //Frame che ci permette di vedere cosa succede sul server
     public static ViewServer frame;
 
@@ -144,9 +145,6 @@ public class Server  {
     }
 
 
-
-
-
     /**
      * messaggio che inviamo a tutti i client conessi in cui aggiorna la posizione, quando sono in movimento
      *
@@ -203,7 +201,7 @@ public class Server  {
 
     public static void main(String[] args) throws UnknownHostException {
 
-    	int portNumber = 1500;
+        int portNumber = 1500;
         frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(), portNumber);
         frame.setVisible(true);
 
@@ -280,7 +278,7 @@ public class Server  {
                             modelField.cambioTurno();
                             System.out.println("MESSAGGIO INVIATO" + message);
                             String part[] = message.split("@");
-                            FieldObject selezionata = modelField.pedinaSelezionata(Double.parseDouble(part[0]), Double.parseDouble(part[1]));
+                            FieldObject selezionata = modelField.checkClickAble(Double.parseDouble(part[0]), Double.parseDouble(part[1]));
                             if (selezionata != null)
                                 selezionata.start(Integer.parseInt(part[2]), Double.parseDouble(part[3]));
                         }
@@ -325,6 +323,7 @@ public class Server  {
 
         /**
          * Metodo che ci permette di scrivere il messaggio al client
+         *
          * @param msg
          * @return
          */

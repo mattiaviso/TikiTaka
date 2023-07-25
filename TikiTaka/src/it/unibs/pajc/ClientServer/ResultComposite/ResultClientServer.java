@@ -8,18 +8,20 @@ import java.awt.*;
 /**
  * Pannello usato per la visualizzazione del risultato
  */
-public class Result extends JPanel {
+public class ResultClientServer extends JPanel {
 
     private int score1;
     private int score2;
     private String team1;
     private String team2;
 
-    private ModelClientForComunication modelClientForComunication;
+    private ModelClientForComunication modelClientForComunication ;
 
-    public Result(ModelClientForComunication t) {
+    public ResultClientServer(ModelClientForComunication t) {
         this.modelClientForComunication = t;
     }
+
+
 
 
     public void setUsername1(String t1) {
@@ -62,7 +64,7 @@ public class Result extends JPanel {
      * @param g
      */
 
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -88,7 +90,7 @@ public class Result extends JPanel {
 
     }
 
-    private void colorareScritta(ComponenteGraficoSetColore testoteam1, ComponenteGraficoSetColore testoteam2) {
+    public void colorareScritta(ComponenteGraficoSetColore testoteam1, ComponenteGraficoSetColore testoteam2) {
         if (modelClientForComunication.getTurno() != null) {
             if (modelClientForComunication.getTurno().equals("T1")) {
                     if (team1.contains("(you)")) {
