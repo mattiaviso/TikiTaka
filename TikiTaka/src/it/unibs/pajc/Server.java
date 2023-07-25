@@ -1,6 +1,7 @@
 package it.unibs.pajc;
 
 
+import it.unibs.pajc.ClientServer.GameFieldClientServer;
 import it.unibs.pajc.ClientServer.Message;
 import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
@@ -207,7 +208,7 @@ public class Server  {
         frame = new ViewServer(Inet4Address.getLocalHost().getHostAddress(), portNumber);
         frame.setVisible(true);
 
-        modelField = new GameField();
+        modelField = new GameFieldClientServer();
 
         //Crea l'oggetto server e lo esegue
         Server server = new Server(portNumber);

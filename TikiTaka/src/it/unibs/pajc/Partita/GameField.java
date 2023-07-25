@@ -5,7 +5,7 @@ import it.unibs.pajc.Partita.Collision.Collision;
 /**
  * Model
  */
-public class GameField implements GameFieldInterface {
+public abstract class GameField implements GameFieldInterface {
 
     public static final int MAX_X = 566;
     public static final int MIN_X = -566;
@@ -15,7 +15,7 @@ public class GameField implements GameFieldInterface {
 
     private int score1 = 0;
     private int score2 = 0;//
-    protected FieldObject[] objectsPiece;
+    private FieldObject[] objectsPiece;
     private String turno;
 
     static public boolean collision = false;
@@ -32,16 +32,43 @@ public class GameField implements GameFieldInterface {
         return score2;
     }
 
+    public void setScore1(int score1) {
+        this.score1 = score1;
+    }
+
+    public void setScore2(int score2) {
+        this.score2 = score2;
+    }
+
+    public FieldObject[] getObjectsPiece() {
+        return objectsPiece;
+    }
+
+    public void setObjectsPiece(FieldObject[] objectsPiece) {
+        this.objectsPiece = objectsPiece;
+    }
+
+    public static boolean isCollision() {
+        return collision;
+    }
+
+    public static void setCollision(boolean collision) {
+        GameField.collision = collision;
+    }
+
     /**
      * Metodo costruttore che inizializza gli 11 oggetti del gioco
      * e le relative componenti grafiche
      */
     public GameField() {
-        String pathT1 = "Pedina1.png";
-        String pathT2 = "Pedina2.png";
-        turno = "T1";
-        objectsPiece = new FieldObject[11];
+        this.score1=0;
+        this.score2 = 0;
+        this.turno = "T1";
+        this.objectsPiece = new FieldObject[11];
         positionStart();
+    }
+    public  void setObj(int i , FieldObject object){
+        objectsPiece[i]= object;
     }
 
 
@@ -51,18 +78,18 @@ public class GameField implements GameFieldInterface {
      *
      */
     @Override
-    public void positionStart() {
-        objectsPiece[0] = (new Piece(40, 500, 0, "Pedina1.png", "T1"));
-        objectsPiece[1] = (new Piece(40, 170, 70, "Pedina1.png", "T1"));
-        objectsPiece[2] = (new Piece(40, 170, -70, "Pedina1.png", "T1"));
-        objectsPiece[3] = (new Piece(40, 350, 180, "Pedina1.png", "T1"));
-        objectsPiece[4] = (new Piece(40, 350, -180, "Pedina1.png", "T1"));
-        objectsPiece[5] = (new Ball(18, 0, 0));
-        objectsPiece[6] = (new Piece(40, -520, 0, "Pedina2.png", "T2"));
-        objectsPiece[7] = (new Piece(40, -170, 70, "Pedina2.png", "T2"));
-        objectsPiece[8] = (new Piece(40, -170, -70, "Pedina2.png", "T2"));
-        objectsPiece[9] = (new Piece(40, -350, 180, "Pedina2.png", "T2"));
-        objectsPiece[10] = (new Piece(40, -350, -180, "Pedina2.png", "T2"));
+    public final void  positionStart() {
+        setObj(0,new Piece(40, 500, 0, "Pedina1.png", "T1"));
+        setObj(1, new Piece(40, 170, 70, "Pedina1.png", "T1"));
+        setObj(2, new Piece(40, 170, -70, "Pedina1.png", "T1"));
+        setObj(3, new Piece(40, 350, 180, "Pedina1.png", "T1"));
+        setObj(4, new Piece(40, 350, -180, "Pedina1.png", "T1"));
+        setObj(5, new Ball(18, 0, 0));
+        setObj(6, new Piece(40, -520, 0, "Pedina2.png", "T2"));
+        setObj(7, new Piece(40, -170, 70, "Pedina2.png", "T2"));
+        setObj(8, new Piece(40, -170, -70, "Pedina2.png", "T2"));
+        setObj(9, new Piece(40, -350, 180, "Pedina2.png", "T2"));
+        setObj(10, new Piece(40, -350, -180, "Pedina2.png", "T2"));
     }
 
     /**
@@ -95,7 +122,7 @@ public class GameField implements GameFieldInterface {
     /**
      * Metodo che effettua il cambio del turno dopo il tiro
      */
-    public void cambioTurno() {
+    public  final void cambioTurno() {
         if (turno.equals("T1")) {
             turno = "T2";
         } else if (turno.equals("T2")) {
@@ -108,21 +135,14 @@ public class GameField implements GameFieldInterface {
     }
 
     @Override
-    public void setScore(int score) {
-        if ( score ==1){
-            score1= score1+1;
-        }
-        if ( score ==2){
-            score2= score2+1;
-        }
-    }
+    public abstract void setScore(int score) ;
 
     /**
      * Metodo che controlla se tutte le palline sono ferme
      *
      * @return True se tutte le palline sono ferme
      */
-    public boolean allStop() {
+    public final boolean allStop() {
         for (FieldObject o : objectsPiece) {
             if (!o.speedIsZero()) return false;
         }
@@ -135,7 +155,7 @@ public class GameField implements GameFieldInterface {
      * Metodo che se invocato manda avanti di un esecuzione il gioco, si occupa dello spostamento e dei controlli vari
      * Come se fosse lo StepNext
      */
-    public void updateGame() {
+    public final void updateGame() {
 
         for (int i = 0; i < objectsPiece.length; i++) {
             Vector2d velocity = objectsPiece[i].getVelocita();
@@ -165,25 +185,18 @@ public class GameField implements GameFieldInterface {
      * @param y Double y
      * @return pedina seleziononata
      */
-    public FieldObject pedinaSelezionata(double x, double y) {
-        double EPS = 1E-3;
-        for (int i = 0; i < objectsPiece.length; i++) {
-            if (Math.abs(x - objectsPiece[i].getPosition().getX()) < EPS && Math.abs(y - objectsPiece[i].getPosition().getY()) < EPS) {
-                return objectsPiece[i];
-            }
-        }
-        return null;
-    }
+    public abstract FieldObject pedinaSelezionata(double x, double y) ;
 
     /**
      * metodo per resettare il risulato alla vittoria
      */
-    public void checkVincitore() {
-        if (score1 == 3 || score2 == 3) {
-            score1 = 0;
-            score2 = 0;
-        }
+    public abstract void checkVincitore();
+    public abstract int gool(FieldObject o, double sup, double min);
+
+    public FieldObject selezionaElemento (int i){
+         return objectsPiece[i];
     }
+
 
 }
 

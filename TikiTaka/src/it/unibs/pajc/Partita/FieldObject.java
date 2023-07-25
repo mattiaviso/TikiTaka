@@ -34,6 +34,30 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         this.massa = massa;
     }
 
+    public void setPosition(Vector2d position) {
+        this.position = position;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setImageObj(BufferedImage imageObj) {
+        this.imageObj = imageObj;
+    }
+
+    public void setMassa(double massa) {
+        this.massa = massa;
+    }
+
+    public boolean isBall() {
+        return isBall;
+    }
+
+    public void setBall(boolean ball) {
+        isBall = ball;
+    }
+
     /**
      * Metodo che ritorno il team di appartenenza della pedina
      */

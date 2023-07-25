@@ -4,6 +4,7 @@ import it.unibs.pajc.ClientServer.ResultComposite.Result;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
+import it.unibs.pajc.Partita.Utility;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -179,7 +180,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
 
             distance = (int) (Math.min(Math.sqrt(Math.pow(valido.getPosition().getX() - xOpposta, 2) + Math.pow(valido.getPosition().getY() - yOpposta, 2)), 150));
             angle = Math.atan2(yOpposta - valido.getPosition().getY(), xOpposta - valido.getPosition().getX());
-            drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
+            Utility.drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
         }
 
         for (FieldObject f : objectsPiece) {
@@ -213,29 +214,7 @@ public class ViewClient extends JPanel implements MouseListener, MouseMotionList
         g2.drawImage(field, -655, -320, 1300, 645, null);
     }
 
-    /**
-     * Metodo che permette di disegnare a video una linea con una freccia
-     *
-     * @param g     Graphics2d g2
-     * @param point Punto di partenza della freccia
-     * @param angle Angolo formato dalla freccia
-     * @param len   lunghezza della retta
-     */
-    private static void drawArrow(Graphics2D g, Point2D point, double angle, int len) {
-        AffineTransform at = AffineTransform.getTranslateInstance(point.getX(), point.getY());
-        at.concatenate(AffineTransform.getRotateInstance(angle));
-        AffineTransform restoreTransform = g.getTransform();
-        g.transform(at);
 
-        int ARR_SIZE = 10;
-
-        g.setStroke(new BasicStroke(2.5f));
-        g.drawLine(0, 0, len - 5, 0);
-        g.setStroke(new BasicStroke(1f));
-        g.fillPolygon(new int[]{len, len - ARR_SIZE, len - ARR_SIZE, len},
-                new int[]{0, -ARR_SIZE, ARR_SIZE, 0}, 4);
-        g.setTransform(restoreTransform);
-    }
 
     /**
      * Dal messaggio ricevuto dal server va ad aggiornare le posizione delle palline
