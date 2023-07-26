@@ -147,10 +147,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         for (FieldObject f : fieldModel.getObjectsPiece()) {
             g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }
-        if (valido != null) {
-            g2.setColor(Color.RED);
-            g2.drawOval((int) (valido.getPosition().getX() - valido.getRadius()), (int) (valido.getPosition().getY() - valido.getRadius()), (int) valido.getRadius() * 2, (int) valido.getRadius() * 2);
-        }
+
         if (newradius != 0) {
 
             g2.setColor(Color.black);
@@ -180,8 +177,9 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         //prendiamo coordinate x e y di dove è stato premuto il mouse
         int x = e.getX() - w / 2;
         int y = -(e.getY() - h / 2);
-
-        valido = fieldModel.pedinaSelezionata(x, y);
+        if(fieldModel.allStop) {
+            valido = fieldModel.pedinaSelezionata(x, y);
+        }
 
         repaint();
 
@@ -194,11 +192,10 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         if (valido != null) {
             valido.start(distance, angle);
 
-            fieldModel.cambioTurno();
+            ;
         }
-        valido = null;
-        newradius = 0;
-        repaint();
+        BallMovementMonitor ballMovementMonitor = new BallMovementMonitor();
+        ballMovementMonitor.run();
 
     }
 
@@ -229,11 +226,58 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     @Override
     public void mouseMoved(MouseEvent e) {
     }
+    public computerscore(){
+        // farei in un altra classe 
+        // selezionare la pallina adeguata
+        //andare a trovare l'angolo (vedere come ho fatto sposta )
+        // andare a fare start del FileObject
+        //
+    }
 
 
 
 
+    public class BallMovementMonitor implements Runnable {
 
+
+        @Override
+        public void run() {
+            fieldModel.setAllStop(false);
+            while (true) {
+                if (!allStop()) {
+                    repaint();
+                    valido = null;
+                    newradius = 0;
+
+                    break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+                }
+
+                // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
+                try {
+                    Thread.sleep(100); // Pausa di 100 millisecondi.
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+            fieldModel.cambioTurno();
+            fieldModel.setAllStop(true);
+            repaint();
+            System.out.println("Tutte le palline si sono fermate.");
+
+        }
+
+        public final boolean allStop() {
+            for (FieldObject o : fieldModel.getObjectsPiece()) {
+                if (!o.speedIsZero()) return false;
+            }
+            return true;
+        }
+
+
+    }
 }
 
 

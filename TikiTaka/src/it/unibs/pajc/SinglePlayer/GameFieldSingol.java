@@ -31,7 +31,6 @@ public class GameFieldSingol extends GameField {
 
     @Override
     public FieldObject pedinaSelezionata(double x, double y) {
-        if (!allStop()) return null;
         for (FieldObject f : getObjectsPiece()) {
             if (f instanceof Piece)
                 if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)

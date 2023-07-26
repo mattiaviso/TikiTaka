@@ -19,6 +19,15 @@ public abstract class GameField implements GameFieldInterface {
     private String turno;
 
     static public boolean collision = false;
+    public boolean allStop = true ;
+
+    public boolean isAllStop() {
+        return allStop;
+    }
+
+    public void setAllStop(boolean allStop) {
+        this.allStop = allStop;
+    }
 
     public String getTurno() {
         return turno;
