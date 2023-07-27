@@ -45,6 +45,13 @@ public class Computer {
         this.angle = angle;
     }
 
+    /**
+     * Imposta l'angolo migliore per alcuni punti della palla  rispetto all'oggetto `piece` nel campo di gioco.
+     * Vengono considerati alcuni punti intorno alla palla e per ognuno di essi, viene calcolato l'angolo tra la palla e la posizione stimata.
+     * L'oggetto `piece` viene spostato in ciascuna posizione stimata, e viene controllata la collisione tra la palla e l'oggetto `piece`.
+     * L'angolo che dà luogo alla posizione Y minima della palla dopo la collisione viene impostato come l'angolo migliore.
+     * @param ball L'oggetto FieldObject (palla) per il quale trovare l'angolo migliore rispetto all'oggetto `piece`.
+     */
     public void settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(FieldObject ball) {
         double angleIncrement = 2 * Math.PI / NUMPUNTICONSIDERATI;
         double y = Double.MAX_VALUE;
@@ -52,6 +59,7 @@ public class Computer {
 
 
         for (int i = 0; i < NUMPUNTICONSIDERATI; i++) {
+
             double angleball = i * angleIncrement;
             // queste sono le posizioni della pedina
             double xStima = ball.getPosition().getX() + ball.getRadius() * Math.cos(angleball);
@@ -61,16 +69,21 @@ public class Computer {
             double angoloPunto = Utility.calcolaAngoloConposizione(piece, xStima, yStima);
 
             piece.start((int) distance, angoloPunto);
-            FieldObject ballAfterCollision =controllacollisione(ball);
+            FieldObject ballAfterCollision = controllacollisione(ball);
             // angolo piu corretto rispetto a quelli presi
-            if(ballAfterCollision.getPosition().getY()  <  yminima){
-                yminima= ballAfterCollision.getPosition().getY();
+            if (ballAfterCollision.getPosition().getY() < yminima) {
+                yminima = ballAfterCollision.getPosition().getY();
                 setAngle(angoloPunto);
             }
 
         }
     }
 
+    /**
+     * Controlla la collisione tra due oggetti nel campo di gioco e gestisce la risoluzione della collisione.
+     * @param ball L'oggetto FieldObject  con cui controllare la collisione.
+     * @return L'oggetto FieldObject ball dopo la risoluzione della collisione e l'applicazione dell'attrito.
+     */
     public FieldObject controllacollisione(FieldObject ball) {
 
         Vector2d velocity = piece.getVelocita();

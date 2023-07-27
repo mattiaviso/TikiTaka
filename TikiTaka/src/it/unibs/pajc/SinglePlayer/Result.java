@@ -34,7 +34,8 @@ public class Result extends JPanel  {
     }
 
     public  void setScore1(int score1) {
-        score1 = score1;
+        this.score1 = score1;
+        repaint();
 
     }
 

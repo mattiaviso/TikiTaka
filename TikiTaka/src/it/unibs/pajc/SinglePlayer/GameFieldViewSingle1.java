@@ -258,6 +258,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         }
 
 
+
         for (FieldObject f : fieldModel.getObjectsPiece()) {
             g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }

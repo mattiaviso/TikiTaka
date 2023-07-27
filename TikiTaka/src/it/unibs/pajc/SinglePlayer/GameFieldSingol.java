@@ -1,31 +1,38 @@
 package it.unibs.pajc.SinglePlayer;
 
-import it.unibs.pajc.ClientServer.SoundClip;
-import it.unibs.pajc.Partita.Ball;
+
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Piece;
 
+import javax.swing.*;
+
 public class GameFieldSingol extends GameField {
 
-    public int gool(FieldObject o, double sup, double min) {
 
-
-        if (o.getPosition().getY() + o.getRadius() < 108 && o.getPosition().getY() - o.getRadius() > -98 && o.isBall) {
-            return 1;
-
-        } else if (o.getPosition().getY() + o.getRadius() < 108 && o.getPosition().getY() - o.getRadius() > min && o.isBall) {
-            return 2;
-        } else return 0;
+    @Override
+    public void setTurnoALternativo(String team) {
+        if(!(getTurno().equals(team))){
+            setTurno(team);
+        }
     }
 
+    @Override
+    public void setTurnoAlternativo(String turno) {
 
+    }
+
+    /**
+     * Sovrascrive il metodo setScore per aggiornare i punteggi del gioco.
+     * @param score Il valore del punteggio
+     */
     @Override
     public void setScore(int score) {
 
         if ( score ==1){
             setScore1( getScore1()+1);
             TikiTakaGame.panel.setScore1(getScore1());
+
 
         }
         if ( score ==2){
@@ -35,6 +42,12 @@ public class GameFieldSingol extends GameField {
 
     }
 
+    /**
+     * Trova e restituisce l'oggetto FieldObject selezionato alle coordinate date per il turno del giocatore corrente.
+     * @param x La coordinata x del punto selezionato.
+     * @param y La coordinata y del punto selezionato.
+     * @return Il FieldObject selezionato se trovato e soddisfa i criteri, altrimenti restituisce null.
+     */
     @Override
     public FieldObject pedinaSelezionata(double x, double y) {
         for (FieldObject f : getObjectsPiece()) {
@@ -47,17 +60,26 @@ public class GameFieldSingol extends GameField {
         return null;
     }
 
-    @Override
+    /**
+     * Controlla se un giocatore ha raggiunto il punteggio vincente e reimposta i punteggi se un giocatore vince.
+     */
+
     public void checkVincitore() {
         if (getScore1() == 3 || getScore2() == 3) {
             setScore1(0);
             setScore2(0);
-            TikiTakaGame.panel.setScore1(0);
-            TikiTakaGame.panel.setScore2(0);
+            TikiTakaGame.panel.setTable(0,0);
+
         }
 
 
     }
+
+
+
+
+
+
 
     
 

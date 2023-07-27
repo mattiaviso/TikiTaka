@@ -1,5 +1,7 @@
 package it.unibs.pajc.SinglePlayer;
 
+import it.unibs.pajc.ClientServer.SoundClip;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -57,13 +59,12 @@ public class TikiTakaGame extends Canvas {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
+		SoundClip sound = new SoundClip("Song");
+		sound.start();
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 50, 1300, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 		frame.getContentPane().add(controllerGameField.getViewGame(), BorderLayout.CENTER);
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
 		panel.setTable(0,0);

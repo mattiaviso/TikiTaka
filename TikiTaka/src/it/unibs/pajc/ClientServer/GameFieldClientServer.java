@@ -20,6 +20,16 @@ public class GameFieldClientServer extends GameField {
 
 
     @Override
+    public void setTurnoALternativo(String team) {
+        setTurno(team);
+    }
+
+    @Override
+    public void setTurnoAlternativo(String turno) {
+
+    }
+
+    @Override
     public void setScore(int score) {
         if ( score ==1){
             setScore1( getScore1()+1);
@@ -37,10 +47,7 @@ public class GameFieldClientServer extends GameField {
         }
     }
 
-    @Override
-    public int gool(FieldObject o, double sup, double min) {
-        return 0;
-    }
+
 
 
 }

@@ -1,5 +1,7 @@
 package it.unibs.pajc.Partita;
 
+import it.unibs.pajc.ClientServer.SoundClip;
+
 import java.awt.image.BufferedImage;
 
 

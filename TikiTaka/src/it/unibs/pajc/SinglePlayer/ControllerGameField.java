@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,9 +26,17 @@ public class ControllerGameField extends MouseAdapter {
 
         modelGameField = new GameFieldSingol();
         this.viewGame = new GameFieldViewSingle1(this);
-        Timer timer = new Timer(10, (e) -> {
+        Timer timer = new Timer(15, (e) -> {
             modelGameField.updateGame();
             viewGame.repaint();
+            if (modelGameField.getScore1() == 3) {
+                JOptionPane.showConfirmDialog(null, "vintoGiocatore1");
+                modelGameField.checkVincitore();
+            }
+            if (modelGameField.getScore2() == 3) {
+                JOptionPane.showConfirmDialog(null, "vintoGiocatore2");
+                modelGameField.checkVincitore();
+            }
         });
         timer.start();
 
@@ -91,8 +101,8 @@ public class ControllerGameField extends MouseAdapter {
 
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
-
         }
+
         BallMovementMonitor monitor = new BallMovementMonitor();
         monitor.run();
 
@@ -118,37 +128,48 @@ public class ControllerGameField extends MouseAdapter {
     public class BallMovementMonitor implements Runnable {
 
 
-
-
         @Override
-        public void run() {
-            modelGameField.setAllStop(false);
-            while (true) {
-                if (!allStop()) {
-                    viewGame.repaint();
-                    viewGame.setValido(null);
-                    viewGame.setNewradius(0);
+        public synchronized void run() {
 
-                    break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+
+
+            modelGameField.setAllStop(false);
+            CompletableFuture<Boolean> allStopFuture = CompletableFuture.supplyAsync(() -> allStop());
+            while (true) {
+
+
+                try {
+                    if (!allStopFuture.get()) {
+                        viewGame.repaint();
+                        viewGame.setValido(null);
+                        viewGame.setNewradius(0);
+                        break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
                 }
+
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(1000); // Pausa di 100 millisecondi.
+                    Thread.sleep(10); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
 
             }
+
+
             modelGameField.cambioTurno();
             modelGameField.setAllStop(true);
             viewGame.repaint();
 
             System.out.println(modelGameField.getTurno());
-            if (modelGameField.getTurno().equalsIgnoreCase("T2")) {
-                startThreadIfT2();
-            }
+
+            startThreadIfT2();
 
 
         }
@@ -169,22 +190,24 @@ public class ControllerGameField extends MouseAdapter {
             // Gestione del computer
 
             try {
-                Thread.sleep(3000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Computer pieceComputer = direzionePieceBall();
-            FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
+            if (modelGameField.getTurno().equalsIgnoreCase("T2")) {
+                Computer pieceComputer = direzionePieceBall();
+                FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
 
-            if (ricercaPedina != null) {
+                if (ricercaPedina != null) {
 
-                FieldObject valido = ricercaPedina;
+                    FieldObject valido = ricercaPedina;
 
 
-                valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
-                
-                BallMovementMonitor monitor = new BallMovementMonitor();
-                monitor.run();
+                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+
+                    BallMovementMonitor monitor = new BallMovementMonitor();
+                    monitor.run();
+                }
             }
         };
 

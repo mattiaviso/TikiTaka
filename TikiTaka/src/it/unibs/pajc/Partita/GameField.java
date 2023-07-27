@@ -141,10 +141,12 @@ public abstract class GameField implements GameFieldInterface {
         }
     }
 
-    @Override
-    public void setTurno(String team) {
-        turno = team;
+
+    public void setTurno(String turno) {
+        this.turno = turno;
     }
+
+    public abstract void setTurnoALternativo(String team) ;
 
     @Override
     public abstract void setScore(int score);
@@ -203,7 +205,6 @@ public abstract class GameField implements GameFieldInterface {
      */
     public abstract void checkVincitore();
 
-    public abstract int gool(FieldObject o, double sup, double min);
 
     public FieldObject selezionaElemento(int i) {
         return objectsPiece[i];
@@ -250,6 +251,8 @@ public abstract class GameField implements GameFieldInterface {
         }
         return null; // Restituisci null se la pedina non è stata trovata
     }
+
+
 
 
 }
