@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class GameFieldViewSingle1 extends JPanel implements MouseListener, MouseMotionListener {
@@ -192,7 +194,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         if (valido != null) {
             valido.start(distance, angle);
 
-            ;
         }
         BallMovementMonitor ballMovementMonitor = new BallMovementMonitor();
         ballMovementMonitor.run();
@@ -227,6 +228,8 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     public void mouseMoved(MouseEvent e) {
     }
 
+
+
     // ci permette di trovare l'angolo giusto
     public Computer direzionePieceBall() {
 
@@ -251,7 +254,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             while (true) {
                 if (!allStop()) {
 
-                    if ()
+
                     repaint();
                     valido = null;
                     newradius = 0;
@@ -261,7 +264,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(10000); // Pausa di 100 millisecondi.
+                    Thread.sleep(10); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -273,26 +276,8 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             repaint();
             System.out.println("Tutte le palline si sono fermate.");
 
+            startThreadIfT2();
 
-            if (fieldModel.getTurno().equalsIgnoreCase("T2")) {
-
-                // getstione del computer
-                Computer pieceComputer = direzionePieceBall();
-
-                 FieldObject ricercaPedina =  fieldModel.findPieceByPosition(pieceComputer.getPiece());
-
-                if(ricercaPedina!= null){
-                    System.out.println("diverso da null");
-                    valido = ricercaPedina;
-                    System.out.println(pieceComputer.getDistance());
-
-                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
-                    BallMovementMonitor monitor = new BallMovementMonitor();
-                    monitor.run();
-                }
-
-
-            }
 
 
         }
@@ -305,6 +290,37 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         }
 
 
+    }
+
+    public void startThreadIfT2() {
+        if (fieldModel.getTurno().equalsIgnoreCase("T2")) {
+
+            Runnable task = () -> {
+                // Gestione del computer
+
+                try {
+                    Thread.sleep(2000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Computer pieceComputer = direzionePieceBall();
+                FieldObject ricercaPedina = fieldModel.findPieceByPosition(pieceComputer.getPiece());
+
+                if (ricercaPedina != null) {
+                    System.out.println("diverso da null");
+                    FieldObject valido = ricercaPedina;
+                    System.out.println(pieceComputer.getDistance());
+
+                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+                    BallMovementMonitor monitor = new BallMovementMonitor();
+                    monitor.run();
+                }
+            };
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.submit(task);
+            executor.shutdown();
+        }
     }
 }
 

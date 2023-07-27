@@ -226,11 +226,13 @@ public abstract class GameField implements GameFieldInterface {
         double distanzaMinima = Double.MAX_VALUE;
         for (FieldObject o : objectsPiece) {
             if (o instanceof Piece) {
-                double distanza = Math.sqrt(Math.pow(o.getPosition().getX() - ball.getPosition().getX(), 2)
-                        + Math.pow(o.getPosition().getY() - ball.getPosition().getY(), 2));
-                if (distanza < distanzaMinima) {
-                    distanzaMinima = distanza;
-                    piece = o;
+                if (o.getTeam().equalsIgnoreCase("T2")) {
+                    double distanza = Math.sqrt(Math.pow(o.getPosition().getX() - ball.getPosition().getX(), 2)
+                            + Math.pow(o.getPosition().getY() - ball.getPosition().getY(), 2));
+                    if (distanza < distanzaMinima) {
+                        distanzaMinima = distanza;
+                        piece = o;
+                    }
                 }
             }
 
