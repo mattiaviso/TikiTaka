@@ -166,32 +166,31 @@ public class ControllerGameField extends MouseAdapter {
     }
 
     public void startThreadIfT2() {
-
-        Runnable task = () -> {
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+        protected Void doInBackground() {
             // Gestione del computer
-
             try {
                 Thread.sleep(2000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             Computer pieceComputer = direzionePieceBall();
             FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
 
             if (ricercaPedina != null) {
-
                 FieldObject valido = ricercaPedina;
-
-
                 valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
                 BallMovementMonitor monitor = new BallMovementMonitor();
-                monitor.run();
-            }
-        };
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.submit(task);
-        executor.shutdown();
+                // Utilizza SwingUtilities.invokeLater per eseguire le operazioni sulla GUI nel thread di evento di Swing
+                SwingUtilities.invokeLater(() -> monitor.run());
+            }
+            return null;
+        }
+    };
+
+        worker.execute(); // Esegui il task di SwingWorker
     }
 
 
