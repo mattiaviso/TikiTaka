@@ -16,8 +16,8 @@ public abstract class GameField implements GameFieldInterface {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
 
-    private int score1 = 0;
-    private int score2 = 0;//
+    private int score1 ;
+    private int score2;
     private FieldObject[] objectsPiece;
     private String turno;
 

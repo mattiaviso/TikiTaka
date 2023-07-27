@@ -21,11 +21,15 @@ public class GameFieldSingol extends GameField {
 
     @Override
     public void setScore(int score) {
+
         if ( score ==1){
             setScore1( getScore1()+1);
+            TikiTakaGame.panel.setScore1(getScore1());
+
         }
         if ( score ==2){
             setScore2( getScore2()+1);
+            TikiTakaGame.panel.setScore2(getScore2());
         }
     }
 
@@ -43,6 +47,13 @@ public class GameFieldSingol extends GameField {
 
     @Override
     public void checkVincitore() {
+        if (getScore1() == 3 || getScore2() == 3) {
+            setScore1(0);
+            setScore2(0);
+            TikiTakaGame.panel.setScore1(0);
+            TikiTakaGame.panel.setScore2(0);
+        }
+
 
     }
 

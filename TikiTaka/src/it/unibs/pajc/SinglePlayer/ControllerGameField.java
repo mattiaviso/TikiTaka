@@ -1,64 +1,40 @@
-/*
+
 
 package it.unibs.pajc.SinglePlayer;
 
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
+import it.unibs.pajc.Partita.Utility;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Point2D;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class ControllerGameField {
+
+public class ControllerGameField extends MouseAdapter {
 
     private GameFieldViewSingle1 viewGame;
-     private GameField modelGameField;
+    private GameField modelGameField;
 
 
     public ControllerGameField() {
 
         modelGameField = new GameFieldSingol();
-        this.viewGame = new GameFieldViewSingle1(modelGameField);
+        this.viewGame = new GameFieldViewSingle1(this);
         Timer timer = new Timer(10, (e) -> {
             modelGameField.updateGame();
             viewGame.repaint();
         });
         timer.start();
 
-
-        if(modelGameField.getTurno().equalsIgnoreCase("T1")){
-
-            viewGame.addMouseListener(mouseMyListener);
-            viewGame.addMouseMotionListener(mouseMyListener);
-
-
-
-        }else{
-            // getstione del computer
-            Computer pieceComputer = direzionePieceBall();
-            FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
-
-            if (ricercaPedina != null) {
-                System.out.println("diverso da null");
-                viewGame.setValido(ricercaPedina);
-                System.out.println(pieceComputer.getDistance());
-
-                viewGame.getValido().start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
-                BallMovementMonitor  ballMovementMonitor = new BallMovementMonitor();
-                ballMovementMonitor.run();
-
-            }
-        }
-
-
-
-
-
+        viewGame.addMouseListener(this);
+        viewGame.addMouseMotionListener(this);
 
 
     }
-
 
 
     // ci permette di trovare l'angolo giusto
@@ -67,13 +43,12 @@ public class ControllerGameField {
         FieldObject ball = modelGameField.selezionaBall();
         Computer piecePiuVicina = modelGameField.piecePiuVicina(ball);
 
-        // angolo sara su piu punti della circonferenza cosi da testare quale sara' quello migliore per il tiro
+
         piecePiuVicina.settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(ball);
 
 
         return piecePiuVicina;
     }
-
 
 
     public GameFieldViewSingle1 getViewGame() {
@@ -93,7 +68,56 @@ public class ControllerGameField {
     }
 
 
-    public  class BallMovementMonitor implements Runnable {
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+        //prendiamo coordinate x e y di dove è stato premuto il mouse
+        int x = e.getX() - viewGame.getW() / 2;
+        int y = -(e.getY() - viewGame.getH() / 2);
+        if (modelGameField.allStop) {
+            viewGame.setValido(modelGameField.pedinaSelezionata(x, y));
+        }
+
+        viewGame.repaint();
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+
+        // il rilascio lo step next
+        System.out.println("ciao");
+
+        if (viewGame.getValido() != null) {
+            viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
+
+        }
+        BallMovementMonitor monitor = new BallMovementMonitor();
+        monitor.run();
+
+
+    }
+
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+        viewGame.setXnew(e.getX() - viewGame.getW() / 2);
+
+        viewGame.setYnew(-(e.getY() - viewGame.getH() / 2));
+
+
+        if (viewGame.getValido() != null)
+            viewGame.setNewradius(Math.min((int) (Math.sqrt(((viewGame.getValido().getPosition().getX() - viewGame.getXnew()) * (viewGame.getValido().getPosition().getX() - viewGame.getXnew())) + ((viewGame.getValido().getPosition().getY() - viewGame.getYnew()) * (viewGame.getValido().getPosition().getY() - viewGame.getYnew())))), 150));
+
+        viewGame.repaint();
+    }
+
+
+    public class BallMovementMonitor implements Runnable {
+
+
 
 
         @Override
@@ -101,6 +125,8 @@ public class ControllerGameField {
             modelGameField.setAllStop(false);
             while (true) {
                 if (!allStop()) {
+
+
                     viewGame.repaint();
                     viewGame.setValido(null);
                     viewGame.setNewradius(0);
@@ -110,7 +136,7 @@ public class ControllerGameField {
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(100); // Pausa di 100 millisecondi.
+                    Thread.sleep(1000); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -120,9 +146,11 @@ public class ControllerGameField {
             modelGameField.cambioTurno();
             modelGameField.setAllStop(true);
             viewGame.repaint();
-            System.out.println("Tutte le palline si sono fermate.");
 
-
+            System.out.println(modelGameField.getTurno());
+            if (modelGameField.getTurno().equalsIgnoreCase("T2")) {
+                startThreadIfT2();
+            }
 
 
         }
@@ -137,10 +165,40 @@ public class ControllerGameField {
 
     }
 
+    public void startThreadIfT2() {
+
+        Runnable task = () -> {
+            // Gestione del computer
+
+            try {
+                Thread.sleep(2000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Computer pieceComputer = direzionePieceBall();
+            FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
+
+            if (ricercaPedina != null) {
+
+                FieldObject valido = ricercaPedina;
+
+
+                valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+                BallMovementMonitor monitor = new BallMovementMonitor();
+                monitor.run();
+            }
+        };
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(task);
+        executor.shutdown();
+    }
+
+
 }
 
 
 
 
 
-*/
+

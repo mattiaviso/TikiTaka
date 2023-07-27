@@ -9,7 +9,7 @@ public class TikiTakaGame extends Canvas {
 	private JFrame frame;
 	private JTextField txtGioco;
 	/*private BufferedImage sfondo = null;*/
-	GameFieldViewSingle1 battleFieldView = new GameFieldViewSingle1();
+	ControllerGameField controllerGameField= new ControllerGameField();
 	public static Result  panel;
 
 
@@ -64,10 +64,11 @@ public class TikiTakaGame extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-		frame.getContentPane().add(battleFieldView, BorderLayout.CENTER);
+		frame.getContentPane().add(controllerGameField.getViewGame(), BorderLayout.CENTER);
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
 		panel.setTable(0,0);
 		panel.setPreferredSize(new Dimension(1300,120));
+
 
 	}
 	// metodo per il cambiamento

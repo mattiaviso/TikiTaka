@@ -25,10 +25,8 @@ import java.util.concurrent.Executors;
 
 public class GameFieldViewSingle1 extends JPanel implements MouseListener, MouseMotionListener {
 
-
-    private Image field;
-    private static int w;
-    private static int h;
+    private  int w;
+    private  int h;
     private FieldObject valido;
     private int newradius = 0;
     private int xnew, ynew;
@@ -40,22 +38,21 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     private Map<String, BufferedImage> imageCache = new HashMap<>();
 
 
-    GameField fieldModel = new GameFieldSingol();
+    GameField fieldModel ;
+    ControllerGameField controllerGameField ;
 
-    public GameFieldViewSingle1() {
-        Timer timer = new Timer(10, (e) -> {
-            fieldModel.updateGame();
-            repaint();
-        });
-        timer.start();
+    public GameFieldViewSingle1( ControllerGameField controllerGameField) {
+        this.controllerGameField = controllerGameField;
+        fieldModel = controllerGameField.getModelGameField();
+
+
 
         this.setDoubleBuffered(true);
 
         //riceve il focus degli eventi
         this.setFocusable(true);
         this.requestFocusInWindow();
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
+
 
 
         try {
@@ -91,6 +88,121 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         imageLoader.execute();
     }
 
+
+    public  int getW() {
+        return w;
+    }
+
+    public  void setW(int w) {
+        this.w = w;
+    }
+
+    public  int getH() {
+        return h;
+    }
+
+    public  void setH(int h) {
+        this.h = h;
+    }
+
+    public FieldObject getValido() {
+        return valido;
+    }
+
+    public void setValido(FieldObject valido) {
+        this.valido = valido;
+    }
+
+    public int getNewradius() {
+        return newradius;
+    }
+
+    public void setNewradius(int newradius) {
+        this.newradius = newradius;
+    }
+
+    public int getXnew() {
+        return xnew;
+    }
+
+    public void setXnew(int xnew) {
+        this.xnew = xnew;
+    }
+
+    public int getYnew() {
+        return ynew;
+    }
+
+    public void setYnew(int ynew) {
+        this.ynew = ynew;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public BufferedImage getBall() {
+        return ball;
+    }
+
+    public void setBall(BufferedImage ball) {
+        this.ball = ball;
+    }
+
+    public BufferedImage getImgT1() {
+        return imgT1;
+    }
+
+    public void setImgT1(BufferedImage imgT1) {
+        this.imgT1 = imgT1;
+    }
+
+    public BufferedImage getImgT2() {
+        return imgT2;
+    }
+
+    public void setImgT2(BufferedImage imgT2) {
+        this.imgT2 = imgT2;
+    }
+
+
+
+
+    public Map<String, BufferedImage> getImageCache() {
+        return imageCache;
+    }
+
+    public void setImageCache(Map<String, BufferedImage> imageCache) {
+        this.imageCache = imageCache;
+    }
+
+    public GameField getFieldModel() {
+        return fieldModel;
+    }
+
+    public void setFieldModel(GameField fieldModel) {
+        this.fieldModel = fieldModel;
+    }
+
+    public ControllerGameField getControllerGameField() {
+        return controllerGameField;
+    }
+
+    public void setControllerGameField(ControllerGameField controllerGameField) {
+        this.controllerGameField = controllerGameField;
+    }
 
     public BufferedImage loadImage(String filename) {
         if (imageCache.containsKey(filename)) {
@@ -149,23 +261,29 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         for (FieldObject f : fieldModel.getObjectsPiece()) {
             g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }
-
         if (newradius != 0) {
-
             g2.setColor(Color.black);
-            int dy = (int) (ynew - valido.getPosition().getY());
-            int dx = (int) (xnew - valido.getPosition().getX());
-            int xOpposta = (int) valido.getPosition().getX() - dx;
-            int yOpposta = (int) valido.getPosition().getY() - dy;
-
-            distance = (int) (Math.min(Math.sqrt(Math.pow(valido.getPosition().getX() - xOpposta, 2) + Math.pow(valido.getPosition().getY() - yOpposta, 2)), 150));
-            angle = Math.atan2(yOpposta - valido.getPosition().getY(), xOpposta - valido.getPosition().getX());
-            Utility.drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
+            posizioneFreccia(g2);
             g2.dispose();
         }
 
 
     }
+
+    // da modificare
+    public void posizioneFreccia(Graphics2D g2) {
+
+        int dy = (int) (ynew - valido.getPosition().getY());
+        int dx = (int) (xnew - valido.getPosition().getX());
+        int xOpposta = (int) valido.getPosition().getX() - dx;
+        int yOpposta = (int) valido.getPosition().getY() - dy;
+
+        distance = (int) (Math.min(Math.sqrt(Math.pow(valido.getPosition().getX() - xOpposta, 2) + Math.pow(valido.getPosition().getY() - yOpposta, 2)), 150));
+        angle = Math.atan2(yOpposta - valido.getPosition().getY(), xOpposta - valido.getPosition().getX());
+        Utility.drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
+    }
+
+
 
 
     @Override
@@ -176,14 +294,9 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     @Override
     public void mousePressed(MouseEvent e) {
 
-        //prendiamo coordinate x e y di dove è stato premuto il mouse
-        int x = e.getX() - w / 2;
-        int y = -(e.getY() - h / 2);
-        if (fieldModel.allStop) {
-            valido = fieldModel.pedinaSelezionata(x, y);
-        }
 
-        repaint();
+
+
 
     }
 
@@ -191,12 +304,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     public void mouseReleased(MouseEvent e) {
         // il rilascio lo step next
 
-        if (valido != null) {
-            valido.start(distance, angle);
-
-        }
-        BallMovementMonitor ballMovementMonitor = new BallMovementMonitor();
-        ballMovementMonitor.run();
 
     }
 
@@ -213,14 +320,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     @Override
     public void mouseDragged(MouseEvent e) {
 
-        xnew = e.getX() - w / 2;
-        ynew = -(e.getY() - h / 2);
 
-
-        if (valido != null)
-            newradius = Math.min((int) (Math.sqrt(((valido.getPosition().getX() - xnew) * (valido.getPosition().getX() - xnew)) + ((valido.getPosition().getY() - ynew) * (valido.getPosition().getY() - ynew)))), 150);
-
-        repaint();
     }
 
 
@@ -230,98 +330,10 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
 
 
 
-    // ci permette di trovare l'angolo giusto
-    public Computer direzionePieceBall() {
-
-        FieldObject ball = fieldModel.selezionaBall();
-        Computer piecePiuVicina = fieldModel.piecePiuVicina(ball);
-
-        // angolo sara su piu punti della circonferenza cosi da testare quale sara' quello migliore per il tiro
-        piecePiuVicina.settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(ball);
 
 
 
-        return piecePiuVicina;
-    }
 
-
-    public class BallMovementMonitor implements Runnable {
-
-
-        @Override
-        public void run() {
-            fieldModel.setAllStop(false);
-            while (true) {
-                if (!allStop()) {
-
-
-                    repaint();
-                    valido = null;
-                    newradius = 0;
-
-                    break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
-                }
-
-                // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
-                try {
-                    Thread.sleep(10); // Pausa di 100 millisecondi.
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-            fieldModel.cambioTurno();
-            fieldModel.setAllStop(true);
-            repaint();
-            System.out.println("Tutte le palline si sono fermate.");
-
-            startThreadIfT2();
-
-
-
-        }
-
-        public final boolean allStop() {
-            for (FieldObject o : fieldModel.getObjectsPiece()) {
-                if (!o.speedIsZero()) return false;
-            }
-            return true;
-        }
-
-
-    }
-
-    public void startThreadIfT2() {
-        if (fieldModel.getTurno().equalsIgnoreCase("T2")) {
-
-            Runnable task = () -> {
-                // Gestione del computer
-
-                try {
-                    Thread.sleep(2000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Computer pieceComputer = direzionePieceBall();
-                FieldObject ricercaPedina = fieldModel.findPieceByPosition(pieceComputer.getPiece());
-
-                if (ricercaPedina != null) {
-                    System.out.println("diverso da null");
-                    FieldObject valido = ricercaPedina;
-                    System.out.println(pieceComputer.getDistance());
-
-                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
-                    BallMovementMonitor monitor = new BallMovementMonitor();
-                    monitor.run();
-                }
-            };
-
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.submit(task);
-            executor.shutdown();
-        }
-    }
 }
 
 

@@ -10,7 +10,7 @@ import static it.unibs.pajc.Partita.GameField.EPSILON;
 
 public class Computer {
 
-    public static final int NUMPUNTICONSIDERATI = 10;
+    public static final int NUMPUNTICONSIDERATI = 5;
     private FieldObject piece;
     private double distance;
     private double angle;
@@ -67,9 +67,6 @@ public class Computer {
                 yminima= ballAfterCollision.getPosition().getY();
                 setAngle(angoloPunto);
             }
-
-
-
 
         }
     }
