@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimerTask;
 
 
 public class GameFieldViewSingle1 extends JPanel implements MouseListener, MouseMotionListener {
@@ -87,7 +88,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         };
         imageLoader.execute();
     }
-
 
 
     public BufferedImage loadImage(String filename) {
@@ -177,7 +177,7 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         //prendiamo coordinate x e y di dove è stato premuto il mouse
         int x = e.getX() - w / 2;
         int y = -(e.getY() - h / 2);
-        if(fieldModel.allStop) {
+        if (fieldModel.allStop) {
             valido = fieldModel.pedinaSelezionata(x, y);
         }
 
@@ -226,15 +226,20 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
     @Override
     public void mouseMoved(MouseEvent e) {
     }
-    public computerscore(){
-        // farei in un altra classe 
-        // selezionare la pallina adeguata
-        //andare a trovare l'angolo (vedere come ho fatto sposta )
-        // andare a fare start del FileObject
-        //
+
+    // ci permette di trovare l'angolo giusto
+    public Computer direzionePieceBall() {
+
+        FieldObject ball = fieldModel.selezionaBall();
+        Computer piecePiuVicina = fieldModel.piecePiuVicina(ball);
+
+        // angolo sara su piu punti della circonferenza cosi da testare quale sara' quello migliore per il tiro
+        piecePiuVicina.settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(ball);
+
+
+
+        return piecePiuVicina;
     }
-
-
 
 
     public class BallMovementMonitor implements Runnable {
@@ -245,6 +250,8 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             fieldModel.setAllStop(false);
             while (true) {
                 if (!allStop()) {
+
+                    if ()
                     repaint();
                     valido = null;
                     newradius = 0;
@@ -254,11 +261,10 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(100); // Pausa di 100 millisecondi.
+                    Thread.sleep(10000); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
 
 
             }
@@ -266,6 +272,28 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
             fieldModel.setAllStop(true);
             repaint();
             System.out.println("Tutte le palline si sono fermate.");
+
+
+            if (fieldModel.getTurno().equalsIgnoreCase("T2")) {
+
+                // getstione del computer
+                Computer pieceComputer = direzionePieceBall();
+
+                 FieldObject ricercaPedina =  fieldModel.findPieceByPosition(pieceComputer.getPiece());
+
+                if(ricercaPedina!= null){
+                    System.out.println("diverso da null");
+                    valido = ricercaPedina;
+                    System.out.println(pieceComputer.getDistance());
+
+                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+                    BallMovementMonitor monitor = new BallMovementMonitor();
+                    monitor.run();
+                }
+
+
+            }
+
 
         }
 
@@ -279,5 +307,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
 
     }
 }
+
 
 

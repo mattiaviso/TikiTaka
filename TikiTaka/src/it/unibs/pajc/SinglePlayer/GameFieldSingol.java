@@ -32,7 +32,7 @@ public class GameFieldSingol extends GameField {
     @Override
     public FieldObject pedinaSelezionata(double x, double y) {
         for (FieldObject f : getObjectsPiece()) {
-            if (f instanceof Piece)
+            if (f instanceof Piece && getTurno().equalsIgnoreCase("T1"))
                 if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)
                         < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
                     return f;

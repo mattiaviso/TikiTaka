@@ -182,7 +182,7 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         double im1 = 1 / getMassa();
         double im2 = 1 / p2.getMassa();
 
-        // angolo di direzione direzione dopo l'urto
+
         position = position.add(mtd.multiply(im1 / (im1 + im2)));
         p2.position = p2.position.subtract(mtd.multiply(im2 / (im1 + im2)));
 

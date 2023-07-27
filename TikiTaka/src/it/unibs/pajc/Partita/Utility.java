@@ -30,6 +30,19 @@ public class Utility {
     }
 
 
+    public static double calcolaAngolo(FieldObject p1, FieldObject p2) {
+        double dx = p2.getPosition().getX() - p1.getPosition().getX();
+        double dy = p2.getPosition().getY() - p1.getPosition().getY();
+        return Math.atan2(dy, dx);
+    }
+
+    public static double calcolaAngoloConposizione(FieldObject p1, double x , double y) {
+        double dx = x - p1.getPosition().getX();
+        double dy = y - p1.getPosition().getY();
+        return Math.atan2(dy, dx);
+    }
+
+
 
 
 }

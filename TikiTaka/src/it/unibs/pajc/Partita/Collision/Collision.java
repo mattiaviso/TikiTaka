@@ -5,6 +5,8 @@ import it.unibs.pajc.Partita.*;
 import static it.unibs.pajc.Partita.GameField.*;
 
 public class Collision {
+
+
     /**
      * gestioni di tutte le collissioni tra pedine e muri
      *
