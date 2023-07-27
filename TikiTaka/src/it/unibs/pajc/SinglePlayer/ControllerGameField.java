@@ -125,8 +125,6 @@ public class ControllerGameField extends MouseAdapter {
             modelGameField.setAllStop(false);
             while (true) {
                 if (!allStop()) {
-
-
                     viewGame.repaint();
                     viewGame.setValido(null);
                     viewGame.setNewradius(0);
@@ -171,7 +169,7 @@ public class ControllerGameField extends MouseAdapter {
             // Gestione del computer
 
             try {
-                Thread.sleep(2000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
+                Thread.sleep(3000); // Aggiungi un ritardo di 2 secondi (2000 millisecondi)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -184,6 +182,7 @@ public class ControllerGameField extends MouseAdapter {
 
 
                 valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+                
                 BallMovementMonitor monitor = new BallMovementMonitor();
                 monitor.run();
             }

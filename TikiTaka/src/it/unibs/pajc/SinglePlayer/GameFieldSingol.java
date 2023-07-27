@@ -1,5 +1,6 @@
 package it.unibs.pajc.SinglePlayer;
 
+import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
@@ -31,6 +32,7 @@ public class GameFieldSingol extends GameField {
             setScore2( getScore2()+1);
             TikiTakaGame.panel.setScore2(getScore2());
         }
+
     }
 
     @Override
