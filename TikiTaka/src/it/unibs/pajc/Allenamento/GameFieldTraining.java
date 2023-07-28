@@ -179,10 +179,10 @@ public class GameFieldTraining implements GameFieldInterface {
             vita--;
             if(vita ==0){
                 // spostarlo nel controller
-                 int scelta = JOptionPane.showConfirmDialog(null, "hai perso");
+                 int scelta = JOptionPane.showConfirmDialog(null, "hai perso, vuoi giocare ancora ");
                 if (scelta == JOptionPane.YES_OPTION) {
                     vita = 3;
-                    // Aggiungi qui il codice per iniziare una nuova partita o riprovare.
+                   impostaStato(new LivelloState1(this));
                 } else if (scelta == JOptionPane.NO_OPTION) {
                     System.exit(0);
                 }
