@@ -1,9 +1,7 @@
 package it.unibs.pajc.Allenamento.Livelli;
 
-import it.unibs.pajc.Allenamento.ControllerFieldTraining;
 import it.unibs.pajc.Allenamento.GameFieldTraining;
 import it.unibs.pajc.Partita.Ball;
-import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Piece;
 
 public class LivelloState1 implements ILivelli {
@@ -33,7 +31,7 @@ public class LivelloState1 implements ILivelli {
 
     @Override
     public void cambiaLivello() {
-        gioco.impostaStato(new livelloState2(gioco));
+        gioco.impostaStato(new LivelloState2(gioco));
     }
 
 

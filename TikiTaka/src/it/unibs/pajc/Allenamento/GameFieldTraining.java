@@ -2,13 +2,10 @@ package it.unibs.pajc.Allenamento;
 
 import it.unibs.pajc.Allenamento.Livelli.ILivelli;
 import it.unibs.pajc.Allenamento.Livelli.LivelloState1;
-import it.unibs.pajc.Allenamento.Livelli.livelloState2;
 import it.unibs.pajc.Partita.*;
 import it.unibs.pajc.Partita.Collision.Collision;
-import it.unibs.pajc.SinglePlayer.Computer;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 /**
  * Model
@@ -94,6 +91,7 @@ public class GameFieldTraining implements GameFieldInterface {
         // prendo il livello
         if(posizioneInizialeLivelli == null) {
             JOptionPane.showConfirmDialog(null, "hai vinto ");
+            System.exit(0);
         }
         posizioneInizialeLivelli.positionStart();
     }
@@ -118,6 +116,7 @@ public class GameFieldTraining implements GameFieldInterface {
 
     @Override
     public void setScore(int score) {
+        vita ++;
 
 
 
@@ -173,18 +172,6 @@ public class GameFieldTraining implements GameFieldInterface {
                 }
         }
         return null;
-    }
-
-    /**
-     * Metodo che controlla se tutte le palline sono ferme
-     *
-     * @return True se tutte le palline sono ferme
-     */
-    public  boolean allStop() {
-        for (FieldObject o : objectsPiece) {
-            if (!o.speedIsZero()) return false;
-        }
-        return true;
     }
 
 

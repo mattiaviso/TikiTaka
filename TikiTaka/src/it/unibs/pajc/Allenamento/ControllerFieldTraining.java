@@ -63,6 +63,8 @@ public class ControllerFieldTraining extends MouseAdapter {
         //prendiamo coordinate x e y di dove è stato premuto il mouse
         int x = e.getX() - viewGame.getW() / 2;
         int y = -(e.getY() - viewGame.getH() / 2);
+
+        System.out.println("posizione X"+ x + "posizione Y " + y );
         if (modelGameField.allStop) {
             viewGame.setValido(modelGameField.pedinaSelezionata(x, y));
         }
@@ -74,8 +76,7 @@ public class ControllerFieldTraining extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
 
-        // il rilascio lo step next
-        System.out.println("ciao");
+
 
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
@@ -113,6 +114,7 @@ public class ControllerFieldTraining extends MouseAdapter {
 
         @Override
         public void run() {
+
 
             modelGameField.setAllStop(false);
             while (true) {
