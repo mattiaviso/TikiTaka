@@ -106,7 +106,8 @@ public class ControllerGameField extends MouseAdapter {
         }
 
         BallMovementMonitor monitor = new BallMovementMonitor(this);
-        monitor.run();
+        Thread ballMovementThread = new Thread(monitor);
+        ballMovementThread.start();
 
 
     }
@@ -136,26 +137,21 @@ public class ControllerGameField extends MouseAdapter {
         }
 
         @Override
-        public synchronized void run() {
+        public void run() {
 
 
             modelGameField.setAllStop(false);
-            CompletableFuture<Boolean> allStopFuture = CompletableFuture.supplyAsync(() -> allStop());
+
             while (true) {
 
 
-                try {
-                    if (!allStopFuture.get()) {
-                        viewGame.repaint();
-                        viewGame.setValido(null);
-                        viewGame.setNewradius(0);
-                        break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
-                    }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException(e);
+                System.out.println(allStop());
+                if (allStop()) {
+                    break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
                 }
+                viewGame.repaint();
+                viewGame.setValido(null);
+                viewGame.setNewradius(0);
 
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
@@ -180,7 +176,8 @@ public class ControllerGameField extends MouseAdapter {
                 startThreadIfT2(controllerGameField);
 
 
-            } if (modelGameField.getTurno().equalsIgnoreCase("T1")) {
+            }
+            if (modelGameField.getTurno().equalsIgnoreCase("T1")) {
                 System.out.println("sono entrato");
                 viewGame.addMouseListener(controllerGameField);
                 viewGame.addMouseMotionListener(controllerGameField);
@@ -205,7 +202,7 @@ public class ControllerGameField extends MouseAdapter {
             // Gestione del computer
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -224,8 +221,6 @@ public class ControllerGameField extends MouseAdapter {
                 monitor.run();
             }
         };
-
-
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(task);
         executor.shutdown();
