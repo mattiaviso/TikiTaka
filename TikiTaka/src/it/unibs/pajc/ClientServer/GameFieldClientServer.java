@@ -19,14 +19,11 @@ public class GameFieldClientServer extends GameField {
     }
 
 
-    @Override
-    public void setTurnoALternativo(String team) {
-        setTurno(team);
-    }
+
 
     @Override
     public void setTurnoAlternativo(String turno) {
-
+        setTurno(turno);
     }
 
     @Override

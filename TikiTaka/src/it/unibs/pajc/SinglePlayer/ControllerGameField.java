@@ -101,9 +101,11 @@ public class ControllerGameField extends MouseAdapter {
 
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
+            System.out.printf("sono entrato nell'iff");
+
         }
 
-        BallMovementMonitor monitor = new BallMovementMonitor();
+        BallMovementMonitor monitor = new BallMovementMonitor(this);
         monitor.run();
 
 
@@ -127,10 +129,14 @@ public class ControllerGameField extends MouseAdapter {
 
     public class BallMovementMonitor implements Runnable {
 
+        private ControllerGameField controllerGameField;
+
+        public BallMovementMonitor(ControllerGameField controllerGameField) {
+            this.controllerGameField = controllerGameField;
+        }
 
         @Override
         public synchronized void run() {
-
 
 
             modelGameField.setAllStop(false);
@@ -168,8 +174,17 @@ public class ControllerGameField extends MouseAdapter {
             viewGame.repaint();
 
             System.out.println(modelGameField.getTurno());
+            if (modelGameField.getTurno().equalsIgnoreCase("T2")) {
+                viewGame.removeMouseListener(controllerGameField);
+                viewGame.removeMouseMotionListener(controllerGameField);
+                startThreadIfT2(controllerGameField);
 
-            startThreadIfT2();
+
+            } if (modelGameField.getTurno().equalsIgnoreCase("T1")) {
+                System.out.println("sono entrato");
+                viewGame.addMouseListener(controllerGameField);
+                viewGame.addMouseMotionListener(controllerGameField);
+            }
 
 
         }
@@ -184,7 +199,7 @@ public class ControllerGameField extends MouseAdapter {
 
     }
 
-    public void startThreadIfT2() {
+    public void startThreadIfT2(ControllerGameField controllerGameField) {
 
         Runnable task = () -> {
             // Gestione del computer
@@ -194,30 +209,31 @@ public class ControllerGameField extends MouseAdapter {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (modelGameField.getTurno().equalsIgnoreCase("T2")) {
-                Computer pieceComputer = direzionePieceBall();
-                FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
 
-                if (ricercaPedina != null) {
+            Computer pieceComputer = direzionePieceBall();
+            FieldObject ricercaPedina = modelGameField.findPieceByPosition(pieceComputer.getPiece());
 
-                    FieldObject valido = ricercaPedina;
+            if (ricercaPedina != null) {
+
+                FieldObject valido = ricercaPedina;
 
 
-                    valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
+                valido.start((int) pieceComputer.getDistance(), pieceComputer.getAngle());
 
-                    BallMovementMonitor monitor = new BallMovementMonitor();
-                    monitor.run();
-                }
+                BallMovementMonitor monitor = new BallMovementMonitor(controllerGameField);
+                monitor.run();
             }
         };
+
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(task);
         executor.shutdown();
     }
-
-
 }
+
+
+
 
 
 

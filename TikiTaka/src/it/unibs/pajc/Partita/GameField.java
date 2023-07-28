@@ -146,7 +146,7 @@ public abstract class GameField implements GameFieldInterface {
         this.turno = turno;
     }
 
-    public abstract void setTurnoALternativo(String team) ;
+
 
     @Override
     public abstract void setScore(int score);
@@ -162,6 +162,8 @@ public abstract class GameField implements GameFieldInterface {
         }
         return true;
     }
+
+    public abstract void  setTurnoAlternativo(String turno);
 
 
     /**
