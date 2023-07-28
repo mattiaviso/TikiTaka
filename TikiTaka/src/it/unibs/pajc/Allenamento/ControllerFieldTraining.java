@@ -80,8 +80,8 @@ public class ControllerFieldTraining extends MouseAdapter {
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
             BallMovementMonitor monitor = new BallMovementMonitor();
-
-            monitor.run();
+            Thread ballMovementThread = new Thread(monitor);
+            ballMovementThread.start();
 
         }
 
@@ -106,28 +106,38 @@ public class ControllerFieldTraining extends MouseAdapter {
     public class BallMovementMonitor implements Runnable {
 
 
+
+        public BallMovementMonitor() {
+
+        }
+
         @Override
         public void run() {
 
-
             modelGameField.setAllStop(false);
-            while (!allStop()) {
+            while (true) {
+                if (allStop()) {
+                    break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+                }
                 viewGame.repaint();
                 viewGame.setValido(null);
                 viewGame.setNewradius(0);
-                // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(100); // Pausa di 100 millisecondi.
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+
             }
+
+
             modelGameField.setAllStop(true);
             modelGameField.setLifeIfPlayerDosentScore();
             viewGame.repaint();
-
 
         }
 
@@ -143,6 +153,9 @@ public class ControllerFieldTraining extends MouseAdapter {
 
 
 }
+
+
+
 
 
 

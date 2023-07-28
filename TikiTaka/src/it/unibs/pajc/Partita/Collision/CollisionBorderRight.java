@@ -20,7 +20,7 @@ public class CollisionBorderRight implements StrategyCollision {
             if (object.getPosition().getX() - object.getRadius() > MAX_X) {
                 gameFieldInterface.positionStart();
                 gameFieldInterface.setScore(1);
-                gameFieldInterface.setTurnoAlternativo("T1");
+                gameFieldInterface.setTurnoAlternativo("T2");
             }
         } else {
 

@@ -22,7 +22,7 @@ public class CollisionBorderleft implements StrategyCollision {
 
                 gameFieldInterface.positionStart();
                 gameFieldInterface.setScore(2);
-                gameFieldInterface.setTurnoAlternativo("T2");
+                gameFieldInterface.setTurnoAlternativo("T1");
 
             }
         } else {

@@ -179,10 +179,10 @@ public class GameFieldTraining implements GameFieldInterface {
 
 
     public void setLifeIfPlayerDosentScore(){
-
             vita--;
             System.out.println(vita);
             posizioneInizialeLivelli.positionStart();
+
 
     }
 

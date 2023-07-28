@@ -96,8 +96,7 @@ public class ControllerGameField extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
 
 
-        // il rilascio lo step next
-        System.out.println("ciao");
+
 
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
@@ -143,9 +142,6 @@ public class ControllerGameField extends MouseAdapter {
             modelGameField.setAllStop(false);
 
             while (true) {
-
-
-                System.out.println(allStop());
                 if (allStop()) {
                     break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
                 }
@@ -156,7 +152,7 @@ public class ControllerGameField extends MouseAdapter {
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(10); // Pausa di 100 millisecondi.
+                    Thread.sleep(100); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -178,7 +174,6 @@ public class ControllerGameField extends MouseAdapter {
 
             }
             if (modelGameField.getTurno().equalsIgnoreCase("T1")) {
-                System.out.println("sono entrato");
                 viewGame.addMouseListener(controllerGameField);
                 viewGame.addMouseMotionListener(controllerGameField);
             }
