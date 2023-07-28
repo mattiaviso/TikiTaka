@@ -21,12 +21,11 @@ public class GameFieldTraining implements GameFieldInterface {
 
     private FieldObject[] objectsPiece;
     private String turno;
-    private ILivelli posizioneInizialeLivelli ;
+    private ILivelli posizioneInizialeLivelli;
 
     static public boolean collision = false;
     public boolean allStop = true;
     public int vita;
-
 
 
     public boolean isAllStop() {
@@ -79,18 +78,15 @@ public class GameFieldTraining implements GameFieldInterface {
     }
 
 
-
-
-
     /**
      * Metodo che setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
      */
     @Override
-    public  void positionStart() {
+    public void positionStart() {
         posizioneInizialeLivelli.cambiaLivello();
         // prendo il livello
-        if(posizioneInizialeLivelli == null) {
-            JOptionPane.showConfirmDialog(null, "hai vinto ");
+        if (posizioneInizialeLivelli == null) {
+            JOptionPane.showMessageDialog(null, "hai vinto ");
             System.exit(0);
         }
         posizioneInizialeLivelli.positionStart();
@@ -99,6 +95,7 @@ public class GameFieldTraining implements GameFieldInterface {
     public void impostaStato(ILivelli nuovoStato) {
         posizioneInizialeLivelli = nuovoStato;
     }
+
     public void setCollision() {
         this.collision = false;
     }
@@ -113,15 +110,12 @@ public class GameFieldTraining implements GameFieldInterface {
     }
 
 
-
     @Override
     public void setScore(int score) {
-        vita ++;
-
+        vita++;
 
 
     }
-
 
 
     public void setTurnoAlternativo(String turno) {
@@ -133,7 +127,7 @@ public class GameFieldTraining implements GameFieldInterface {
      * Metodo che se invocato manda avanti di un esecuzione il gioco, si occupa dello spostamento e dei controlli vari
      * Come se fosse lo StepNext
      */
-    public  void updateGame() {
+    public void updateGame() {
 
         for (int i = 0; i < objectsPiece.length; i++) {
             Vector2d velocity = objectsPiece[i].getVelocita();
@@ -165,7 +159,7 @@ public class GameFieldTraining implements GameFieldInterface {
      */
     public FieldObject pedinaSelezionata(double x, double y) {
         for (FieldObject f : getObjectsPiece()) {
-            if (f instanceof Piece )
+            if (f instanceof Piece)
                 if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)
                         < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
                     return f;
@@ -175,35 +169,15 @@ public class GameFieldTraining implements GameFieldInterface {
     }
 
 
-    public void setLifeIfPlayerDosentScore(){
-            vita--;
-            if(vita ==0){
-                // spostarlo nel controller
-                 int scelta = JOptionPane.showConfirmDialog(null, "hai perso, vuoi giocare ancora ");
-                if (scelta == JOptionPane.YES_OPTION) {
-                    vita = 3;
-                   impostaStato(new LivelloState1(this));
-                } else if (scelta == JOptionPane.NO_OPTION) {
-                    System.exit(0);
-                }
-            }
-            System.out.println(vita);
-            posizioneInizialeLivelli.positionStart();
-
+    public boolean setLifeIfPlayerDosentScore() {
+        vita--;
+        if (vita == 0) {
+            return false;
+        }
+        posizioneInizialeLivelli.positionStart();
+        return true;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

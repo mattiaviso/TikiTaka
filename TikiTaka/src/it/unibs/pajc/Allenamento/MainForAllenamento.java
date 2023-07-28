@@ -14,7 +14,7 @@ public class MainForAllenamento extends Canvas {
 	private JTextField txtGioco;
 	/*private BufferedImage sfondo = null;*/
 	ControllerFieldTraining controllerGameField;
-	public static Result panel;
+	public static ResultAllenamento panel;
 
 
 
@@ -23,10 +23,9 @@ public class MainForAllenamento extends Canvas {
 	 */
 	public static void main(String[] args) {
 
-		String team1 = JOptionPane.showInputDialog("Dammi il nome del team1");
-		String team2 = JOptionPane.showInputDialog("Dammi il nome del team2");
 
-		panel = new Result(team1,team2);
+
+		panel = new ResultAllenamento();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -60,7 +59,6 @@ public class MainForAllenamento extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(controllerGameField.getViewGame(), BorderLayout.CENTER);
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
-		panel.setTable(0,0);
 		panel.setPreferredSize(new Dimension(1300,120));
 
 

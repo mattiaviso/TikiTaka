@@ -2,6 +2,7 @@
 
 package it.unibs.pajc.Allenamento;
 
+import it.unibs.pajc.Allenamento.Livelli.LivelloState1;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.SinglePlayer.Computer;
@@ -64,7 +65,7 @@ public class ControllerFieldTraining extends MouseAdapter {
         int x = e.getX() - viewGame.getW() / 2;
         int y = -(e.getY() - viewGame.getH() / 2);
 
-        System.out.println("posizione X"+ x + "posizione Y " + y );
+        System.out.println("posizione X" + x + "posizione Y " + y);
         if (modelGameField.allStop) {
             viewGame.setValido(modelGameField.pedinaSelezionata(x, y));
         }
@@ -75,7 +76,6 @@ public class ControllerFieldTraining extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
 
 
         if (viewGame.getValido() != null) {
@@ -105,7 +105,6 @@ public class ControllerFieldTraining extends MouseAdapter {
 
 
     public class BallMovementMonitor implements Runnable {
-
 
 
         public BallMovementMonitor() {
@@ -138,8 +137,13 @@ public class ControllerFieldTraining extends MouseAdapter {
 
 
             modelGameField.setAllStop(true);
-            modelGameField.setLifeIfPlayerDosentScore();
-            viewGame.repaint();
+            boolean continuoPartita = modelGameField.setLifeIfPlayerDosentScore();
+            if (!continuoPartita) {
+                JOptionPane.showMessageDialog(null, "hai perso");
+
+                System.exit(0);
+                viewGame.repaint();
+            }
 
         }
 
