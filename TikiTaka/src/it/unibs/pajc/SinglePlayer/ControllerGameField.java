@@ -26,7 +26,7 @@ public class ControllerGameField extends MouseAdapter {
 
         modelGameField = new GameFieldSingol();
         this.viewGame = new GameFieldViewSingle1(this);
-        Timer timer = new Timer(15, (e) -> {
+        Timer timer = new Timer(20, (e) -> {
             modelGameField.updateGame();
             viewGame.repaint();
             if (modelGameField.getScore1() == 3) {
