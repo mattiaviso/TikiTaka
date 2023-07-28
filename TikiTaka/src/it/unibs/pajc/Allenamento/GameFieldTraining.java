@@ -31,6 +31,7 @@ public class GameFieldTraining implements GameFieldInterface {
     public int vita;
 
 
+
     public boolean isAllStop() {
         return allStop;
     }
@@ -70,8 +71,14 @@ public class GameFieldTraining implements GameFieldInterface {
     public GameFieldTraining() {
         this.turno = "T1";
         vita = 3;
-        posizioneInizialeLivelli = new LivelloState1();
-        objectsPiece = Arrays.copyOf(posizioneInizialeLivelli.getFieldObject(), posizioneInizialeLivelli.getFieldObject().length);
+        objectsPiece = new FieldObject[7];
+        posizioneInizialeLivelli = new LivelloState1(this);
+        posizioneInizialeLivelli.positionStart();
+
+    }
+
+    public void setObj(int i, FieldObject object) {
+        objectsPiece[i] = object;
     }
 
 
@@ -83,14 +90,17 @@ public class GameFieldTraining implements GameFieldInterface {
      */
     @Override
     public  void positionStart() {
-        posizioneInizialeLivelli=posizioneInizialeLivelli.cambiaLivello();
+        posizioneInizialeLivelli.cambiaLivello();
         // prendo il livello
-        if(posizioneInizialeLivelli == null){
-            JOptionPane.showConfirmDialog(null , "hai vinto ");
+        if(posizioneInizialeLivelli == null) {
+            JOptionPane.showConfirmDialog(null, "hai vinto ");
         }
         posizioneInizialeLivelli.positionStart();
     }
 
+    public void impostaStato(ILivelli nuovoStato) {
+        posizioneInizialeLivelli = nuovoStato;
+    }
     public void setCollision() {
         this.collision = false;
     }
@@ -180,6 +190,16 @@ public class GameFieldTraining implements GameFieldInterface {
 
     public void setLifeIfPlayerDosentScore(){
             vita--;
+            if(vita ==0){
+                // spostarlo nel controller
+                 int scelta = JOptionPane.showConfirmDialog(null, "hai perso");
+                if (scelta == JOptionPane.YES_OPTION) {
+                    vita = 3;
+                    // Aggiungi qui il codice per iniziare una nuova partita o riprovare.
+                } else if (scelta == JOptionPane.NO_OPTION) {
+                    System.exit(0);
+                }
+            }
             System.out.println(vita);
             posizioneInizialeLivelli.positionStart();
 

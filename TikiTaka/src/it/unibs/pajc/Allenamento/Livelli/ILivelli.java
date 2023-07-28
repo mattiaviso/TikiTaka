@@ -7,7 +7,7 @@ public interface ILivelli {
     int GRANDEZZA_ARRAY = 7;
     public void positionStart();
 
-    public FieldObject[] getFieldObject();
 
-    public ILivelli cambiaLivello();
+
+    public void cambiaLivello();
 }
