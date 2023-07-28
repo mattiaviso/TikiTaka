@@ -101,7 +101,7 @@ public class ControllerGameField extends MouseAdapter {
 
         if (viewGame.getValido() != null) {
             viewGame.getValido().start(viewGame.getDistance(), viewGame.getAngle());
-            System.out.printf("sono entrato nell'iff");
+
 
         }
 
