@@ -1,4 +1,4 @@
-package it.unibs.pajc.SinglePlayer;
+package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

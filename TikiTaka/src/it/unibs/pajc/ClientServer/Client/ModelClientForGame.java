@@ -1,4 +1,4 @@
-package it.unibs.pajc.Client;
+package it.unibs.pajc.ClientServer.Client;
 
 import it.unibs.pajc.Partita.FieldObject;
 

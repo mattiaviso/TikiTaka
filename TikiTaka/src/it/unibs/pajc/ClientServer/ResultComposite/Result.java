@@ -1,6 +1,6 @@
 package it.unibs.pajc.ClientServer.ResultComposite;
 
-import it.unibs.pajc.Client.ModelClientForComunication;
+import it.unibs.pajc.ClientServer.Client.ModelClientForComunication;
 
 import javax.swing.*;
 import java.awt.*;

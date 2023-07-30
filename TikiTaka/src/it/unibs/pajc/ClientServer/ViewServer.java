@@ -1,10 +1,5 @@
 package it.unibs.pajc.ClientServer;
 
-import it.unibs.pajc.Server;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -12,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
-import javax.swing.JTextField;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;

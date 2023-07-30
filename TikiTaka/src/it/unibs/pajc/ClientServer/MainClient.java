@@ -1,4 +1,4 @@
-package it.unibs.pajc;
+package it.unibs.pajc.ClientServer;
 
 import it.unibs.pajc.ClientServer.HomePage.ControllerHomePage;
 import it.unibs.pajc.ClientServer.HomePage.ModelHomePage;

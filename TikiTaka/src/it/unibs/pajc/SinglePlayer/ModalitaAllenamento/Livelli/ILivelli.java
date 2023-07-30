@@ -1,6 +1,4 @@
-package it.unibs.pajc.Allenamento.Livelli;
-
-import it.unibs.pajc.Partita.FieldObject;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli;
 
 public interface ILivelli {
 

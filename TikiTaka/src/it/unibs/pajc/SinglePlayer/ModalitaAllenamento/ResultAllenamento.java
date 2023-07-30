@@ -1,4 +1,4 @@
-package it.unibs.pajc.Allenamento;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,15 +13,6 @@ public class ResultAllenamento extends JPanel  {
     private  int scoreMancanti;
 
     private  BufferedImage Tabel;
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,10 +1,13 @@
-package it.unibs.pajc.SinglePlayer;
+package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 
-import it.unibs.pajc.Partita.Collision.Collision;
 import it.unibs.pajc.Partita.FieldObject;
-import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Utility;
 import it.unibs.pajc.Partita.Vector2d;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ComputerBallMovimentMonitor;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.GeneralBallMovementMonitor;
+
+import java.awt.event.MouseEvent;
 
 import static it.unibs.pajc.Partita.GameField.EPSILON;
 
@@ -108,6 +111,7 @@ public class Computer {
         return ball;
 
     }
+
 
 
 }

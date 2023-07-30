@@ -1,7 +1,7 @@
-package it.unibs.pajc.Allenamento;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
-import it.unibs.pajc.Allenamento.Livelli.ILivelli;
-import it.unibs.pajc.Allenamento.Livelli.LivelloState1;
+import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.ILivelli;
+import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.LivelloState1;
 import it.unibs.pajc.Partita.*;
 import it.unibs.pajc.Partita.Collision.Collision;
 
@@ -10,14 +10,9 @@ import javax.swing.*;
 /**
  * Model
  */
-public class GameFieldTraining implements GameFieldInterface {
+public class GameFieldTraining extends GameField implements GameFieldInterface {
 
 
-    public static final float EPSILON = 0.09f;
-
-
-    private FieldObject[] objectsPiece;
-    private String turno;
     private ILivelli posizioneInizialeLivelli;
 
     static public boolean collision = false;
@@ -34,15 +29,6 @@ public class GameFieldTraining implements GameFieldInterface {
     }
 
 
-
-    public String getTurno() {
-        return turno;
-    }
-
-    public FieldObject[] getObjectsPiece() {
-        return objectsPiece;
-    }
-
     public static boolean isCollision() {
         return collision;
     }
@@ -56,16 +42,12 @@ public class GameFieldTraining implements GameFieldInterface {
      * e le relative componenti grafiche
      */
     public GameFieldTraining() {
-        this.turno = "T1";
+        setTurno("T1");
         vita = 3;
-        objectsPiece = new FieldObject[7];
+        setObjectsPiece(new FieldObject[7]);
         posizioneInizialeLivelli = new LivelloState1(this);
         posizioneInizialeLivelli.positionStart();
 
-    }
-
-    public void setObj(int i, FieldObject object) {
-        objectsPiece[i] = object;
     }
 
 
@@ -115,33 +97,6 @@ public class GameFieldTraining implements GameFieldInterface {
 
 
     /**
-     * Metodo che se invocato manda avanti di un esecuzione il gioco, si occupa dello spostamento e dei controlli vari
-     * Come se fosse lo StepNext
-     */
-    public void updateGame() {
-
-        for (int i = 0; i < objectsPiece.length; i++) {
-            Vector2d velocity = objectsPiece[i].getVelocita();
-            Vector2d position = objectsPiece[i].getPosition();
-
-            velocity.setY(velocity.getY());
-            position.setX(position.getX() + (velocity.getX() * 1));
-            position.setY(position.getY() + (velocity.getY() * 1));
-
-            if (Math.abs(velocity.getX()) < EPSILON) {
-                velocity.setX(0);
-            }
-            if (Math.abs(velocity.getY()) < EPSILON) {
-                velocity.setY(0);
-            }
-        }
-
-        Collision gestioneCollisioni = new Collision();
-        gestioneCollisioni.checkCollision(objectsPiece, this);
-    }
-
-
-    /**
      * Metodo che ritorna la pedina premuta  date le coordinate x e y
      *
      * @param x Double x
@@ -157,6 +112,11 @@ public class GameFieldTraining implements GameFieldInterface {
                 }
         }
         return null;
+    }
+
+    @Override
+    public void checkVincitore() {
+
     }
 
 

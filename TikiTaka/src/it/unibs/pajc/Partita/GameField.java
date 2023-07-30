@@ -1,9 +1,7 @@
 package it.unibs.pajc.Partita;
 
 import it.unibs.pajc.Partita.Collision.Collision;
-import it.unibs.pajc.SinglePlayer.Computer;
-
-import java.lang.reflect.Field;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 /**
  * Model
@@ -68,17 +66,7 @@ public abstract class GameField implements GameFieldInterface {
         GameField.collision = collision;
     }
 
-    /**
-     * Metodo costruttore che inizializza gli 11 oggetti del gioco
-     * e le relative componenti grafiche
-     */
-    public GameField() {
-        this.score1 = 0;
-        this.score2 = 0;
-        this.turno = "T1";
-        this.objectsPiece = new FieldObject[11];
-        positionStart();
-    }
+
 
     public void setObj(int i, FieldObject object) {
         objectsPiece[i] = object;
@@ -89,19 +77,7 @@ public abstract class GameField implements GameFieldInterface {
      * Metodo che setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
      */
     @Override
-    public final void positionStart() {
-        setObj(0, new Piece(40, 500, 0, "Pedina1.png", "T1"));
-        setObj(1, new Piece(40, 170, 70, "Pedina1.png", "T1"));
-        setObj(2, new Piece(40, 170, -70, "Pedina1.png", "T1"));
-        setObj(3, new Piece(40, 350, 180, "Pedina1.png", "T1"));
-        setObj(4, new Piece(40, 350, -180, "Pedina1.png", "T1"));
-        setObj(5, new Ball(18, 0, 0));
-        setObj(6, new Piece(40, -520, 0, "Pedina2.png", "T2"));
-        setObj(7, new Piece(40, -170, 70, "Pedina2.png", "T2"));
-        setObj(8, new Piece(40, -170, -70, "Pedina2.png", "T2"));
-        setObj(9, new Piece(40, -350, 180, "Pedina2.png", "T2"));
-        setObj(10, new Piece(40, -350, -180, "Pedina2.png", "T2"));
-    }
+    public abstract void positionStart() ;
 
     /**
      * Creazione stringa con posizioni di tutte le pedine, che verra in seguito invitato al server

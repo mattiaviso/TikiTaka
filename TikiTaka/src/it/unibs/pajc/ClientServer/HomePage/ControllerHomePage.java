@@ -1,6 +1,6 @@
 package it.unibs.pajc.ClientServer.HomePage;
 
-import it.unibs.pajc.Client.ControllerClient;
+import it.unibs.pajc.ClientServer.Client.ControllerClient;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

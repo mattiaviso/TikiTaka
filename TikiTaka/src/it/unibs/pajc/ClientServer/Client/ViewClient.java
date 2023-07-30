@@ -1,4 +1,4 @@
-package it.unibs.pajc.Client;
+package it.unibs.pajc.ClientServer.Client;
 
 import it.unibs.pajc.ClientServer.ResultComposite.Result;
 import it.unibs.pajc.Partita.Ball;
@@ -12,10 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**

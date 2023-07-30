@@ -1,9 +1,9 @@
 package it.unibs.pajc.SinglePlayer;
 
-import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Utility;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,19 +11,15 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
-public class GameFieldViewSingle1 extends JPanel implements MouseListener, MouseMotionListener {
+public class ViewGameField extends JPanel implements MouseListener, MouseMotionListener {
 
     private  int w;
     private  int h;
@@ -39,12 +35,11 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
 
 
     GameField fieldModel ;
-    ControllerGameField controllerGameField ;
+    ControllerGeneral controllerGameField ;
 
-    public GameFieldViewSingle1( ControllerGameField controllerGameField) {
+    public ViewGameField(ControllerGeneral controllerGameField) {
         this.controllerGameField = controllerGameField;
         fieldModel = controllerGameField.getModelGameField();
-
 
 
         this.setDoubleBuffered(true);
@@ -93,17 +88,12 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         return w;
     }
 
-    public  void setW(int w) {
-        this.w = w;
-    }
+
 
     public  int getH() {
         return h;
     }
 
-    public  void setH(int h) {
-        this.h = h;
-    }
 
     public FieldObject getValido() {
         return valido;
@@ -113,9 +103,6 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         this.valido = valido;
     }
 
-    public int getNewradius() {
-        return newradius;
-    }
 
     public void setNewradius(int newradius) {
         this.newradius = newradius;
@@ -141,17 +128,13 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         return distance;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
+
 
     public double getAngle() {
         return angle;
     }
 
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
+
 
     public BufferedImage getBall() {
         return ball;
@@ -161,48 +144,9 @@ public class GameFieldViewSingle1 extends JPanel implements MouseListener, Mouse
         this.ball = ball;
     }
 
-    public BufferedImage getImgT1() {
-        return imgT1;
-    }
-
-    public void setImgT1(BufferedImage imgT1) {
-        this.imgT1 = imgT1;
-    }
-
-    public BufferedImage getImgT2() {
-        return imgT2;
-    }
-
-    public void setImgT2(BufferedImage imgT2) {
-        this.imgT2 = imgT2;
-    }
 
 
 
-
-    public Map<String, BufferedImage> getImageCache() {
-        return imageCache;
-    }
-
-    public void setImageCache(Map<String, BufferedImage> imageCache) {
-        this.imageCache = imageCache;
-    }
-
-    public GameField getFieldModel() {
-        return fieldModel;
-    }
-
-    public void setFieldModel(GameField fieldModel) {
-        this.fieldModel = fieldModel;
-    }
-
-    public ControllerGameField getControllerGameField() {
-        return controllerGameField;
-    }
-
-    public void setControllerGameField(ControllerGameField controllerGameField) {
-        this.controllerGameField = controllerGameField;
-    }
 
     public BufferedImage loadImage(String filename) {
         if (imageCache.containsKey(filename)) {

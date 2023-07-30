@@ -1,6 +1,7 @@
-package it.unibs.pajc.SinglePlayer;
+package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 
 import it.unibs.pajc.ClientServer.SoundClip;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class TikiTakaGame extends Canvas {
 	private JFrame frame;
 	private JTextField txtGioco;
 	/*private BufferedImage sfondo = null;*/
-	ControllerGameField controllerGameField= new ControllerGameField();
+	ControllerGeneral controllerGameField= new ControllerGameField();
 	public static Result  panel;
 
 

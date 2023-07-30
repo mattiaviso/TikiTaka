@@ -1,8 +1,6 @@
-package it.unibs.pajc.Allenamento;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
 import it.unibs.pajc.ClientServer.SoundClip;
-import it.unibs.pajc.SinglePlayer.ControllerGameField;
-import it.unibs.pajc.SinglePlayer.Result;
 
 import javax.swing.*;
 import java.awt.*;

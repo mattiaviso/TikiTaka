@@ -1,9 +1,6 @@
-package it.unibs.pajc;
+package it.unibs.pajc.ClientServer;
 
 
-import it.unibs.pajc.ClientServer.GameFieldClientServer;
-import it.unibs.pajc.ClientServer.Message;
-import it.unibs.pajc.ClientServer.ViewServer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 
