@@ -17,9 +17,9 @@ public class Result extends JPanel  {
     private  BufferedImage Tabel;
 
 
-    public Result(String n1, String n2){
-        this.team1 = n1;
-        this.team2 = n2;
+    public Result(String n1 ){
+        this.team1 = "computer";
+        this.team2 = n1;
     }
 
     public void setTable(int t1, int t2){

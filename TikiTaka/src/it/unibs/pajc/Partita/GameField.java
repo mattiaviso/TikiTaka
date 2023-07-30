@@ -16,7 +16,7 @@ public abstract class GameField implements GameFieldInterface {
     public static final int MAX_Y = 312;
     public static final float EPSILON = 0.09f;
 
-    private int score1 ;
+    private int score1;
     private int score2;
     private FieldObject[] objectsPiece;
     private String turno;
@@ -147,7 +147,6 @@ public abstract class GameField implements GameFieldInterface {
     }
 
 
-
     @Override
     public abstract void setScore(int score);
 
@@ -163,7 +162,7 @@ public abstract class GameField implements GameFieldInterface {
         return true;
     }
 
-    public abstract void  setTurnoAlternativo(String turno);
+    public abstract void setTurnoAlternativo(String turno);
 
 
     /**
@@ -232,16 +231,31 @@ public abstract class GameField implements GameFieldInterface {
                 if (o.getTeam().equalsIgnoreCase("T2")) {
                     double distanza = Math.sqrt(Math.pow(o.getPosition().getX() - ball.getPosition().getX(), 2)
                             + Math.pow(o.getPosition().getY() - ball.getPosition().getY(), 2));
-                    if (distanza < distanzaMinima) {
+                    if (distanza < distanzaMinima && o.getPosition().getX() - ball.getPosition().getX() < 0) {
                         distanzaMinima = distanza;
                         piece = o;
+                    }
+                }
+            }
+        }
+        if (piece == null) {
+            for (FieldObject c : objectsPiece) {
+                if (c instanceof Piece) {
+                    if (c.getTeam().equalsIgnoreCase("T2")) {
+                        double distanza = Math.sqrt(Math.pow(c.getPosition().getX() - ball.getPosition().getX(), 2)
+                                + Math.pow(c.getPosition().getY() - ball.getPosition().getY(), 2));
+                        if (distanza < distanzaMinima) {
+                            distanzaMinima = distanza;
+                            piece = c;
+                        }
                     }
                 }
             }
 
 
         }
-        return new Computer(piece, distanzaMinima);
+            return new Computer(piece, distanzaMinima);
+
     }
 
 
@@ -253,8 +267,6 @@ public abstract class GameField implements GameFieldInterface {
         }
         return null; // Restituisci null se la pedina non è stata trovata
     }
-
-
 
 
 }

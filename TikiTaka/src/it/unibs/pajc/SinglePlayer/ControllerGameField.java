@@ -4,16 +4,12 @@ package it.unibs.pajc.SinglePlayer;
 
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
-import it.unibs.pajc.Partita.Utility;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ControllerGameField extends MouseAdapter {
@@ -23,20 +19,23 @@ public class ControllerGameField extends MouseAdapter {
 
 
     public ControllerGameField() {
+         
+
 
         modelGameField = new GameFieldSingol();
         this.viewGame = new GameFieldViewSingle1(this);
-        Timer timer = new Timer(20, (e) -> {
+        Timer timer = new Timer(15, (e) -> {
             modelGameField.updateGame();
             viewGame.repaint();
             if (modelGameField.getScore1() == 3) {
-                JOptionPane.showConfirmDialog(null, "vintoGiocatore1");
+                 JOptionPane.showConfirmDialog(null, "vintoGiocatore1");
                 modelGameField.checkVincitore();
             }
             if (modelGameField.getScore2() == 3) {
-                JOptionPane.showConfirmDialog(null, "vintoGiocatore2");
+                 JOptionPane.showConfirmDialog(null, "vintoGiocatore2");
                 modelGameField.checkVincitore();
             }
+
         });
         timer.start();
 
@@ -152,7 +151,7 @@ public class ControllerGameField extends MouseAdapter {
 
                 // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
                 try {
-                    Thread.sleep(100); // Pausa di 100 millisecondi.
+                    Thread.sleep(300); // Pausa di 100 millisecondi.
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -197,7 +196,7 @@ public class ControllerGameField extends MouseAdapter {
             // Gestione del computer
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

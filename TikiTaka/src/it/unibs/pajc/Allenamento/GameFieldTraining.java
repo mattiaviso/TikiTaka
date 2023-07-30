@@ -12,10 +12,7 @@ import javax.swing.*;
  */
 public class GameFieldTraining implements GameFieldInterface {
 
-    public static final int MAX_X = 566;
-    public static final int MIN_X = -566;
-    public static final int MIN_Y = -302;
-    public static final int MAX_Y = 312;
+
     public static final float EPSILON = 0.09f;
 
 
@@ -36,13 +33,7 @@ public class GameFieldTraining implements GameFieldInterface {
         this.allStop = allStop;
     }
 
-    public int getVita() {
-        return vita;
-    }
 
-    public void setVita(int vita) {
-        this.vita = vita;
-    }
 
     public String getTurno() {
         return turno;
