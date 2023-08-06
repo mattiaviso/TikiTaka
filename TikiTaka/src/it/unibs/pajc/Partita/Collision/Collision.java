@@ -21,38 +21,44 @@ public class Collision {
      * @param gameFieldInterface Interfaccia del campo di gioco per gestire le collisioni.
      */
     public void checkCollision(FieldObject[] objectsPiece, GameFieldInterface gameFieldInterface) {
+        // Ordina gli oggetti in base alla coordinata X (potresti voler usare un algoritmo di ordinamento più efficiente)
         insertionSort(objectsPiece);
-
 
         // Controllo collisioni con bordi del campo
         for (int i = 0; i < objectsPiece.length; i++) {
             borderCollision(objectsPiece[i], gameFieldInterface);
 
+            // Applica attrito agli oggetti
             objectsPiece[i].friction(0.02);
 
-            // Controllo collisione pedine contro pedina
+            // Controllo collisione tra oggetti circolari
             for (int j = i + 1; j < objectsPiece.length; j++) {
+                // Calcola la distanza tra i centri delle circonferenze
+                double dx = objectsPiece[i].getPosition().getX() - objectsPiece[j].getPosition().getX();
+                double dy = objectsPiece[i].getPosition().getY() - objectsPiece[j].getPosition().getY();
+                double distanceBetweenCenters = Math.sqrt(dx * dx + dy * dy);
 
-                if ((objectsPiece[i].getPosition().getX() + objectsPiece[i].getRadius()) <= (objectsPiece[j].getPosition().getX() - objectsPiece[j].getRadius()))
-                    break;
+                // Calcola la somma dei raggi delle circonferenze
+                double sumOfRadii = objectsPiece[i].getRadius() + objectsPiece[j].getRadius();
 
-                if ((objectsPiece[i].getPosition().getY() + objectsPiece[i].getRadius()) <= (objectsPiece[j].getPosition().getY() - objectsPiece[j].getRadius()) ||
-                        (objectsPiece[j].getPosition().getY() + objectsPiece[j].getRadius()) <= (objectsPiece[i].getPosition().getY() - objectsPiece[i].getRadius()))
-                    continue;
+                // Verifica la collisione solo se le circonferenze si sovrappongono
+                if (distanceBetweenCenters < sumOfRadii) {
+                    // Risolvi la collisione tra oggetti circolari
+                    objectsPiece[i].resolveCollision(objectsPiece[j]);
 
-                objectsPiece[i].resolveCollision(objectsPiece[j]);
-                objectsPiece[i].friction(0.035);
-                objectsPiece[j].friction(0.015);
+                    // Applica attrito diverso agli oggetti coinvolti
+                    objectsPiece[i].friction(0.035);
+                    objectsPiece[j].friction(0.015);
 
-
-
+                        SoundClip collision = new SoundClip("collision");
+                        collision.play();
 
 
 
                 }
             }
-
         }
+    }
 
                 /*if (distance <= objectsPiece[i].getRadius() + objectsPiece[j].getRadius() - 10 ) {
                     SoundClip collision = new SoundClip("collision");
@@ -74,11 +80,15 @@ public class Collision {
             if (x - radius < MIN_X) {
                 StrategyCollision collisionSx = new CollisionBorderleft(gameFieldInterface);
                 collisionSx.collisionBoard(object);
+                SoundClip collision = new SoundClip("collision");
+                collision.play();
 
 
             } else if (x + radius > MAX_X) {
                 StrategyCollision collisionDx = new CollisionBorderRight(gameFieldInterface);
                 collisionDx.collisionBoard(object);
+                SoundClip collision = new SoundClip("collision");
+                collision.play();
 
 
             }
@@ -87,12 +97,16 @@ public class Collision {
                 gameFieldInterface.setCollisionForBouard(true);
                 StrategyCollision collisionDown = new collisionBorederDown();
                 collisionDown.collisionBoard(object);
+                SoundClip collision = new SoundClip("collision");
+                collision.play();
 
 
             } else if (y + radius > MAX_Y) {
                 gameFieldInterface.setCollisionForBouard(true);
                 StrategyCollision collisionUp = new CollisionBorderUp();
                 collisionUp.collisionBoard(object);
+                SoundClip collision = new SoundClip("collision");
+                collision.play();
 
 
             }
