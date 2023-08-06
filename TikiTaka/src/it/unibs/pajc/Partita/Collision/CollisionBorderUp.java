@@ -5,6 +5,10 @@ import it.unibs.pajc.Partita.Vector2d;
 
 import static it.unibs.pajc.Partita.GameField.MAX_Y;
 
+
+/**
+ * La classe CollisionBorderleft implementa l'interfaccia StrategyCollision ed è responsabile di gestire le collisioni di un oggetto (pedina) con il bordo up del campo di gioco.
+ */
 public class CollisionBorderUp implements StrategyCollision {
 
     @Override

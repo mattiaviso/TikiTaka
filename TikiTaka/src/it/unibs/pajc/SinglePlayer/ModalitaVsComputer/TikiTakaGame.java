@@ -16,14 +16,6 @@ public class TikiTakaGame extends Canvas {
 	public static Result  panel;
 
 
-/**
- * Suono al gol
- * Quando si vince? e immagine
- * Server Client
- * Musica in gioco
- * https://medium.com/@rohitramkumar308/a-simple-client-server-game-26ceb7be673c    link per il client server 
- *
- */
 
 
 	 

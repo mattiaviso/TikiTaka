@@ -21,7 +21,11 @@ public class Result extends JPanel  {
         this.team1 = "computer";
         this.team2 = n1;
     }
-
+/**
+     * Imposta i punteggi dei giocatori e richiama repaint() per ridisegnare il pannello con i nuovi punteggi.
+     * @param t1 Il punteggio del giocatore 1.
+     * @param t2 Il punteggio del giocatore 2.
+     */
     public void setTable(int t1, int t2){
         //settare variabili
         this.score1 = t1;
@@ -29,9 +33,7 @@ public class Result extends JPanel  {
         repaint();
     }
 
-    public int getScore1() {
-        return score1;
-    }
+
 
     public  void setScore1(int score1) {
         this.score1 = score1;
@@ -39,23 +41,15 @@ public class Result extends JPanel  {
 
     }
 
-    public int getScore2() {
-        return score2;
-    }
-
     public void setScore2(int score2) {
         this.score2 = score2;
         repaint();
     }
 
-    public void setTeam1(String team1, String team2) {
-        this.team1 = team1;
-        this.team2 = team2;
-    }
-
-    public void setTeam2(String team2) {
-        this.team2 = team2;
-    }
+    /**
+     * Override del metodo paintComponent per disegnare il pannello dei risultati.
+     * @param g L'oggetto Graphics utilizzato per disegnare il pannello.
+     */
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

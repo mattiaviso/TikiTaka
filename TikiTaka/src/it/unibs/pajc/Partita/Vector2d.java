@@ -6,10 +6,10 @@ package it.unibs.pajc.Partita;
  */
 public class Vector2d {
 
-    protected double x;
-    protected double y;
-    protected double total;
-    protected double angle;
+    private  double x;
+    private  double y;
+    private  double total;
+    private double angle;
 
 
     public Vector2d() {

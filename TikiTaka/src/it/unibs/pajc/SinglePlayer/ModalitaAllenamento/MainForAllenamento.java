@@ -21,8 +21,6 @@ public class MainForAllenamento extends Canvas {
 	 */
 	public static void main(String[] args) {
 
-
-
 		panel = new ResultAllenamento();
 
 		EventQueue.invokeLater(new Runnable() {

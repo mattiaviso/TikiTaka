@@ -19,10 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * La classe ViewGameField rappresenta la vista del campo di gioco in modalità giocatore singolo o contro il computer.
+ * Estende JPanel e implementa MouseListener e MouseMotionListener per gestire gli eventi del mouse.
+ */
 public class ViewGameField extends JPanel implements MouseListener, MouseMotionListener {
 
-    private  int w;
-    private  int h;
+    private int w;
+    private int h;
     private FieldObject valido;
     private int newradius = 0;
     private int xnew, ynew;
@@ -34,8 +38,8 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     private Map<String, BufferedImage> imageCache = new HashMap<>();
 
 
-    GameField fieldModel ;
-    ControllerGeneral controllerGameField ;
+    GameField fieldModel;
+    ControllerGeneral controllerGameField;
 
     public ViewGameField(ControllerGeneral controllerGameField) {
         this.controllerGameField = controllerGameField;
@@ -47,7 +51,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
         //riceve il focus degli eventi
         this.setFocusable(true);
         this.requestFocusInWindow();
-
 
 
         try {
@@ -84,13 +87,12 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     }
 
 
-    public  int getW() {
+    public int getW() {
         return w;
     }
 
 
-
-    public  int getH() {
+    public int getH() {
         return h;
     }
 
@@ -129,11 +131,9 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     }
 
 
-
     public double getAngle() {
         return angle;
     }
-
 
 
     public BufferedImage getBall() {
@@ -146,8 +146,12 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
 
 
 
-
-
+    /**
+     * Carica un'immagine dal percorso specificato e la memorizza nella cache per utilizzi futuri.
+     *
+     * @param filename Il percorso del file dell'immagine.
+     * @return L'immagine BufferedImage caricata o null se si verifica un errore durante il caricamento.
+     */
     public BufferedImage loadImage(String filename) {
         if (imageCache.containsKey(filename)) {
             return imageCache.get(filename);
@@ -170,7 +174,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
 
         w = getWidth();
         h = getHeight();
-
 
         g2.translate(0, h);
         g2.scale(1, -1);
@@ -202,7 +205,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
         }
 
 
-
         for (FieldObject f : fieldModel.getObjectsPiece()) {
             g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }
@@ -215,7 +217,11 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
 
     }
 
-    // da modificare
+    /**
+     * Calcola la posizione e l'angolo per disegnare una freccia e quindi la disegna.
+     *
+     * @param g2 L'oggetto Graphics2D su cui disegnare la freccia.
+     */
     public void posizioneFreccia(Graphics2D g2) {
 
         int dy = (int) (ynew - valido.getPosition().getY());
@@ -229,8 +235,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     }
 
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -238,9 +242,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mousePressed(MouseEvent e) {
-
-
-
 
 
     }
@@ -272,11 +273,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     @Override
     public void mouseMoved(MouseEvent e) {
     }
-
-
-
-
-
 
 
 }

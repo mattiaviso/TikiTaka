@@ -10,18 +10,14 @@ public class GameFieldSingol extends GameField {
 
 
     public GameFieldSingol() {
-       setScore1(0);
-       setScore2(0);
+        setScore1(0);
+        setScore2(0);
         setTurno("T1");
         setObjectsPiece(new FieldObject[11]);
         positionStart();
     }
 
-    @Override
-    public void setTurnoAlternativo(String turno) {
-        setTurno(turno);
 
-    }
 
     @Override
     public void positionStart() {
@@ -39,20 +35,21 @@ public class GameFieldSingol extends GameField {
     }
 
     /**
-     * Sovrascrive il metodo setScore per aggiornare i punteggi del gioco.
-     * @param score Il valore del punteggio
+     * Sovrascrive il metodo setScore per aggiornare i punteggi del gioco e visualizzarli nella vista.
+     *
+     * @param score Il valore del punteggio da aggiornare.
      */
     @Override
     public void setScore(int score) {
 
-        if ( score ==1){
-            setScore1( getScore1()+1);
+        if (score == 1) {
+            setScore1(getScore1() + 1);
             TikiTakaGame.panel.setScore1(getScore1());
 
 
         }
-        if ( score ==2){
-            setScore2( getScore2()+1);
+        if (score == 2) {
+            setScore2(getScore2() + 1);
             TikiTakaGame.panel.setScore2(getScore2());
         }
 
@@ -60,6 +57,7 @@ public class GameFieldSingol extends GameField {
 
     /**
      * Trova e restituisce l'oggetto FieldObject selezionato alle coordinate date per il turno del giocatore corrente.
+     *
      * @param x La coordinata x del punto selezionato.
      * @param y La coordinata y del punto selezionato.
      * @return Il FieldObject selezionato se trovato e soddisfa i criteri, altrimenti restituisce null.
@@ -67,9 +65,8 @@ public class GameFieldSingol extends GameField {
     @Override
     public FieldObject pedinaSelezionata(double x, double y) {
         for (FieldObject f : getObjectsPiece()) {
-            if (f instanceof Piece )
-                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)
-                        < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
+            if (f instanceof Piece)
+                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
                     return f;
                 }
         }
@@ -79,25 +76,16 @@ public class GameFieldSingol extends GameField {
     /**
      * Controlla se un giocatore ha raggiunto il punteggio vincente e reimposta i punteggi se un giocatore vince.
      */
-
     public void checkVincitore() {
         if (getScore1() == 3 || getScore2() == 3) {
             setScore1(0);
             setScore2(0);
-            TikiTakaGame.panel.setTable(0,0);
+            TikiTakaGame.panel.setTable(0, 0);
 
         }
 
 
     }
-
-
-
-
-
-
-
-    
 
 
 }

@@ -18,6 +18,11 @@ public class TrainingBallMovimentMonitor implements GeneralBallMovementMonitor{
         this.viewGame = viewGame;
     }
 
+    /**
+     * Implementa il metodo run() dell'interfaccia GeneralBallMovementMonitor.
+     * Si occupa di controllare il movimento delle palline durante la modalità di allenamento.
+     * Una volta che tutte le palline si sono fermate, mostra un messaggio di perdita se ci sono determinate condizioni .
+     */
     @Override
     public void run() {
 
@@ -54,6 +59,11 @@ public class TrainingBallMovimentMonitor implements GeneralBallMovementMonitor{
 
     }
 
+    /**
+     * Controlla se tutte le palline si sono fermate.
+     *
+     * @return True se tutte le palline si sono fermate, altrimenti False.
+     */
     public  boolean allStop() {
         for (FieldObject o : modelGameField.getObjectsPiece()) {
             if (!o.speedIsZero()) return false;

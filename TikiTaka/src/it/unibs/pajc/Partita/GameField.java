@@ -1,6 +1,8 @@
 package it.unibs.pajc.Partita;
 
+import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.Collision.Collision;
+import it.unibs.pajc.Partita.Collision.CollisionThread;
 import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 /**
@@ -21,10 +23,7 @@ public abstract class GameField implements GameFieldInterface {
 
     static public boolean collision = false;
     public boolean allStop = true;
-
-    public boolean isAllStop() {
-        return allStop;
-    }
+    
 
     public void setAllStop(boolean allStop) {
         this.allStop = allStop;
@@ -54,6 +53,24 @@ public abstract class GameField implements GameFieldInterface {
         return objectsPiece;
     }
 
+    public void setCollision() {
+        this.collision = false;
+    }
+
+    @Override
+    public void setCollisionForBouard(Boolean collision) {
+        this.collision = collision;
+
+    }
+
+    public boolean getCollision() {
+        return collision;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
     public void setObjectsPiece(FieldObject[] objectsPiece) {
         this.objectsPiece = objectsPiece;
     }
@@ -66,7 +83,9 @@ public abstract class GameField implements GameFieldInterface {
         GameField.collision = collision;
     }
 
-
+    public FieldObject selezionaElemento(int i) {
+        return objectsPiece[i];
+    }
 
     public void setObj(int i, FieldObject object) {
         objectsPiece[i] = object;
@@ -74,15 +93,15 @@ public abstract class GameField implements GameFieldInterface {
 
 
     /**
-     * Metodo che setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
+     * Imposta le posizioni iniziali delle pedine dopo un gol o al calcio d'inizio.
      */
     @Override
-    public abstract void positionStart() ;
+    public abstract void positionStart();
 
     /**
-     * Creazione stringa con posizioni di tutte le pedine, che verra in seguito invitato al server
+     * Crea una stringa con le posizioni di tutte le pedine per inviarla al server.
      *
-     * @return String con informazioni sulle coordiante delle pedine
+     * @return La stringa con le informazioni sulle coordinate delle pedine.
      */
     public String messaggioPos() {
         String string = "";
@@ -93,21 +112,8 @@ public abstract class GameField implements GameFieldInterface {
     }
 
 
-    public void setCollision() {
-        this.collision = false;
-    }
-
-    @Override
-    public void setCollisionForBouard(Boolean collision) {
-        this.collision = collision;
-    }
-
-    public boolean getCollision() {
-        return collision;
-    }
-
     /**
-     * Metodo che effettua il cambio del turno dopo il tiro
+     * Cambia il turno tra i due team dopo il tiro.
      */
     public final void cambioTurno() {
         if (turno.equals("T1")) {
@@ -115,11 +121,6 @@ public abstract class GameField implements GameFieldInterface {
         } else if (turno.equals("T2")) {
             turno = "T1";
         }
-    }
-
-
-    public void setTurno(String turno) {
-        this.turno = turno;
     }
 
 
@@ -138,12 +139,10 @@ public abstract class GameField implements GameFieldInterface {
         return true;
     }
 
-    public abstract void setTurnoAlternativo(String turno);
 
 
     /**
-     * Metodo che se invocato manda avanti di un esecuzione il gioco, si occupa dello spostamento e dei controlli vari
-     * Come se fosse lo StepNext
+     * Metodo che esegue un'iterazione del gioco, si occupa dello spostamento e dei controlli vari.
      */
     public final void updateGame() {
 
@@ -163,32 +162,35 @@ public abstract class GameField implements GameFieldInterface {
             }
         }
 
-        Collision gestioneCollisioni = new Collision();
-        gestioneCollisioni.checkCollision(objectsPiece, this);
+        /*Collision gestioneCollisioni = new Collision();
+        gestioneCollisioni.checkCollision(objectsPiece, this);*/
+        CollisionThread collisionThread = new CollisionThread(objectsPiece, this);
+        collisionThread.start();
+
+
     }
 
 
     /**
-     * Metodo che ritorna la pedina premuta  date le coordinate x e y
+     * Trova la pedina premuta date le coordinate x e y.
      *
-     * @param x Double x
-     * @param y Double y
-     * @return pedina seleziononata
+     * @param x Coordinata x.
+     * @param y Coordinata y.
+     * @return La pedina selezionata.
      */
     public abstract FieldObject pedinaSelezionata(double x, double y);
 
     /**
-     * metodo per resettare il risulato alla vittoria
+     * Verifica se c'è un vincitore e aggiorna il punteggio.
      */
     public abstract void checkVincitore();
 
 
-    public FieldObject selezionaElemento(int i) {
-        return objectsPiece[i];
-    }
-
-
-    // da spostare dove servono
+    /**
+     * Seleziona la palla presente nell'array di pedine.
+     *
+     * @return La Ball se presente nell'array, altrimenti null.
+     */
     public FieldObject selezionaBall() {
         FieldObject ball = null;
         for (FieldObject o : objectsPiece) {
@@ -199,6 +201,12 @@ public abstract class GameField implements GameFieldInterface {
         return ball;
     }
 
+    /**
+     * Trova la pedina del team "T2" più vicina alla posizione della palla prima controllando se ci sono sul retro poi controllandole tuttr .
+     *
+     * @param ball La palla di riferimento per il calcolo della distanza.
+     * @return Un oggetto Computer contenente la pedina più vicina e la sua distanza dalla palla.
+     */
     public Computer piecePiuVicina(FieldObject ball) {
         FieldObject piece = null;
         double distanzaMinima = Double.MAX_VALUE;
@@ -230,20 +238,24 @@ public abstract class GameField implements GameFieldInterface {
 
 
         }
-            return new Computer(piece, distanzaMinima);
+        return new Computer(piece, distanzaMinima);
 
     }
 
-
+    /**
+     * Trova la pedina nell'array con la stessa posizione specificata.
+     *
+     * @param piece2 L'oggetto FieldObject con la posizione da cercare.
+     * @return La pedina trovata con la stessa posizione, se presente nell'array, altrimenti null.
+     */
     public FieldObject findPieceByPosition(FieldObject piece2) {
         for (FieldObject piece : objectsPiece) {
             if (piece.getPosition().getX() == piece2.getPosition().getX() && piece2.getPosition().getY() == piece.getPosition().getY()) {
-                return piece; // Restituisci la pedina se la posizione corrisponde
+                return piece;
             }
         }
-        return null; // Restituisci null se la pedina non è stata trovata
+        return null;
+
     }
-
-
 }
 

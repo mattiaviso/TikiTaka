@@ -14,6 +14,10 @@ import java.awt.event.MouseEvent;
 public class ControllerFieldTraining extends ControllerGeneral {
 
 
+    /**
+     * Costruttore della classe ControllerFieldTraining. Inizializza il modello del campo di gioco (GameFieldTraining) e la vista di gioco (ViewTraining).
+     * Avvia un timer per l'aggiornamento del gioco e aggiunge i listener del mouse alla vista di gioco.
+     */
     public ControllerFieldTraining() {
         setModelGameField(new GameFieldTraining());
         setViewGame( new ViewTraining(this));
@@ -29,6 +33,13 @@ public class ControllerFieldTraining extends ControllerGeneral {
 
     }
 
+
+    /**
+     * Metodo che gestisce l'evento del rilascio del mouse. Se è stata selezionata una pedina valida, viene avviato TrainingBallMovimentMonitor
+     * per gestire il movimento delle palline durante il tiro.
+     *
+     * @param e L'evento del mouse rilasciato
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if (getViewGame().getValido() != null) {

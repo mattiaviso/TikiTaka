@@ -16,8 +16,9 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
     private ILivelli posizioneInizialeLivelli;
 
     static public boolean collision = false;
-    public boolean allStop = true;
-    public int vita;
+    private boolean allStop = true;
+    private int vita;
+
 
 
     public boolean isAllStop() {
@@ -37,13 +38,11 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
         GameFieldTraining.collision = collision;
     }
 
-    /**
-     * Metodo costruttore che inizializza gli 11 oggetti del gioco
-     * e le relative componenti grafiche
-     */
+
     public GameFieldTraining() {
         setTurno("T1");
         vita = 3;
+        ResultAllenamento.setScoreMancanti(vita);
         setObjectsPiece(new FieldObject[7]);
         posizioneInizialeLivelli = new LivelloState1(this);
         posizioneInizialeLivelli.positionStart();
@@ -52,7 +51,7 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
 
 
     /**
-     * Metodo che setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
+     * setta le posizioni iniziali delle pedine dopo un gol oppure al calcio d'inizio
      */
     @Override
     public void positionStart() {
@@ -73,10 +72,8 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
         this.collision = false;
     }
 
-    @Override
-    public void setCollisionForBouard(Boolean collision) {
-        this.collision = collision;
-    }
+
+
 
     public boolean getCollision() {
         return collision;
@@ -86,28 +83,26 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
     @Override
     public void setScore(int score) {
         vita++;
-
-
+        ResultAllenamento.setScoreMancanti(vita);
+        ResultAllenamento.setLivelli();
     }
 
 
-    public void setTurnoAlternativo(String turno) {
 
-    }
 
 
     /**
-     * Metodo che ritorna la pedina premuta  date le coordinate x e y
+     * Metodo che ritorna la pedina premuta date le coordinate x e y.
+     * Controlla se il punto (x, y) è all'interno del raggio della pedina e se la pedina appartiene al turno corrente.
      *
-     * @param x Double x
-     * @param y Double y
-     * @return pedina seleziononata
+     * @param x Double x, coordinata x del punto premuto.
+     * @param y Double y, coordinata y del punto premuto.
+     * @return La pedina selezionata, null se non è stata premuta alcuna pedina valida.
      */
     public FieldObject pedinaSelezionata(double x, double y) {
         for (FieldObject f : getObjectsPiece()) {
             if (f instanceof Piece)
-                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2)
-                        < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
+                if (Math.pow((x - f.getPosition().getX()), 2) + Math.pow((y - f.getPosition().getY()), 2) < Math.pow((f.getRadius()), 2) && ((Piece) f).getTeam().equals(getTurno())) {
                     return f;
                 }
         }
@@ -119,15 +114,21 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
 
     }
 
-
+    /**
+     * Metodo che diminuisce la vita del giocatore se non riesce a segnare un gol.
+     * Se la vita del giocatore arriva a 0, mostra un messaggio di sconfitta e chiude il gioco.
+     * Inoltre, imposta la posizione iniziale del livello di allenamento corrente per consentire un nuovo tentativo.
+     *
+     * @return true se il giocatore ha ancora vite disponibili, false se il giocatore ha perso tutte le vite.
+     */
     public boolean setLifeIfPlayerDosentScore() {
         vita--;
+        ResultAllenamento.setScoreMancanti(vita);
         if (vita == 0) {
             return false;
         }
         posizioneInizialeLivelli.positionStart();
         return true;
-
     }
 
 

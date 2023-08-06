@@ -11,6 +11,10 @@ import java.awt.event.MouseEvent;
 
 import static it.unibs.pajc.Partita.GameField.EPSILON;
 
+/**
+ * La classe Computer rappresenta l'avversario controllato dal computer nella modalità contro il computer.
+ * Viene utilizzato per calcolare la direzione in cui muovere la pedina del computer per raggiungere la palla.
+ */
 public class Computer {
 
     public static final int NUMPUNTICONSIDERATI = 5;
@@ -49,10 +53,11 @@ public class Computer {
     }
 
     /**
-     * Imposta l'angolo migliore per alcuni punti della palla  rispetto all'oggetto `piece` nel campo di gioco.
-     * Vengono considerati alcuni punti intorno alla palla e per ognuno di essi, viene calcolato l'angolo tra la palla e la posizione stimata.
-     * L'oggetto `piece` viene spostato in ciascuna posizione stimata, e viene controllata la collisione tra la palla e l'oggetto `piece`.
-     * L'angolo che dà luogo alla posizione Y minima della palla dopo la collisione viene impostato come l'angolo migliore.
+     * Imposta l'angolo migliore per alcuni punti intorno alla palla rispetto all'oggetto `piece` nel campo di gioco.
+     * Viene considerato un insieme di punti intorno alla palla e, per ciascuno di essi, viene calcolato l'angolo tra la palla
+     * e la posizione stimata. L'oggetto `piece` viene spostato in ciascuna posizione stimata, e viene controllata la collisione
+     * tra la palla e l'oggetto `piece`. L'angolo che dà luogo alla posizione Y minima della palla dopo la collisione viene impostato come l'angolo migliore.
+     *
      * @param ball L'oggetto FieldObject (palla) per il quale trovare l'angolo migliore rispetto all'oggetto `piece`.
      */
     public void settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(FieldObject ball) {
@@ -81,10 +86,11 @@ public class Computer {
 
         }
     }
-
     /**
      * Controlla la collisione tra due oggetti nel campo di gioco e gestisce la risoluzione della collisione.
-     * @param ball L'oggetto FieldObject  con cui controllare la collisione.
+     * Vengono aggiornate le posizioni e le velocità degli oggetti coinvolti e viene applicato un attrito alla palla.
+     *
+     * @param ball L'oggetto FieldObject (palla) con cui controllare la collisione.
      * @return L'oggetto FieldObject ball dopo la risoluzione della collisione e l'applicazione dell'attrito.
      */
     public FieldObject controllacollisione(FieldObject ball) {

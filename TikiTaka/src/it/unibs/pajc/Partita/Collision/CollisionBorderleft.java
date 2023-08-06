@@ -4,9 +4,11 @@ import it.unibs.pajc.Partita.*;
 
 import static it.unibs.pajc.Partita.GameField.MIN_X;
 
+/**
+ * La classe CollisionBorderleft implementa l'interfaccia StrategyCollision ed è responsabile di gestire le collisioni di un oggetto (pedina) con il bordo sinistro del campo di gioco.
+ */
 public class CollisionBorderleft implements StrategyCollision {
     GameFieldInterface gameFieldInterface ;
-    // utilizziamo l'interfaccia per andare a settare dei paramentri
     public CollisionBorderleft(GameFieldInterface gameFieldInterface) {
         this.gameFieldInterface = gameFieldInterface;
     }
@@ -22,7 +24,7 @@ public class CollisionBorderleft implements StrategyCollision {
 
                 gameFieldInterface.positionStart();
                 gameFieldInterface.setScore(2);
-                gameFieldInterface.setTurnoAlternativo("T1");
+                gameFieldInterface.setTurno("T1");
 
             }
         } else {

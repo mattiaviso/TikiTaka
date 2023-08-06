@@ -36,22 +36,6 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         this.massa = massa;
     }
 
-    public void setPosition(Vector2d position) {
-        this.position = position;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    public void setImageObj(BufferedImage imageObj) {
-        this.imageObj = imageObj;
-    }
-
-    public void setMassa(double massa) {
-        this.massa = massa;
-    }
-
     public boolean isBall() {
         return isBall;
     }
@@ -61,23 +45,15 @@ abstract public class FieldObject implements Comparable<FieldObject> {
     }
 
     /**
-     * Metodo che ritorno il team di appartenenza della pedina
+     * Metodo che ritorna il team di appartenenza della pedina.
+     *
+     * @return Il team di appartenenza della pedina, null se la pedina non è di tipo Piece.
      */
     public String getTeam() {
         if (this instanceof Piece) {
             return this.getTeam();
         }
         return null;
-    }
-
-    /**
-     * Metodo che setta coordinate x e y della pedina
-     * @param x Double X
-     * @param y Double Y
-     */
-    public void setXY(double x, double y) {
-        this.position.setX(x);
-        this.position.setY(y);
     }
 
     public double getRadius() {
@@ -149,9 +125,9 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
 
     /**
-     * Metodo per risolvere le collissioni con un altro oggetto
+     * Risolve le collisioni tra l'oggetto corrente e un altro oggetto.
      *
-     * @param p2
+     * @param p2 L'altro oggetto con cui gestire la collisione.
      */
     public void resolveCollision(FieldObject p2) {
 
@@ -202,8 +178,9 @@ abstract public class FieldObject implements Comparable<FieldObject> {
     }
 
     /**
-     * Attrito che diminuisce la velocita delle pedine
-     * @param num
+     * Applica l'attrito alla velocità dell'oggetto, diminuendone la velocità.
+     *
+     * @param num Il coefficiente di attrito per diminuire la velocità.
      */
     public void friction(double num) {
         velocita.set(velocita.getX() - (velocita.getX() * num), velocita.getY() - (velocita.getY() * num));

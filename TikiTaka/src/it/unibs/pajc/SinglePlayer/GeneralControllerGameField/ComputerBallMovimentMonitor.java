@@ -14,6 +14,10 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
         this.controllerGameField = controllerGameField;
     }
 
+    /**
+     * Metodo che esegue il monitoraggio del movimento della pallina controllata dal computer.
+     * Quando tutte le palline si sono fermate, il turno viene cambiato e avviato un nuovo thread per gestire il movimento della pallina del computer.
+     */
     @Override
     public void run() {
 
@@ -22,16 +26,15 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
 
         while (true) {
             if (allStop()) {
-                break; // Esci dal ciclo while una volta che tutte le palline si sono fermate.
+                break;
             }
             controllerGameField.getViewGame().repaint();
             controllerGameField.getViewGame().setValido(null);
             controllerGameField.getViewGame().setNewradius(0);
 
 
-            // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
             try {
-                Thread.sleep(300); // Pausa di 100 millisecondi.
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,6 +55,7 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
 
 
         }
+        // Aggiungi i listener del mouse se è il turno del giocatore.
         if (controllerGameField.getModelGameField().getTurno().equalsIgnoreCase("T1")) {
             controllerGameField.getViewGame().addMouseListener(controllerGameField);
             controllerGameField.getViewGame().addMouseMotionListener(controllerGameField);
@@ -59,6 +63,13 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
 
 
     }
+
+
+    /**
+     * Verifica se tutte le palline nel campo di gioco sono ferme.
+     *
+     * @return true se tutte le palline sono ferme, altrimenti false.
+     */
 
     public final boolean allStop() {
         for (FieldObject o : controllerGameField.getModelGameField().getObjectsPiece()) {
@@ -68,6 +79,11 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
     }
 
 
+    /**
+     * Avvia un nuovo thread per gestire il movimento della pallina del computer.
+     *
+     * @param controllerGameField Il controller del gioco associato al monitor del movimento della pallina.
+     */
     public void startThreadIfT2(ControllerGeneral controllerGameField) {
 
         Runnable task = () -> {
@@ -99,14 +115,16 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
     }
 
 
+    /**
+     * Calcola la direzione in cui la pedina del computer deve muoversi per colpire la pallina.
+     *
+     * @return Un oggetto Computer contenente informazioni sulla distanza e l'angolo tra la pedina del computer e la pallina.
+     */
     public Computer direzionePieceBall() {
 
         FieldObject ball = controllerGameField.getModelGameField().selezionaBall();
         Computer piecePiuVicina = controllerGameField.getModelGameField().piecePiuVicina(ball);
-
-
         piecePiuVicina.settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(ball);
-
 
         return piecePiuVicina;
     }

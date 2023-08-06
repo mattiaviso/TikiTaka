@@ -85,8 +85,7 @@ public class ControllerClient {
 
     }
     /**
-     * Metodo che controlla se il vincitore
-     * E stampa a video gif vincitore e perdente
+     * Metodo che controlla se c'è un vincitore e stampa a video l'immagine corrispondente.
      */
     public void checkWinner() {
         ImageIcon winner = new ImageIcon("winner.gif");
@@ -116,8 +115,9 @@ public class ControllerClient {
     }
 
     /**
-     * creazione del messaggio da mandare
-     * @param msg
+     * Costruisce il messaggio da inviare al server.
+     *
+     * @param msg Il messaggio da inviare.
      */
     private void buildMessage(String msg) {
 
@@ -130,14 +130,20 @@ public class ControllerClient {
     }
 
     /**
-     * Stampa a video in un pop-up una certa stringa msg
+     * Mostra un messaggio in una finestra di dialogo.
      *
-     * @param msg
+     * @param msg Il messaggio da mostrare.
      */
     public void display(String msg) {
         JOptionPane.showMessageDialog(viewClient, msg);
     }
 
+
+    /**
+     * Avvia il listener del client.
+     *
+     * @return True se l'avvio è riuscito, False altrimenti.
+     */
     public boolean startClientListener (){
         if (!modelClientForComunication.start())
             return false;
@@ -158,8 +164,8 @@ public class ControllerClient {
 
 
     /**
-     * Classe che resta in ascolto dei messaggi dal server
-     * Ed elabora le informazioni ricevute
+     * Classe interna che resta in ascolto dei messaggi dal server ed elabora le informazioni ricevute.
+     * È utilizzata per gestire le operazioni asincrone.
      */
     class ListenFromServer extends Thread {
 
@@ -233,12 +239,6 @@ public class ControllerClient {
 
         }
     }
-
-
-
-
-    // GESTIONE DELLE PEDINE DA PARTE DEL CLIENT SECONDO ME E' DA CREARE UN ALTRA CLASSE
-
 
 
 

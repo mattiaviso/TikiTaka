@@ -4,6 +4,10 @@ import it.unibs.pajc.Partita.*;
 
 import static it.unibs.pajc.Partita.GameField.MAX_X;
 
+
+/**
+ * La classe CollisionBorderleft implementa l'interfaccia StrategyCollision ed è responsabile di gestire le collisioni di un oggetto (pedina) con il destro del campo di gioco.
+ */
 public class CollisionBorderRight implements StrategyCollision {
     GameFieldInterface gameFieldInterface ;
 
@@ -20,7 +24,7 @@ public class CollisionBorderRight implements StrategyCollision {
             if (object.getPosition().getX() - object.getRadius() > MAX_X) {
                 gameFieldInterface.positionStart();
                 gameFieldInterface.setScore(1);
-                gameFieldInterface.setTurnoAlternativo("T2");
+                gameFieldInterface.setTurno("T2");
             }
         } else {
 

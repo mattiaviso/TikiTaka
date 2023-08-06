@@ -18,14 +18,6 @@ public class GameFieldClientServer extends GameField {
         return null;
     }
 
-
-
-
-    @Override
-    public void setTurnoAlternativo(String turno) {
-        setTurno(turno);
-    }
-
     @Override
     public void positionStart() {
         setObj(0, new Piece(40, 500, 0, "Pedina1.png", "T1"));
@@ -50,7 +42,6 @@ public class GameFieldClientServer extends GameField {
             setScore2( getScore2()+1);
         }
     }
-
 
     public void checkVincitore() {
         if (getScore1() == 3 || getScore2() == 3) {

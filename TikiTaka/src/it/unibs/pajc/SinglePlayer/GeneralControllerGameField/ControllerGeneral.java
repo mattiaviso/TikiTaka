@@ -7,6 +7,11 @@ import it.unibs.pajc.SinglePlayer.ViewGameField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+/**
+ * ControllerGeneral è una classe astratta che estende MouseAdapter e fornisce metodi comuni per i controller del gioco.
+ * Ogni controller specifico del gioco dovrà estendere questa classe per implementare il comportamento specifico del gioco.
+ */
 public abstract class ControllerGeneral extends MouseAdapter {
 
     private ViewGameField viewGame;
@@ -29,6 +34,12 @@ public abstract class ControllerGeneral extends MouseAdapter {
         return viewGame;
     }
 
+    /**
+     * Gestisce l'evento di pressione del mouse.
+     * Ottiene le coordinate x e y del punto in cui è stato premuto il mouse e invoca il metodo pedinaSelezionata() del modello per selezionare la pedina corrispondente.
+     *
+     * @param e L'evento del mouse.
+     */
     @Override
     public final void mousePressed(MouseEvent e) {
 
@@ -45,16 +56,23 @@ public abstract class ControllerGeneral extends MouseAdapter {
 
     }
 
+
     @Override
-    public abstract   void mouseReleased(MouseEvent e) ;
+    public abstract void mouseReleased(MouseEvent e);
+
+
+    /**
+     * Gestisce l'evento di trascinamento del mouse.
+     * Aggiorna le nuove coordinate x e y del punto in cui è stato trascinato il mouse e calcola il nuovo raggio per la pedina selezionata.
+     *
+     * @param e L'evento del mouse.
+     */
 
     @Override
     public final void mouseDragged(MouseEvent e) {
 
         viewGame.setXnew(e.getX() - viewGame.getW() / 2);
-
         viewGame.setYnew(-(e.getY() - viewGame.getH() / 2));
-
 
         if (viewGame.getValido() != null)
             viewGame.setNewradius(Math.min((int) (Math.sqrt(((viewGame.getValido().getPosition().getX() - viewGame.getXnew()) * (viewGame.getValido().getPosition().getX() - viewGame.getXnew())) + ((viewGame.getValido().getPosition().getY() - viewGame.getYnew()) * (viewGame.getValido().getPosition().getY() - viewGame.getYnew())))), 150));

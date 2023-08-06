@@ -10,11 +10,35 @@ import java.io.IOException;
 
 public class ResultAllenamento extends JPanel  {
 
-    private  int scoreMancanti;
+
+    private static int scoreMancanti;
+    private static int livelli =1 ;
 
     private  BufferedImage Tabel;
 
+    public static int getLivelli() {
+        return livelli;
+    }
 
+    public static void setLivelli() {
+        livelli++;
+    }
+
+    public int getScoreMancanti() {
+        return scoreMancanti;
+    }
+
+    public  static void setScoreMancanti(int scoreMancanti) {
+        ResultAllenamento.scoreMancanti = scoreMancanti;
+    }
+
+    public BufferedImage getTabel() {
+        return Tabel;
+    }
+
+    public void setTabel(BufferedImage tabel) {
+        Tabel = tabel;
+    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -24,24 +48,16 @@ public class ResultAllenamento extends JPanel  {
         g.setColor(Color.BLUE);
         //g.fillRect(0,0,1300,120);
 
-        String textToDraw = ""+scoreMancanti;
 
-        // Ottieni le dimensioni del pannello
-        int panelWidth = getWidth();
-        int panelHeight = getHeight();
 
-        // Ottieni le dimensioni della scritta
-        FontMetrics fontMetrics = g.getFontMetrics();
-        int textWidth = fontMetrics.stringWidth(textToDraw);
-        int textHeight = fontMetrics.getHeight();
+        g2.drawImage(this.Tabel, 0, 0, 1285, 120, null);
 
-        // Calcola la posizione per centrare la scritta nel pannello
-        int x = (panelWidth - textWidth) / 2;
-        int y = (panelHeight - textHeight) / 2 + fontMetrics.getAscent();
+        g2.setFont(new Font("Ahoroni",Font.BOLD,30));
+        g2.drawString( "livello " +" "+  livelli +"/4", 438,30);
+        g2.drawString(" vita " + scoreMancanti +"", 857,30);
 
-        // Disegna la scritta
-        g.drawString(textToDraw, x, y);
-
+        repaint();
+        //porterofutbol.gif
 
 
     }

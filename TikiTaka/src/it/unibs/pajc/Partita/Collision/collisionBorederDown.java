@@ -6,6 +6,11 @@ import it.unibs.pajc.Partita.Vector2d;
 
 import static it.unibs.pajc.Partita.GameField.MIN_Y;
 
+
+
+/**
+ * La classe CollisionBorderleft implementa l'interfaccia StrategyCollision ed è responsabile di gestire le collisioni di un oggetto (pedina) con il bordodown del campo di gioco.
+ */
 public class collisionBorederDown implements StrategyCollision {
     GameFieldInterface gameFieldInterface;
 
