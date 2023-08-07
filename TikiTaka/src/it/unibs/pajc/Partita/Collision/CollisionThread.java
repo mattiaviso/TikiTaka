@@ -7,15 +7,17 @@ public class CollisionThread extends Thread {
 
     private FieldObject[] objectsPiece;
     private GameFieldInterface gameFieldInterface;
+    private  Collision collision ;
 
     public CollisionThread(FieldObject[] objectsPiece, GameFieldInterface gameFieldInterface) {
         this.objectsPiece = objectsPiece;
         this.gameFieldInterface = gameFieldInterface;
+         collision = new Collision();
     }
 
     @Override
     public void run() {
-        Collision collision = new Collision();
+
         collision.checkCollision(objectsPiece, gameFieldInterface);
     }
 }

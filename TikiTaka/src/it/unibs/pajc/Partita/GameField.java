@@ -1,7 +1,6 @@
 package it.unibs.pajc.Partita;
 
-import it.unibs.pajc.ClientServer.SoundClip;
-import it.unibs.pajc.Partita.Collision.Collision;
+
 import it.unibs.pajc.Partita.Collision.CollisionThread;
 import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 

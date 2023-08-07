@@ -120,19 +120,34 @@ public class Collision {
          * Ordina l'array di oggetti comparabili in modo crescente utilizzando l'algoritmo di ordinamento per inserimento (Insertion Sort).
          * @param a L'array di oggetti comparabili da ordinare.
          */
-        public void insertionSort (Comparable[]a){
+        public void insertionSort(Comparable[] a) {
             for (int p = 1; p < a.length; p++) {
                 Comparable tmp = a[p];
-                int j = p;
+                int left = 0;
+                int right = p - 1;
 
-                for (; j > 0 && tmp.compareTo(a[j - 1]) < 0; j--)
-                    a[j] = a[j - 1];
+                // Utilizza la ricerca binaria per trovare la posizione corretta per l'inserimento
+                while (left <= right) {
+                    int mid = left + (right - left) / 2;
+                    if (tmp.compareTo(a[mid]) < 0) {
+                        right = mid - 1;
+                    } else {
+                        left = mid + 1;
+                    }
+                }
 
-                a[j] = tmp;
+                // Sposta gli elementi maggiori di tmp in avanti
+                for (int j = p - 1; j >= left; j--) {
+                    a[j + 1] = a[j];
+                }
+
+                // Inserisci l'elemento nella posizione corretta
+                a[left] = tmp;
             }
         }
 
-    }
+
+}
 
 
 
