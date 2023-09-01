@@ -4,6 +4,7 @@ import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.ILivelli;
 import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.LivelloState1;
 import it.unibs.pajc.Partita.*;
 import it.unibs.pajc.Partita.Collision.Collision;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 import javax.swing.*;
 
@@ -112,6 +113,11 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
     @Override
     public void checkVincitore() {
 
+    }
+
+    @Override
+    public Computer piecePiuVicina(FieldObject ball) {
+        return null;
     }
 
     /**

@@ -21,7 +21,6 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
     @Override
     public void run() {
 
-
         controllerGameField.getModelGameField().setAllStop(false);
 
         while (true) {
@@ -41,8 +40,6 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
 
 
         }
-
-
         controllerGameField.getModelGameField().cambioTurno();
         controllerGameField.getModelGameField().setAllStop(true);
         controllerGameField.getViewGame().repaint();

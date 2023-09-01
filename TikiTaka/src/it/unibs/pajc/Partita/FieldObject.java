@@ -133,11 +133,10 @@ abstract public class FieldObject implements Comparable<FieldObject> {
 
 
         Vector2d delta = (position.subtract(p2.position));
-        double r = getRadius() + p2.getRadius();
+        /*double r = getRadius() + p2.getRadius();
         double dist2 = delta.dot(delta);
 
-        // non esiste collisoni
-        if (dist2 > r * r) return;
+        if (dist2 > r * r) return;*/
 
         GameField.collision = true;
 
@@ -153,7 +152,6 @@ abstract public class FieldObject implements Comparable<FieldObject> {
         {
             d = p2.getRadius() + getRadius() - 1.0f;
             delta = new Vector2d(p2.getRadius() + getRadius(), 0.0f);
-
             mtd = delta.multiply(((getRadius() + p2.getRadius()) - d) / d);
         }
 

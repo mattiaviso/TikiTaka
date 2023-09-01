@@ -4,6 +4,7 @@ import it.unibs.pajc.Partita.Ball;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Piece;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 public class GameFieldClientServer extends GameField {
 
@@ -50,7 +51,10 @@ public class GameFieldClientServer extends GameField {
         }
     }
 
-
+    @Override
+    public Computer piecePiuVicina(FieldObject ball) {
+        return null;
+    }
 
 
 }

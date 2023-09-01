@@ -206,40 +206,8 @@ public abstract class GameField implements GameFieldInterface {
      * @param ball La palla di riferimento per il calcolo della distanza.
      * @return Un oggetto Computer contenente la pedina più vicina e la sua distanza dalla palla.
      */
-    public Computer piecePiuVicina(FieldObject ball) {
-        FieldObject piece = null;
-        double distanzaMinima = Double.MAX_VALUE;
-        for (FieldObject o : objectsPiece) {
-            if (o instanceof Piece) {
-                if (o.getTeam().equalsIgnoreCase("T2")) {
-                    double distanza = Math.sqrt(Math.pow(o.getPosition().getX() - ball.getPosition().getX(), 2)
-                            + Math.pow(o.getPosition().getY() - ball.getPosition().getY(), 2));
-                    if (distanza < distanzaMinima && o.getPosition().getX() - ball.getPosition().getX() < 0) {
-                        distanzaMinima = distanza;
-                        piece = o;
-                    }
-                }
-            }
-        }
-        if (piece == null) {
-            for (FieldObject c : objectsPiece) {
-                if (c instanceof Piece) {
-                    if (c.getTeam().equalsIgnoreCase("T2")) {
-                        double distanza = Math.sqrt(Math.pow(c.getPosition().getX() - ball.getPosition().getX(), 2)
-                                + Math.pow(c.getPosition().getY() - ball.getPosition().getY(), 2));
-                        if (distanza < distanzaMinima) {
-                            distanzaMinima = distanza;
-                            piece = c;
-                        }
-                    }
-                }
-            }
+    public  abstract Computer piecePiuVicina(FieldObject ball);
 
-
-        }
-        return new Computer(piece, distanzaMinima);
-
-    }
 
     /**
      * Trova la pedina nell'array con la stessa posizione specificata.

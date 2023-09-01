@@ -3,11 +3,6 @@ package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Utility;
 import it.unibs.pajc.Partita.Vector2d;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ComputerBallMovimentMonitor;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.GeneralBallMovementMonitor;
-
-import java.awt.event.MouseEvent;
 
 import static it.unibs.pajc.Partita.GameField.EPSILON;
 
@@ -69,16 +64,14 @@ public class Computer {
         for (int i = 0; i < NUMPUNTICONSIDERATI; i++) {
 
             double angleball = i * angleIncrement;
-            // queste sono le posizioni della pedina
+
             double xStima = ball.getPosition().getX() + ball.getRadius() * Math.cos(angleball);
             double yStima = ball.getPosition().getY() + ball.getRadius() * Math.sin(angleball);
-
-            // calcoliano l'angolo delle posizioni
             double angoloPunto = Utility.calcolaAngoloConposizione(piece, xStima, yStima);
 
             piece.start((int) distance, angoloPunto);
-            FieldObject ballAfterCollision = controllacollisione(ball);
-            // angolo piu corretto rispetto a quelli presi
+            FieldObject ballAfterCollision = simulazioneCollisione(ball);
+
             if (ballAfterCollision.getPosition().getY() < yminima) {
                 yminima = ballAfterCollision.getPosition().getY();
                 setAngle(angoloPunto);
@@ -90,10 +83,10 @@ public class Computer {
      * Controlla la collisione tra due oggetti nel campo di gioco e gestisce la risoluzione della collisione.
      * Vengono aggiornate le posizioni e le velocità degli oggetti coinvolti e viene applicato un attrito alla palla.
      *
-     * @param ball L'oggetto FieldObject (palla) con cui controllare la collisione.
+     * @param ball L'oggetto palla  con cui controllare la collisione.
      * @return L'oggetto FieldObject ball dopo la risoluzione della collisione e l'applicazione dell'attrito.
      */
-    public FieldObject controllacollisione(FieldObject ball) {
+    public FieldObject simulazioneCollisione(FieldObject ball) {
 
         Vector2d velocity = piece.getVelocita();
         Vector2d position = piece.getPosition();
