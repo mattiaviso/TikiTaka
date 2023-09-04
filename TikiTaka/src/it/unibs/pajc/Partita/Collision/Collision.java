@@ -22,7 +22,7 @@ public class Collision {
      */
     public void checkCollision(FieldObject[] objectsPiece, GameFieldInterface gameFieldInterface) {
 
-        //insertionSort(objectsPiece);
+        insertionSort(objectsPiece);
 
 
         for (int i = 0; i < objectsPiece.length; i++) {
@@ -72,7 +72,7 @@ public class Collision {
          * @param object            pedina da controllare per la collisione con i bordi.
          * @param gameFieldInterface Interfaccia del campo di gioco per gestire la collisione.
          */
-        private void borderCollision (FieldObject object, GameFieldInterface gameFieldInterface){
+        public  void borderCollision (FieldObject object, GameFieldInterface gameFieldInterface){
             double x = object.getPosition().getX();
             double y = object.getPosition().getY();
             double radius = object.getRadius();
@@ -109,7 +109,7 @@ public class Collision {
 
             }
 
-            //manca tutta la seconda parte
+
 
 
         }
@@ -118,7 +118,7 @@ public class Collision {
          * Ordina l'array di oggetti comparabili in modo crescente utilizzando l'algoritmo di ordinamento per inserimento (Insertion Sort).
          * @param a L'array di oggetti comparabili da ordinare.
          */
-        /*public void insertionSort(Comparable[] a) {
+        public void insertionSort(Comparable[] a) {
             for (int p = 1; p < a.length; p++) {
                 Comparable tmp = a[p];
                 int left = 0;
@@ -141,7 +141,7 @@ public class Collision {
                 a[left] = tmp;
             }
         }
-*/
+
 
 }
 

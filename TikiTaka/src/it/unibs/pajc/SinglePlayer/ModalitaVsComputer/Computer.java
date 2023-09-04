@@ -1,10 +1,13 @@
 package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 
+import it.unibs.pajc.ClientServer.SoundClip;
+import it.unibs.pajc.Partita.Collision.*;
 import it.unibs.pajc.Partita.FieldObject;
+import it.unibs.pajc.Partita.GameFieldInterface;
 import it.unibs.pajc.Partita.Utility;
 import it.unibs.pajc.Partita.Vector2d;
 
-import static it.unibs.pajc.Partita.GameField.EPSILON;
+import static it.unibs.pajc.Partita.GameField.*;
 
 /**
  * La classe Computer rappresenta l'avversario controllato dal computer nella modalità contro il computer.
@@ -79,6 +82,7 @@ public class Computer {
 
         }
     }
+
     /**
      * Controlla la collisione tra due oggetti nel campo di gioco e gestisce la risoluzione della collisione.
      * Vengono aggiornate le posizioni e le velocità degli oggetti coinvolti e viene applicato un attrito alla palla.
@@ -102,15 +106,33 @@ public class Computer {
             velocity.setY(0);
         }
 
+        Collision collision1 = new Collision();
+        collision1.borderCollision(ball, null);
 
-        piece.resolveCollision(ball);
-        ball.friction(0.015);
+        // nuovo
+
+        double dx = piece.getPosition().getX() - ball.getPosition().getX();
+        double dy = piece.getPosition().getY() - ball.getPosition().getY();
+        double distanceBetweenCenters = Math.sqrt(dx * dx + dy * dy);
 
 
+        double sumOfRadii = ball.getRadius() + piece.getRadius();
+
+
+        if (distanceBetweenCenters < sumOfRadii) {
+
+            piece.resolveCollision(ball);
+            ball.friction(0.015);
+
+
+
+
+        }
         return ball;
 
     }
-
-
-
 }
+
+
+
+

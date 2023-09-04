@@ -2,6 +2,7 @@ package it.unibs.pajc.Partita.Collision;
 
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameFieldInterface;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 public class CollisionThread extends Thread {
 
@@ -14,6 +15,8 @@ public class CollisionThread extends Thread {
         this.gameFieldInterface = gameFieldInterface;
          collision = new Collision();
     }
+
+
 
     @Override
     public void run() {
