@@ -33,7 +33,7 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
 
 
             try {
-                Thread.sleep(300);
+                Thread.sleep(150);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

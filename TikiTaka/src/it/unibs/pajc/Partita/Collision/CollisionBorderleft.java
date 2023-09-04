@@ -1,5 +1,6 @@
 package it.unibs.pajc.Partita.Collision;
 
+import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.*;
 
 import static it.unibs.pajc.Partita.GameField.MIN_X;
@@ -30,6 +31,8 @@ public class CollisionBorderleft implements StrategyCollision {
         } else {
             object.getPosition().setX(object.getRadius() + MIN_X);
             object.setVelocita(new Vector2d(-object.getVelocita().getX(), +object.getVelocita().getY()));
+            SoundClip collision = new SoundClip("collision");
+            collision.play();
         }
     }
 

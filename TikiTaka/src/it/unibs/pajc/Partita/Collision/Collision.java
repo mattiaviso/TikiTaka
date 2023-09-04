@@ -80,15 +80,13 @@ public class Collision {
             if (x - radius < MIN_X) {
                 StrategyCollision collisionSx = new CollisionBorderleft(gameFieldInterface);
                 collisionSx.collisionBoard(object);
-                SoundClip collision = new SoundClip("collision");
-                collision.play();
+
 
 
             } else if (x + radius > MAX_X) {
                 StrategyCollision collisionDx = new CollisionBorderRight(gameFieldInterface);
                 collisionDx.collisionBoard(object);
-                SoundClip collision = new SoundClip("collision");
-                collision.play();
+                
 
 
             }

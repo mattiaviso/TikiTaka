@@ -1,6 +1,7 @@
 package it.unibs.pajc.Partita;
 
 
+import it.unibs.pajc.Partita.Collision.Collision;
 import it.unibs.pajc.Partita.Collision.CollisionThread;
 import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
@@ -165,7 +166,6 @@ public abstract class GameField implements GameFieldInterface {
         gestioneCollisioni.checkCollision(objectsPiece, this);*/
         CollisionThread collisionThread = new CollisionThread(objectsPiece, this);
         collisionThread.start();
-
 
     }
 

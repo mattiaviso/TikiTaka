@@ -1,5 +1,6 @@
 package it.unibs.pajc.Partita.Collision;
 
+import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.Partita.*;
 
 import static it.unibs.pajc.Partita.GameField.MAX_X;
@@ -30,6 +31,8 @@ public class CollisionBorderRight implements StrategyCollision {
 
             object.getPosition().setX(MAX_X - object.getRadius());
             object.setVelocita( new Vector2d(-object.getVelocita().getX(), object.getVelocita().getY()));
+            SoundClip collision = new SoundClip("collision");
+            collision.play();
         }
 
     }
