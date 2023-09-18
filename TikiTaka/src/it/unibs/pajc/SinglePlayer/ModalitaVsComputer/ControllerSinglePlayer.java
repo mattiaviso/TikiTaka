@@ -1,23 +1,22 @@
 package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
 
 import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ComputerBallMovimentMonitor;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.Controller;
 import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.GeneralBallMovementMonitor;
-import it.unibs.pajc.SinglePlayer.ViewGameField;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 
-public class ControllerGameField extends ControllerGeneral {
+public class ControllerSinglePlayer extends Controller {
 
     /**
-     * Costruttore della classe ControllerGameField. Inizializza il modello del campo di gioco e la vista,
+     * Costruttore della classe ControllerSinglePlayer. Inizializza il modello del campo di gioco e la vista,
      * e avvia un timer per aggiornare il gioco a intervalli regolari. Inoltre, aggiunge i listener del mouse per gestire gli eventi del mouse.
      */
-    public ControllerGameField() {
-        setModelGameField(new GameFieldSingol());
-        setViewGame(new ViewComputer(this));
+    public ControllerSinglePlayer() {
+        setModelGameField(new GameFieldSinglePlayer());
+        setViewGame(new ViewSinglePlayer(this));
         Timer timer = new Timer(15, (e) -> {
             getModelGameField().updateGame();
             getViewGame().repaint();

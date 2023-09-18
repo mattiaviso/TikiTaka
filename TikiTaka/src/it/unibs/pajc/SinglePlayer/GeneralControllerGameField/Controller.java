@@ -1,24 +1,23 @@
 package it.unibs.pajc.SinglePlayer.GeneralControllerGameField;
 
 import it.unibs.pajc.Partita.GameField;
-import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.GameFieldSingol;
-import it.unibs.pajc.SinglePlayer.ViewGameField;
+import it.unibs.pajc.SinglePlayer.View;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
 /**
- * ControllerGeneral è una classe astratta che estende MouseAdapter e fornisce metodi comuni per i controller del gioco.
+ * Controller è una classe astratta che estende MouseAdapter e fornisce metodi comuni per i controller del gioco.
  * Ogni controller specifico del gioco dovrà estendere questa classe per implementare il comportamento specifico del gioco.
  */
-public abstract class ControllerGeneral extends MouseAdapter {
+public abstract class Controller extends MouseAdapter {
 
-    private ViewGameField viewGame;
+    private View viewGame;
     private GameField modelGameField;
 
 
-    public void setViewGame(ViewGameField viewGame) {
+    public void setViewGame(View viewGame) {
         this.viewGame = viewGame;
     }
 
@@ -30,7 +29,7 @@ public abstract class ControllerGeneral extends MouseAdapter {
         this.modelGameField = modelGameField;
     }
 
-    public final ViewGameField getViewGame() {
+    public final View getViewGame() {
         return viewGame;
     }
 

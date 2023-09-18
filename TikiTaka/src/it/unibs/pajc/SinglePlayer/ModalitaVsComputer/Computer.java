@@ -4,7 +4,18 @@ import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.Utility;
 import it.unibs.pajc.Partita.Vector2d;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 import static it.unibs.pajc.Partita.GameField.EPSILON;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Future;
 
 /**
  * La classe Computer rappresenta l'avversario controllato dal computer nella modalità contro il computer.
@@ -16,11 +27,13 @@ public class Computer {
     private FieldObject piece;
     private double distance;
     private double angle;
+    private ArrayList<Double> anglePuntoThread ;
 
 
     public Computer(FieldObject piece, double distance) {
         this.piece = piece;
         this.distance = distance;
+        anglePuntoThread = new ArrayList<>();
     }
 
     public void setPiece(FieldObject piece) {
@@ -55,7 +68,7 @@ public class Computer {
      *
      * @param ball L'oggetto FieldObject (palla) per il quale trovare l'angolo migliore rispetto all'oggetto `piece`.
      */
-    public void settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(FieldObject ball) {
+   public void settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(FieldObject ball) {
         double angleIncrement = 2 * Math.PI / NUMPUNTICONSIDERATI;
         double y = Double.MAX_VALUE;
         double yminima = y;
@@ -79,6 +92,10 @@ public class Computer {
 
         }
     }
+
+
+
+
     /**
      * Controlla la collisione tra due oggetti nel campo di gioco e gestisce la risoluzione della collisione.
      * Vengono aggiornate le posizioni e le velocità degli oggetti coinvolti e viene applicato un attrito alla palla.

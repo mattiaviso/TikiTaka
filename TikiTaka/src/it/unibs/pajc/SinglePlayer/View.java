@@ -3,7 +3,7 @@ package it.unibs.pajc.SinglePlayer;
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Utility;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.Controller;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,10 +20,10 @@ import java.util.Map;
 
 
 /**
- * La classe ViewGameField rappresenta la vista del campo di gioco in modalità giocatore singolo o contro il computer.
+ * La classe View rappresenta la vista del campo di gioco in modalità giocatore singolo o contro il computer.
  * Estende JPanel e implementa MouseListener e MouseMotionListener per gestire gli eventi del mouse.
  */
-public class ViewGameField extends JPanel implements MouseListener, MouseMotionListener {
+public class View extends JPanel  {
 
     private int w;
     private int h;
@@ -34,21 +34,12 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
     private double angle;
     private BufferedImage ball, imgT1, imgT2;
     private BufferedImage background;
-
     private Map<String, BufferedImage> imageCache = new HashMap<>();
+    private Controller controllerGameField;
 
-
-    GameField fieldModel;
-    ControllerGeneral controllerGameField;
-
-    public ViewGameField(ControllerGeneral controllerGameField) {
+    public View(Controller controllerGameField) {
         this.controllerGameField = controllerGameField;
-        fieldModel = controllerGameField.getModelGameField();
-
-
         this.setDoubleBuffered(true);
-
-        //riceve il focus degli eventi
         this.setFocusable(true);
         this.requestFocusInWindow();
 
@@ -183,7 +174,7 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
             g2.drawImage(background, -655, -320, 1300, 645, null);
         }
 
-        for (FieldObject f : fieldModel.getObjectsPiece()) {
+        for (FieldObject f : controllerGameField.getModelGameField().getObjectsPiece()) {
             if (f != null) {
                 int x = (int) (f.getPosition().getX() - f.getRadius());
                 int y = (int) (f.getPosition().getY() - f.getRadius());
@@ -205,7 +196,7 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
         }
 
 
-        for (FieldObject f : fieldModel.getObjectsPiece()) {
+        for (FieldObject f : controllerGameField.getModelGameField().getObjectsPiece()) {
             g2.drawImage(f.getImageObj(), (int) (f.getPosition().getX() - (f.getRadius())), (int) (f.getPosition().getY() - (f.getRadius())), null);
         }
         if (newradius != 0) {
@@ -234,45 +225,6 @@ public class ViewGameField extends JPanel implements MouseListener, MouseMotionL
         Utility.drawArrow(g2, new Point2D.Double(valido.getPosition().getX(), valido.getPosition().getY()), angle, distance);
     }
 
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // il rilascio lo step next
-
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-
-    }
-
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
 
 
 }

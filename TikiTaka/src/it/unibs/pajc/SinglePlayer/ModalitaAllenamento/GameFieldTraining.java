@@ -3,7 +3,6 @@ package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.ILivelli;
 import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.Livelli.LivelloState1;
 import it.unibs.pajc.Partita.*;
-import it.unibs.pajc.Partita.Collision.Collision;
 import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import javax.swing.*;
 /**
  * Model
  */
-public class GameFieldTraining extends GameField implements GameFieldInterface {
+public class GameFieldTraining extends GameField {
 
 
     private ILivelli posizioneInizialeLivelli;
@@ -43,7 +42,7 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
     public GameFieldTraining() {
         setTurno("T1");
         vita = 3;
-        ResultAllenamento.setScoreMancanti(vita);
+        ResultTraining.setScoreMancanti(vita);
         setObjectsPiece(new FieldObject[7]);
         posizioneInizialeLivelli = new LivelloState1(this);
         posizioneInizialeLivelli.positionStart();
@@ -84,8 +83,8 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
     @Override
     public void setScore(int score) {
         vita++;
-        ResultAllenamento.setScoreMancanti(vita);
-        ResultAllenamento.setLivelli();
+        ResultTraining.setScoreMancanti(vita);
+        ResultTraining.setLivelli();
     }
 
 
@@ -129,7 +128,7 @@ public class GameFieldTraining extends GameField implements GameFieldInterface {
      */
     public boolean setLifeIfPlayerDosentScore() {
         vita--;
-        ResultAllenamento.setScoreMancanti(vita);
+        ResultTraining.setScoreMancanti(vita);
         if (vita == 0) {
             return false;
         }

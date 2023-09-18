@@ -2,15 +2,14 @@ package it.unibs.pajc.SinglePlayer.GeneralControllerGameField;
 
 import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Computer;
-import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.ControllerGameField;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
-    private ControllerGeneral controllerGameField;
+    private Controller controllerGameField;
 
-    public ComputerBallMovimentMonitor(ControllerGeneral controllerGameField) {
+    public ComputerBallMovimentMonitor(Controller controllerGameField) {
         this.controllerGameField = controllerGameField;
     }
 
@@ -44,7 +43,7 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
         controllerGameField.getModelGameField().setAllStop(true);
         controllerGameField.getViewGame().repaint();
 
-        System.out.println(controllerGameField.getModelGameField().getTurno());
+
         if (controllerGameField.getModelGameField().getTurno().equalsIgnoreCase("T2")) {
             controllerGameField.getViewGame().removeMouseListener(controllerGameField);
             controllerGameField.getViewGame().removeMouseMotionListener(controllerGameField);
@@ -81,7 +80,7 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
      *
      * @param controllerGameField Il controller del gioco associato al monitor del movimento della pallina.
      */
-    public void startThreadIfT2(ControllerGeneral controllerGameField) {
+    public void startThreadIfT2(Controller controllerGameField) {
 
         Runnable task = () -> {
             // Gestione del computer

@@ -100,7 +100,5 @@ public class ControllerHomePage {
         return view;
     }
 
-    public ModelHomePage getModel() {
-        return model;
-    }
+
 }

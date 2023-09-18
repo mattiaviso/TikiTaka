@@ -1,19 +1,18 @@
-package it.unibs.pajc.SinglePlayer.GeneralControllerGameField;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
 import it.unibs.pajc.Partita.FieldObject;
-import it.unibs.pajc.Partita.GameField;
-import it.unibs.pajc.SinglePlayer.ModalitaAllenamento.GameFieldTraining;
-import it.unibs.pajc.SinglePlayer.ViewGameField;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.GeneralBallMovementMonitor;
+import it.unibs.pajc.SinglePlayer.View;
 
 import javax.swing.*;
 
-public class TrainingBallMovimentMonitor implements GeneralBallMovementMonitor{
+public class BallMovimentMonitorAllenamento implements GeneralBallMovementMonitor {
 
 
     private GameFieldTraining modelGameField;
-    private ViewGameField viewGame;
+    private View viewGame;
 
-    public TrainingBallMovimentMonitor(GameFieldTraining modelGameField, ViewGameField viewGame) {
+    public BallMovimentMonitorAllenamento(GameFieldTraining modelGameField, View viewGame) {
         this.modelGameField = modelGameField;
         this.viewGame = viewGame;
     }

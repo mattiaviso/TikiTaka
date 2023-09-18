@@ -1,14 +1,11 @@
 package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
-public class ResultAllenamento extends JPanel  {
+public class ResultTraining extends JPanel  {
 
 
     private static int scoreMancanti;
@@ -29,7 +26,7 @@ public class ResultAllenamento extends JPanel  {
     }
 
     public  static void setScoreMancanti(int scoreMancanti) {
-        ResultAllenamento.scoreMancanti = scoreMancanti;
+        ResultTraining.scoreMancanti = scoreMancanti;
     }
 
     public BufferedImage getTabel() {

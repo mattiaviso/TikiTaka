@@ -2,16 +2,14 @@
 
 package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.Controller;
 import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.GeneralBallMovementMonitor;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.TrainingBallMovimentMonitor;
-import it.unibs.pajc.SinglePlayer.ViewGameField;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 
-public class ControllerFieldTraining extends ControllerGeneral {
+public class ControllerFieldTraining extends Controller {
 
 
     /**
@@ -35,7 +33,7 @@ public class ControllerFieldTraining extends ControllerGeneral {
 
 
     /**
-     * Metodo che gestisce l'evento del rilascio del mouse. Se è stata selezionata una pedina valida, viene avviato TrainingBallMovimentMonitor
+     * Metodo che gestisce l'evento del rilascio del mouse. Se è stata selezionata una pedina valida, viene avviato BallMovimentMonitorAllenamento
      * per gestire il movimento delle palline durante il tiro.
      *
      * @param e L'evento del mouse rilasciato
@@ -44,7 +42,7 @@ public class ControllerFieldTraining extends ControllerGeneral {
     public void mouseReleased(MouseEvent e) {
         if (getViewGame().getValido() != null) {
             getViewGame().getValido().start(getViewGame().getDistance(), getViewGame().getAngle());
-            GeneralBallMovementMonitor monitor = new TrainingBallMovimentMonitor((GameFieldTraining) getModelGameField(), getViewGame());
+            GeneralBallMovementMonitor monitor = new BallMovimentMonitorAllenamento((GameFieldTraining) getModelGameField(), getViewGame());
             Thread ballMovementThread = new Thread(monitor);
             ballMovementThread.start();
 

@@ -6,10 +6,10 @@ import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Piece;
 
-public class GameFieldSingol extends GameField {
+public class GameFieldSinglePlayer extends GameField {
 
 
-    public GameFieldSingol() {
+    public GameFieldSinglePlayer() {
         setScore1(0);
         setScore2(0);
         setTurno("T1");
@@ -44,13 +44,13 @@ public class GameFieldSingol extends GameField {
 
         if (score == 1) {
             setScore1(getScore1() + 1);
-            TikiTakaGame.panel.setScore1(getScore1());
+            MainSinglePlayer.panel.setScore1(getScore1());
 
 
         }
         if (score == 2) {
             setScore2(getScore2() + 1);
-            TikiTakaGame.panel.setScore2(getScore2());
+            MainSinglePlayer.panel.setScore2(getScore2());
         }
 
     }
@@ -80,7 +80,7 @@ public class GameFieldSingol extends GameField {
         if (getScore1() == 3 || getScore2() == 3) {
             setScore1(0);
             setScore2(0);
-            TikiTakaGame.panel.setTable(0, 0);
+            MainSinglePlayer.panel.setTable(0, 0);
 
         }
 
@@ -124,4 +124,7 @@ public class GameFieldSingol extends GameField {
 
 
 
-    }
+
+
+
+}

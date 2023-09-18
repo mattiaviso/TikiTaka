@@ -1,5 +1,5 @@
 package it.unibs.pajc.Partita;
-public interface GameFieldInterface {
+public interface GameFieldInterface  {
     /**
      * Metodo per impostare le posizioni iniziali delle pedine dopo un gol o al calcio d'inizio.
      */

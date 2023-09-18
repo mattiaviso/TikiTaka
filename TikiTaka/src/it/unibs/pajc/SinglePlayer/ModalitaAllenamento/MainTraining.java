@@ -1,38 +1,33 @@
-package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
+package it.unibs.pajc.SinglePlayer.ModalitaAllenamento;
 
 import it.unibs.pajc.ClientServer.SoundClip;
-import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.ControllerGeneral;
+import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TikiTakaGame extends Canvas {
+public class MainTraining extends Canvas {
 
 	private static JLabel textField = new JLabel("");
 	private JFrame frame;
 	private JTextField txtGioco;
 	/*private BufferedImage sfondo = null;*/
-	ControllerGeneral controllerGameField= new ControllerGameField();
-	public static Result  panel;
+	Controller controllerGameField;
+	public static ResultTraining panel;
 
 
 
-
-	 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 
-
-		String team2 = JOptionPane.showInputDialog("Dammi il nome del team");
-
-		panel = new Result(team2);
+		panel = new ResultTraining();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TikiTakaGame window = new TikiTakaGame();
+					MainTraining window = new MainTraining();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +39,7 @@ public class TikiTakaGame extends Canvas {
 	/**
 	 * Create the application.
 	 */
-	public TikiTakaGame() {
+	public MainTraining() {
 		initialize();
 	}
 
@@ -52,6 +47,7 @@ public class TikiTakaGame extends Canvas {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		controllerGameField= new ControllerFieldTraining();
 		SoundClip sound = new SoundClip("Song");
 		sound.start();
 		frame = new JFrame();
@@ -60,7 +56,6 @@ public class TikiTakaGame extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(controllerGameField.getViewGame(), BorderLayout.CENTER);
 		frame.getContentPane().add(panel,BorderLayout.NORTH);
-		panel.setTable(0,0);
 		panel.setPreferredSize(new Dimension(1300,120));
 
 
