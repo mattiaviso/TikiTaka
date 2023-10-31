@@ -29,26 +29,20 @@ public class ComputerBallMovimentMonitor implements GeneralBallMovementMonitor {
             controllerGameField.getViewGame().repaint();
             controllerGameField.getViewGame().setValido(null);
             controllerGameField.getViewGame().setNewradius(0);
-
-
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
         }
         controllerGameField.getModelGameField().cambioTurno();
         controllerGameField.getModelGameField().setAllStop(true);
         controllerGameField.getViewGame().repaint();
 
-
         if (controllerGameField.getModelGameField().getTurno().equalsIgnoreCase("T2")) {
             controllerGameField.getViewGame().removeMouseListener(controllerGameField);
             controllerGameField.getViewGame().removeMouseMotionListener(controllerGameField);
             startThreadIfT2(controllerGameField);
-
 
         }
         // Aggiungi i listener del mouse se è il turno del giocatore.

@@ -29,7 +29,6 @@ public class Computer {
     private double angle;
     private ArrayList<Double> anglePuntoThread ;
 
-
     public Computer(FieldObject piece, double distance) {
         this.piece = piece;
         this.distance = distance;
@@ -57,8 +56,10 @@ public class Computer {
     }
 
     public void setAngle(double angle) {
+
         this.angle = angle;
     }
+
 
     /**
      * Imposta l'angolo migliore per alcuni punti intorno alla palla rispetto all'oggetto `piece` nel campo di gioco.
@@ -69,21 +70,19 @@ public class Computer {
      * @param ball L'oggetto FieldObject (palla) per il quale trovare l'angolo migliore rispetto all'oggetto `piece`.
      */
    public void settoAngoloPerAlcuniPuntidellaBallScelgoIlMigliore(FieldObject ball) {
-        double angleIncrement = 2 * Math.PI / NUMPUNTICONSIDERATI;
-        double y = Double.MAX_VALUE;
-        double yminima = y;
+        double angleIncrement = 2 * Math.PI / 5;
+        double yminima = Double.MAX_VALUE;
 
 
-        for (int i = 0; i < NUMPUNTICONSIDERATI; i++) {
+        for (int i = 0; i < 5; i++) {
 
             double angleball = i * angleIncrement;
-
             double xStima = ball.getPosition().getX() + ball.getRadius() * Math.cos(angleball);
             double yStima = ball.getPosition().getY() + ball.getRadius() * Math.sin(angleball);
             double angoloPunto = Utility.calcolaAngoloConposizione(piece, xStima, yStima);
-
             piece.start((int) distance, angoloPunto);
             FieldObject ballAfterCollision = simulazioneCollisione(ball);
+
 
             if (ballAfterCollision.getPosition().getY() < yminima) {
                 yminima = ballAfterCollision.getPosition().getY();
@@ -92,6 +91,34 @@ public class Computer {
 
         }
     }
+
+
+   /*
+    Funzione angoloPedinaColpirePalla(palla)
+    angoloIncremento <-- 2*π/5
+    yMinore <-- 1000000
+
+    Per ogni i da 0 a 4
+
+     angoloPalla <-- i*angoloIncremento
+     xStimata <-- posizionePallaX+ raggioPalla * cos(AngoloPalla)
+     yStimata <-- posizionePallaY+ raggioPalla * cos(AngoloPalla)
+
+     angoloPedina <-- calcoloANgoloDirezionePallina(pedina, xStimata,yStimata)
+     Simulazionetiro (distanzaPedinaPalla, angoloPedina)
+
+     se pallaDopoCollisionePosY < yMinore allora
+       yMinore = pallaDopoCollisionePosY
+       angoloPedina <-- angoloPedina
+     fine se
+
+    fine per
+
+fine Funzione
+*/
+
+
+ 
 
 
 
@@ -127,6 +154,9 @@ public class Computer {
         return ball;
 
     }
+
+
+
 
 
 

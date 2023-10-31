@@ -19,7 +19,6 @@ public class LivelloState1 implements ILivelli {
     public void positionStart() {
         gioco.setObj(0, new Piece(40, 450, 0, "Pedina1.png", "T1"));
         gioco.setObj(1, new Ball(18, 0, 0));
-        /*gioco.setObj(2, new Piece(40, -520, 0, "Pedina2.png", "T2"));*/
         gioco.setObj(2, new Piece(40, -400, -70, "Pedina2.png", "T2"));
         gioco.setObj(3, new Piece(40, -170, 70, "Pedina2.png", "T2"));
         gioco.setObj(4, new Piece(40, -170, -70, "Pedina2.png", "T2"));
@@ -31,6 +30,7 @@ public class LivelloState1 implements ILivelli {
 
     @Override
     public void cambiaLivello() {
+
         gioco.impostaStato(new LivelloState2(gioco));
     }
 

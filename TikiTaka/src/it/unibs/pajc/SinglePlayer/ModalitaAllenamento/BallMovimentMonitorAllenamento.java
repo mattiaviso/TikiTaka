@@ -24,8 +24,6 @@ public class BallMovimentMonitorAllenamento implements GeneralBallMovementMonito
      */
     @Override
     public void run() {
-
-
         modelGameField.setAllStop(false);
         while (true) {
             if (allStop()) {
@@ -34,19 +32,13 @@ public class BallMovimentMonitorAllenamento implements GeneralBallMovementMonito
             viewGame.repaint();
             viewGame.setValido(null);
             viewGame.setNewradius(0);
-
-
             // Puoi aggiungere una piccola pausa qui per ridurre l'utilizzo della CPU.
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
         }
-
-
         modelGameField.setAllStop(true);
         boolean continuoPartita = modelGameField.setLifeIfPlayerDosentScore();
         if (!continuoPartita) {
@@ -55,7 +47,6 @@ public class BallMovimentMonitorAllenamento implements GeneralBallMovementMonito
             System.exit(0);
             viewGame.repaint();
         }
-
     }
 
     /**

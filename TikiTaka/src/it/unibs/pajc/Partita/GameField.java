@@ -83,7 +83,7 @@ public abstract class GameField implements GameFieldInterface {
         GameField.collision = collision;
     }
 
-    public FieldObject selezionaElemento(int i) {
+    public  final FieldObject selezionaElemento(int i) {
         return objectsPiece[i];
     }
 
@@ -103,7 +103,7 @@ public abstract class GameField implements GameFieldInterface {
      *
      * @return La stringa con le informazioni sulle coordinate delle pedine.
      */
-    public String messaggioPos() {
+    public  final String messaggioPos() {
         String string = "";
         for (FieldObject f : objectsPiece) {
             string += f.toString() + "\n";
@@ -190,7 +190,7 @@ public abstract class GameField implements GameFieldInterface {
      *
      * @return La Ball se presente nell'array, altrimenti null.
      */
-    public FieldObject selezionaBall() {
+    public final FieldObject selezionaBall() {
         FieldObject ball = null;
         for (FieldObject o : objectsPiece) {
             if (o instanceof Ball) {
@@ -215,7 +215,7 @@ public abstract class GameField implements GameFieldInterface {
      * @param piece2 L'oggetto FieldObject con la posizione da cercare.
      * @return La pedina trovata con la stessa posizione, se presente nell'array, altrimenti null.
      */
-    public FieldObject findPieceByPosition(FieldObject piece2) {
+    public  final FieldObject findPieceByPosition(FieldObject piece2) {
         for (FieldObject piece : objectsPiece) {
             if (piece.getPosition().getX() == piece2.getPosition().getX() && piece2.getPosition().getY() == piece.getPosition().getY()) {
                 return piece;

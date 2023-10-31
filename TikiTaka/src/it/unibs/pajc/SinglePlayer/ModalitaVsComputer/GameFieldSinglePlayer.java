@@ -6,6 +6,8 @@ import it.unibs.pajc.Partita.FieldObject;
 import it.unibs.pajc.Partita.GameField;
 import it.unibs.pajc.Partita.Piece;
 
+import java.util.ArrayList;
+
 public class GameFieldSinglePlayer extends GameField {
 
 
@@ -17,6 +19,14 @@ public class GameFieldSinglePlayer extends GameField {
         positionStart();
     }
 
+    //scopo per fase di testing
+    public GameFieldSinglePlayer(FieldObject[] arrayFaseTest, String turno) {
+        setScore1(0);
+        setScore2(0);
+        setTurno(turno);
+        setObjectsPiece(arrayFaseTest);
+
+    }
 
 
     @Override
@@ -88,23 +98,28 @@ public class GameFieldSinglePlayer extends GameField {
     }
 
 
-    public  Computer piecePiuVicina(FieldObject ball) {
+    public Computer piecePiuVicina(FieldObject ball) {
         FieldObject piece = null;
+        ArrayList<FieldObject> rightpiece= new ArrayList<>();
         double distanzaMinima = Double.MAX_VALUE;
         for (FieldObject o : getObjectsPiece()) {
             if (o instanceof Piece) {
                 if (o.getTeam().equalsIgnoreCase("T2")) {
                     double distanza = Math.sqrt(Math.pow(o.getPosition().getX() - ball.getPosition().getX(), 2)
                             + Math.pow(o.getPosition().getY() - ball.getPosition().getY(), 2));
-                    if (distanza < distanzaMinima && o.getPosition().getX() - ball.getPosition().getX() < 0) {
-                        distanzaMinima = distanza;
-                        piece = o;
+                    if (o.getPosition().getX() - ball.getPosition().getX() < 0) {
+                        if (distanza < distanzaMinima) {
+                            distanzaMinima = distanza;
+                            piece = o;
+                        }
+                    }else{
+                        rightpiece.add(o);
                     }
                 }
             }
         }
         if (piece == null) {
-            for (FieldObject c : getObjectsPiece()) {
+            for (FieldObject c : rightpiece) {
                 if (c instanceof Piece) {
                     if (c.getTeam().equalsIgnoreCase("T2")) {
                         double distanza = Math.sqrt(Math.pow(c.getPosition().getX() - ball.getPosition().getX(), 2)
@@ -116,15 +131,38 @@ public class GameFieldSinglePlayer extends GameField {
                     }
                 }
             }
-
-
         }
         return new Computer(piece, distanzaMinima);
+
     }
 
 
-
-
+    /**
+     * Funzione piecePiuVicina(palla):
+     *     oggettoPiece <-- null
+     *     ArraylistOggettiDestra <-- 0
+     *     distanzaMinima <-- ValoreMassimoDouble
+     *
+     *     Per ogni i nell'elencoDeiPezzetti():
+     *         Se i è una Pedina E il suo team è "T2":
+     *             distanza <-- CalcolaDistanzaTra(palla, i)
+     *             Se la coordinata X dell'oggetto i è a sinistra della palla e a distanza < distanzaMinima :
+     *                     distanzaMinima <-- distanza
+     *                     oggettoPiece <-- oggetto
+     *             Altrimenti:
+     *                 Aggiungi oggetto alla ArraylistOggettiDestra
+     *
+     *     Se oggettoPiece è nullo:
+     *         Per ogni oggetto in listaOggettiDestra:
+     *             Se l'oggetto è una Pedina E il suo team è "T2":
+     *                 distanza <-- CalcolaDistanzaTra(palla, oggetto)
+     *                 Se distanza < distanzaMinima:
+     *                     distanzaMinima <-- distanza
+     *                     oggettoPiece <-- oggetto
+     *
+     *     Ritorna un nuovo Computer con oggettoPiece e distanzaMinima
+     * Fine Funzione
+     */
 
 
 }

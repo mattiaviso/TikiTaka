@@ -28,11 +28,8 @@ public class MainSinglePlayer extends Canvas {
      */
     public static void main(String[] args) {
 
-
         String team2 = JOptionPane.showInputDialog("Dammi il nome del team");
-
         panel = new Result(team2);
-
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

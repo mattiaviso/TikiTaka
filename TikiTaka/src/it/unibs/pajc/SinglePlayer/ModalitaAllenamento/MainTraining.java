@@ -21,7 +21,6 @@ public class MainTraining extends Canvas {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-
 		panel = new ResultTraining();
 
 		EventQueue.invokeLater(new Runnable() {

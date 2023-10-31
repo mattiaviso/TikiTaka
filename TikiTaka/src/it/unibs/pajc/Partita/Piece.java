@@ -7,14 +7,9 @@ public class Piece extends FieldObject {
 
     public Piece(double radius, double x, double y, String imagePath, String team) {
         super(radius, x, y, 200);
-        imgPathString = imagePath;
         this.team = team;
     }
 
-    public void setImage(String imgPathString) {
-        this.imgPathString = imgPathString;
-
-    }
 
     public String getTeam() {
         return team;
