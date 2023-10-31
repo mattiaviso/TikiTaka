@@ -1,7 +1,9 @@
-package it.unibs.pajc.SinglePlayer.ModalitaVsComputer;
+package it.unibs.pajc;
 
 import it.unibs.pajc.ClientServer.SoundClip;
 import it.unibs.pajc.SinglePlayer.GeneralControllerGameField.Controller;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.ControllerSinglePlayer;
+import it.unibs.pajc.SinglePlayer.ModalitaVsComputer.Result;
 
 import javax.swing.*;
 import java.awt.*;
